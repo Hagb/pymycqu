@@ -126,7 +126,7 @@ def login(session: Session,
           service: Optional[str] = None,
           timeout: int = 10,
           force_relogin: bool = False,
-          capture_callback: Optional[
+          captcha_callback: Optional[
               Callable[[bytes, str], Optional[str]]] = None
           ) -> Response:
     login_page = session.get(
@@ -173,11 +173,11 @@ def login(session: Session,
     captcha_str = None
     if(session.get(AUTHSERVER_CAPTCHA_DETERMINE_URL, params={"username": username}).text == "true"):
         captcha_img_resp = session.get(AUTHSERVER_CAPTCHA_IMAGE_URL)
-        if capture_callback is None:
+        if captcha_callback is None:
             raise NeedCaptcha(captcha_img_resp.content,
                               captcha_img_resp.headers["Content-Type"],
                               after_captcha)
-        captcha_str = capture_callback(
+        captcha_str = captcha_callback(
             captcha_img_resp.content, captcha_img_resp.headers["Content-Type"])
         if captcha_str is None:
             raise NeedCaptcha(captcha_img_resp.content,
