@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import Any, Dict, Optional, Tuple, List, Union, ClassVar
-from pydantic.dataclasses import dataclass
+#from pydantic.dataclasses import dataclass
+from .dataclass import dataclass
 from .utils.datetimes import parse_period_str, parse_weeks_str, parse_weekday_str, date_from_str
 from .mycqu import MycquUnauthorized
 from requests import Session, get

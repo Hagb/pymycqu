@@ -3,7 +3,8 @@ from typing import Dict, Any, Optional, List, Tuple, List
 import requests
 from .course import Course
 from .utils.datetimes import date_from_str, time_from_str
-from pydantic.dataclasses import dataclass
+# from pydantic.dataclasses import dataclass
+from .dataclass import dataclass
 from datetime import date, time
 
 try:
