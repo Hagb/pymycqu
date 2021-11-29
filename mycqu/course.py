@@ -83,7 +83,7 @@ class CourseDayTime:
 
     @staticmethod
     def from_dict(data: Dict[str, Any]) -> Optional[CourseDayTime]:
-        if "periodFormat" in data and "weekDayFormat" in data:
+        if data.get("periodFormat") and data.get("weekDayFormat"):
             return CourseDayTime(
                 weekday=parse_weekday_str(data["weekDayFormat"]),
                 period=parse_period_str(data["periodFormat"])
