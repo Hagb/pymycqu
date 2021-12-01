@@ -1,0 +1,35 @@
+mycqu.course.Course
+===================
+
+.. currentmodule:: mycqu.course
+
+.. autoclass:: Course
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Course.__init__
+      ~Course.from_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Course.name
+      ~Course.code
+      ~Course.course_num
+      ~Course.dept
+      ~Course.credit
+      ~Course.instructor
+      ~Course.session
+   
+   

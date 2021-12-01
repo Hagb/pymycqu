@@ -1,0 +1,34 @@
+mycqu.course.CQUSession
+=======================
+
+.. currentmodule:: mycqu.course
+
+.. autoclass:: CQUSession
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CQUSession.__init__
+      ~CQUSession.fetch
+      ~CQUSession.from_str
+      ~CQUSession.get_id
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~CQUSession.CQUSESSION_MIN
+      ~CQUSession.SESSION_RE
+      ~CQUSession.year
+      ~CQUSession.is_autumn
+   
+   

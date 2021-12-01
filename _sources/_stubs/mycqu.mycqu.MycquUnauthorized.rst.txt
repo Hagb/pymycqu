@@ -1,0 +1,6 @@
+mycqu.mycqu.MycquUnauthorized
+=============================
+
+.. currentmodule:: mycqu.mycqu
+
+.. autoexception:: MycquUnauthorized

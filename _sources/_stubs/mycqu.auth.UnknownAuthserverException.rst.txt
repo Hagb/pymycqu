@@ -1,0 +1,6 @@
+mycqu.auth.UnknownAuthserverException
+=====================================
+
+.. currentmodule:: mycqu.auth
+
+.. autoexception:: UnknownAuthserverException

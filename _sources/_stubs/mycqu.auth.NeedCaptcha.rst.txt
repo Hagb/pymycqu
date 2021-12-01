@@ -1,0 +1,6 @@
+mycqu.auth.NeedCaptcha
+======================
+
+.. currentmodule:: mycqu.auth
+
+.. autoexception:: NeedCaptcha

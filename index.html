@@ -1,545 +1,135 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+<html lang="zh_CN">
   <head>
     <meta charset="utf-8" />
-    <title>Welcome to pymycqu’s documentation! &#8212; pymycqu 0.1.0 文档</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Indices and tables &#8212; pymycqu 0.1.0 文档</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <script src="_static/translations.js"></script>
+    
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="next" title="mycqu.auth" href="_stubs/mycqu.auth.html" /> 
   </head><body>
-  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="_stubs/mycqu.auth.html" title="mycqu.auth"
+             accesskey="N">下一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">pymycqu 0.1.0 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Indices and tables</a></li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          
-
           <div class="body" role="main">
             
-  <div class="section" id="module-mycqu.course">
-<span id="welcome-to-pymycqu-s-documentation"></span><h1>Welcome to pymycqu’s documentation!<a class="headerlink" href="#module-mycqu.course" title="永久链接至标题">¶</a></h1>
-<p>课程相关的模块</p>
-<dl class="class">
-<dt id="mycqu.course.CQUSession">
-<em class="property">class </em><code class="sig-prename descclassname">mycqu.course.</code><code class="sig-name descname">CQUSession</code><span class="sig-paren">(</span><em class="sig-param">year: int</em>, <em class="sig-param">is_autumn: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.course.CQUSession" title="永久链接至目标">¶</a></dt>
-<dd><p>重大的某一学期</p>
-<dl class="attribute">
-<dt id="mycqu.course.CQUSession.CQUSESSION_MIN">
-<code class="sig-name descname">CQUSESSION_MIN</code><em class="property">: ClassVar[CQUSession]</em><em class="property"> = CQUSession(year=2020, is_autumn=True)</em><a class="headerlink" href="#mycqu.course.CQUSession.CQUSESSION_MIN" title="永久链接至目标">¶</a></dt>
-<dd><p>my.cqu.edu.cn 支持的最早学期</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="mycqu.course.CQUSession.fetch">
-<em class="property">static </em><code class="sig-name descname">fetch</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List[mycqu.course.CQUSession]<a class="headerlink" href="#mycqu.course.CQUSession.fetch" title="永久链接至目标">¶</a></dt>
-<dd><p>从 my.cqu.edu.cn 上获取各个学期</p>
-<dl class="field-list simple">
-<dt class="field-odd">返回</dt>
-<dd class="field-odd"><p>各个学期组成的列表</p>
-</dd>
-<dt class="field-even">返回类型</dt>
-<dd class="field-even"><p>List[<a class="reference internal" href="#mycqu.course.CQUSession" title="mycqu.course.CQUSession">CQUSession</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="mycqu.course.CQUSession.from_str">
-<em class="property">static </em><code class="sig-name descname">from_str</code><span class="sig-paren">(</span><em class="sig-param">string: str</em><span class="sig-paren">)</span> &#x2192; mycqu.course.CQUSession<a class="headerlink" href="#mycqu.course.CQUSession.from_str" title="永久链接至目标">¶</a></dt>
-<dd><p>从学期字符串中解析学期</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">CQUSession</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">&quot;2021春&quot;</span><span class="p">)</span>
-<span class="go">CQUSession(year=2021, is_autumn=False)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">CQUSession</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">&quot;2020年秋&quot;</span><span class="p">)</span>
-<span class="go">CQUSession(year=2020, is_autumn=True)</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">参数</dt>
-<dd class="field-odd"><p><strong>string</strong> (<em>str</em>) – 学期字符串，如“2021春”、“2020年秋”</p>
-</dd>
-<dt class="field-even">引发</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – 字符串不是一个预期中的学期字符串时抛出</p>
-</dd>
-<dt class="field-odd">返回</dt>
-<dd class="field-odd"><p>对应的学期</p>
-</dd>
-<dt class="field-even">返回类型</dt>
-<dd class="field-even"><p><a class="reference internal" href="#mycqu.course.CQUSession" title="mycqu.course.CQUSession">CQUSession</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="mycqu.course.CQUSession.get_id">
-<code class="sig-name descname">get_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#mycqu.course.CQUSession.get_id" title="永久链接至目标">¶</a></dt>
-<dd><p>获取该学期在 my.cqu.edu.cn 中的 id</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">CQUSession</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
-<span class="go">1038</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">返回</dt>
-<dd class="field-odd"><p>学期的 id</p>
-</dd>
-<dt class="field-even">返回类型</dt>
-<dd class="field-even"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.course.CQUSession.is_autumn">
-<code class="sig-name descname">is_autumn</code><em class="property">: bool</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.CQUSession.is_autumn" title="永久链接至目标">¶</a></dt>
-<dd><p>是否为秋冬季学期</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.course.CQUSession.year">
-<code class="sig-name descname">year</code><em class="property">: int</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.CQUSession.year" title="永久链接至目标">¶</a></dt>
-<dd><p>主要行课年份</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="mycqu.course.CQUSessionInfo">
-<em class="property">class </em><code class="sig-prename descclassname">mycqu.course.</code><code class="sig-name descname">CQUSessionInfo</code><span class="sig-paren">(</span><em class="sig-param">session: mycqu.course.CQUSession</em>, <em class="sig-param">begin_date: datetime.date</em>, <em class="sig-param">end_date: datetime.date</em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.course.CQUSessionInfo" title="永久链接至目标">¶</a></dt>
-<dd><p>某学期的一些额外信息，目前只找到当个学期这些信息的 web api</p>
-<dl class="attribute">
-<dt id="mycqu.course.CQUSessionInfo.begin_date">
-<code class="sig-name descname">begin_date</code><em class="property">: date</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.CQUSessionInfo.begin_date" title="永久链接至目标">¶</a></dt>
-<dd><p>学期的开始日期</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.course.CQUSessionInfo.end_date">
-<code class="sig-name descname">end_date</code><em class="property">: date</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.CQUSessionInfo.end_date" title="永久链接至目标">¶</a></dt>
-<dd><p>学期的结束日期</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="mycqu.course.CQUSessionInfo.fetch">
-<em class="property">static </em><code class="sig-name descname">fetch</code><span class="sig-paren">(</span><em class="sig-param">session: requests.sessions.Session</em><span class="sig-paren">)</span> &#x2192; mycqu.course.CQUSessionInfo<a class="headerlink" href="#mycqu.course.CQUSessionInfo.fetch" title="永久链接至目标">¶</a></dt>
-<dd><p>从 my.cqu.edu.cn 上获取当前学期的学期信息，需要登录并认证了 mycqu 的会话</p>
-<dl class="field-list simple">
-<dt class="field-odd">参数</dt>
-<dd class="field-odd"><p><strong>session</strong> (<em>Session</em>) – 登录了统一身份认证（<a class="reference internal" href="#mycqu.auth.login" title="mycqu.auth.login"><code class="xref py py-func docutils literal notranslate"><span class="pre">auth.login()</span></code></a>）并在 mycqu 进行了认证（<code class="xref py py-func docutils literal notranslate"><span class="pre">mycqu.access_mycqu()</span></code>）的 requests 会话</p>
-</dd>
-<dt class="field-even">引发</dt>
-<dd class="field-even"><p><strong>MycquUnauthorized</strong> – 若会话未在 my.cqu.edu.cn 认证</p>
-</dd>
-<dt class="field-odd">返回</dt>
-<dd class="field-odd"><p>本学期信息对象</p>
-</dd>
-<dt class="field-even">返回类型</dt>
-<dd class="field-even"><p><a class="reference internal" href="#mycqu.course.CQUSessionInfo" title="mycqu.course.CQUSessionInfo">CQUSessionInfo</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.course.CQUSessionInfo.session">
-<code class="sig-name descname">session</code><em class="property">: CQUSession</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.CQUSessionInfo.session" title="永久链接至目标">¶</a></dt>
-<dd><p>对应的学期</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="mycqu.course.CourseTimetable">
-<em class="property">class </em><code class="sig-prename descclassname">mycqu.course.</code><code class="sig-name descname">CourseTimetable</code><span class="sig-paren">(</span><em class="sig-param">course: mycqu.course.Course, stu_num: int, classroom: Optional[str], weeks: List[Tuple[int, int]], day_time: Optional[mycqu.course.CourseDayTime], whole_week: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.course.CourseTimetable" title="永久链接至目标">¶</a></dt>
-<dd><p>课表对象，一个对象存储有相同课程、相同行课节次和相同星期的一批行课安排</p>
-<dl class="attribute">
-<dt id="mycqu.course.CourseTimetable.classroom">
-<code class="sig-name descname">classroom</code><em class="property">: Optional[str]</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.CourseTimetable.classroom" title="永久链接至目标">¶</a></dt>
-<dd><p>行课地点，无则为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.course.CourseTimetable.course">
-<code class="sig-name descname">course</code><em class="property">: Course</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.CourseTimetable.course" title="永久链接至目标">¶</a></dt>
-<dd><p>对应的课程</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.course.CourseTimetable.day_time">
-<code class="sig-name descname">day_time</code><em class="property">: Optional[CourseDayTime]</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.CourseTimetable.day_time" title="永久链接至目标">¶</a></dt>
-<dd><p>行课的星期和节次，若时间是整周（如真实地占用整周的军训和某些实习、虚拟地使用一周的思修实践）
-则为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
-</dd></dl>
-
-<dl class="method">
-<dt id="mycqu.course.CourseTimetable.fetch">
-<em class="property">static </em><code class="sig-name descname">fetch</code><span class="sig-paren">(</span><em class="sig-param">session: requests.sessions.Session</em>, <em class="sig-param">id_: str</em>, <em class="sig-param">cqu_session: Union[mycqu.course.CQUSession</em>, <em class="sig-param">str</em>, <em class="sig-param">None] = None</em><span class="sig-paren">)</span> &#x2192; List[mycqu.course.CourseTimetable]<a class="headerlink" href="#mycqu.course.CourseTimetable.fetch" title="永久链接至目标">¶</a></dt>
-<dd><p>从 my.cqu.edu.cn 上获取学生或老师的课表</p>
-<dl class="field-list simple">
-<dt class="field-odd">参数</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>session</strong> (<em>Session</em>) – 登录了统一身份认证（<a class="reference internal" href="#mycqu.auth.login" title="mycqu.auth.login"><code class="xref py py-func docutils literal notranslate"><span class="pre">auth.login()</span></code></a>）并在 mycqu 进行了认证（<code class="xref py py-func docutils literal notranslate"><span class="pre">mycqu.access_mycqu()</span></code>）的 requests 会话</p></li>
-<li><p><strong>id</strong> (<em>str</em>) – 学生或教师的学工号</p></li>
-<li><p><strong>cqu_session</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><em>CQUSession</em></a><em>, </em><em>str</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – 需要获取课表的学期，留空获取当前年级的课表</p></li>
-</ul>
-</dd>
-<dt class="field-even">引发</dt>
-<dd class="field-even"><p><strong>MycquUnauthorized</strong> – 若会话未在 my.cqu.edu.cn 进行认证</p>
-</dd>
-<dt class="field-odd">返回</dt>
-<dd class="field-odd"><p>获取的课表对象的列表</p>
-</dd>
-<dt class="field-even">返回类型</dt>
-<dd class="field-even"><p>List[<a class="reference internal" href="#mycqu.course.CourseTimetable" title="mycqu.course.CourseTimetable">CourseTimetable</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="mycqu.course.CourseTimetable.from_dict">
-<em class="property">static </em><code class="sig-name descname">from_dict</code><span class="sig-paren">(</span><em class="sig-param">data: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; mycqu.course.CourseTimetable<a class="headerlink" href="#mycqu.course.CourseTimetable.from_dict" title="永久链接至目标">¶</a></dt>
-<dd><p>从反序列化的一个课表 json 中获取课表</p>
-<dl class="field-list simple">
-<dt class="field-odd">参数</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 反序列化成字典的课表 json</p>
-</dd>
-<dt class="field-even">返回</dt>
-<dd class="field-even"><p>课表对象</p>
-</dd>
-<dt class="field-odd">返回类型</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#mycqu.course.CourseTimetable" title="mycqu.course.CourseTimetable">CourseTimetable</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.course.CourseTimetable.stu_num">
-<code class="sig-name descname">stu_num</code><em class="property">: int</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.CourseTimetable.stu_num" title="永久链接至目标">¶</a></dt>
-<dd><p>学生数</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.course.CourseTimetable.weeks">
-<code class="sig-name descname">weeks</code><em class="property">: List[Tuple[int, int]]</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.CourseTimetable.weeks" title="永久链接至目标">¶</a></dt>
-<dd><p>行课周数，列表中每个元组 (a,b) 代表一个周数范围 a~b（包含 a, b），在单独的一周则有 b=a</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.course.CourseTimetable.whole_week">
-<code class="sig-name descname">whole_week</code><em class="property">: bool</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.CourseTimetable.whole_week" title="永久链接至目标">¶</a></dt>
-<dd><p>是否真实地占用整周（如军训和某些实习是真实地占用、思修实践是“虚拟地占用”）</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="mycqu.course.CourseDayTime">
-<em class="property">class </em><code class="sig-prename descclassname">mycqu.course.</code><code class="sig-name descname">CourseDayTime</code><span class="sig-paren">(</span><em class="sig-param">weekday: int, period: Tuple[int, int]</em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.course.CourseDayTime" title="永久链接至目标">¶</a></dt>
-<dd><p>课程一次的星期和节次</p>
-<dl class="method">
-<dt id="mycqu.course.CourseDayTime.from_dict">
-<em class="property">static </em><code class="sig-name descname">from_dict</code><span class="sig-paren">(</span><em class="sig-param">data: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; Optional[mycqu.course.CourseDayTime]<a class="headerlink" href="#mycqu.course.CourseDayTime.from_dict" title="永久链接至目标">¶</a></dt>
-<dd><p>从反序列化的（一个）课表 json 中获取课程的星期和节次</p>
-<dl class="field-list simple">
-<dt class="field-odd">参数</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 反序列化成字典的课表 json</p>
-</dd>
-<dt class="field-even">返回</dt>
-<dd class="field-even"><p>若其中有课程的星期和节次则返回相应对象，否则返回 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
-</dd>
-<dt class="field-odd">返回类型</dt>
-<dd class="field-odd"><p>Optional[<a class="reference internal" href="#mycqu.course.CourseDayTime" title="mycqu.course.CourseDayTime">CourseDayTime</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.course.CourseDayTime.period">
-<code class="sig-name descname">period</code><em class="property">: Tuple[int, int]</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.CourseDayTime.period" title="永久链接至目标">¶</a></dt>
-<dd><p>节次，第一个元素为开始节次，第二个元素为结束节次（该节次也包括在范围内）。
-只有一节课时，两个元素相同。</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.course.CourseDayTime.weekday">
-<code class="sig-name descname">weekday</code><em class="property">: int</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.CourseDayTime.weekday" title="永久链接至目标">¶</a></dt>
-<dd><p>星期，0 为周一，6 为周日，此与 <code class="xref py py-attr docutils literal notranslate"><span class="pre">datetime.date.day</span></code> 一致</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="mycqu.course.Course">
-<em class="property">class </em><code class="sig-prename descclassname">mycqu.course.</code><code class="sig-name descname">Course</code><span class="sig-paren">(</span><em class="sig-param">name: str, code: str, course_num: Optional[str], dept: str, credit: Optional[float], instructor: Optional[str], session: Optional[mycqu.course.CQUSession]</em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.course.Course" title="永久链接至目标">¶</a></dt>
-<dd><p>与具体行课时间无关的课程信息</p>
-<dl class="attribute">
-<dt id="mycqu.course.Course.code">
-<code class="sig-name descname">code</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.Course.code" title="永久链接至目标">¶</a></dt>
-<dd><p>课程代码</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.course.Course.course_num">
-<code class="sig-name descname">course_num</code><em class="property">: Optional[str]</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.Course.course_num" title="永久链接至目标">¶</a></dt>
-<dd><p>教学班号，在无法获取时（如考表 <code class="xref py py-class docutils literal notranslate"><span class="pre">exam.Exam</span></code> 中）设为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.course.Course.credit">
-<code class="sig-name descname">credit</code><em class="property">: Optional[float]</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.Course.credit" title="永久链接至目标">¶</a></dt>
-<dd><p>学分，无法获取到则为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None`（如在考表</span> <span class="pre">:class:</span></code>.exam.Exam` 中）</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.course.Course.dept">
-<code class="sig-name descname">dept</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.Course.dept" title="永久链接至目标">¶</a></dt>
-<dd><p>开课学院</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="mycqu.course.Course.from_dict">
-<em class="property">static </em><code class="sig-name descname">from_dict</code><span class="sig-paren">(</span><em class="sig-param">data: Dict[str, Any], session: Union[mycqu.course.CQUSession, str, None] = None</em><span class="sig-paren">)</span> &#x2192; mycqu.course.Course<a class="headerlink" href="#mycqu.course.Course.from_dict" title="永久链接至目标">¶</a></dt>
-<dd><p>从反序列化的（一个）课表或考表 json 中返回课程</p>
-<dl class="field-list simple">
-<dt class="field-odd">参数</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 反序列化成字典的课表或考表 json</p></li>
-<li><p><strong>session</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><em>CQUSession</em></a><em>]</em><em>]</em><em>, </em><em>optional</em>) – 学期字符串或学期对象，留空则尝试从 <code class="docutils literal notranslate"><span class="pre">data</span></code> 中获取</p></li>
-</ul>
-</dd>
-<dt class="field-even">返回</dt>
-<dd class="field-even"><p>对应的课程对象</p>
-</dd>
-<dt class="field-odd">返回类型</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#mycqu.course.Course" title="mycqu.course.Course">Course</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.course.Course.instructor">
-<code class="sig-name descname">instructor</code><em class="property">: Optional[str]</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.Course.instructor" title="永久链接至目标">¶</a></dt>
-<dd><p>教师</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.course.Course.name">
-<code class="sig-name descname">name</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.Course.name" title="永久链接至目标">¶</a></dt>
-<dd><p>课程名称</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.course.Course.session">
-<code class="sig-name descname">session</code><em class="property">: Optional[CQUSession]</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.course.Course.session" title="永久链接至目标">¶</a></dt>
-<dd><p>学期，无法获取时则为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
-</dd></dl>
-
-</dd></dl>
-
-<span class="target" id="module-mycqu.auth"></span><p>统一身份认证相关的模块</p>
-<dl class="exception">
-<dt id="mycqu.auth.NotAllowedService">
-<em class="property">exception </em><code class="sig-prename descclassname">mycqu.auth.</code><code class="sig-name descname">NotAllowedService</code><a class="headerlink" href="#mycqu.auth.NotAllowedService" title="永久链接至目标">¶</a></dt>
-<dd><p>试图认证不允许的服务时抛出</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="mycqu.auth.NeedCaptcha">
-<em class="property">exception </em><code class="sig-prename descclassname">mycqu.auth.</code><code class="sig-name descname">NeedCaptcha</code><span class="sig-paren">(</span><em class="sig-param">image: bytes, image_type: str, after_captcha: Callable[[str], requests.models.Response]</em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.auth.NeedCaptcha" title="永久链接至目标">¶</a></dt>
-<dd><p>登录统一身份认证时需要输入验证码时拋出</p>
-<dl class="attribute">
-<dt id="mycqu.auth.NeedCaptcha.after_captcha">
-<code class="sig-name descname">after_captcha</code><em class="property">: Callable[[str], Response]</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.auth.NeedCaptcha.after_captcha" title="永久链接至目标">¶</a></dt>
-<dd><p>将验证码传入，调用以继续进行登陆</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.auth.NeedCaptcha.image">
-<code class="sig-name descname">image</code><em class="property">: bytes</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.auth.NeedCaptcha.image" title="永久链接至目标">¶</a></dt>
-<dd><p>验证码图片文件数据</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mycqu.auth.NeedCaptcha.image_type">
-<code class="sig-name descname">image_type</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.auth.NeedCaptcha.image_type" title="永久链接至目标">¶</a></dt>
-<dd><p>验证码图片 MIME 类型</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="exception">
-<dt id="mycqu.auth.InvaildCaptcha">
-<em class="property">exception </em><code class="sig-prename descclassname">mycqu.auth.</code><code class="sig-name descname">InvaildCaptcha</code><a class="headerlink" href="#mycqu.auth.InvaildCaptcha" title="永久链接至目标">¶</a></dt>
-<dd><p>登录统一身份认证输入了无效验证码时抛出</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="mycqu.auth.IncorrectLoginCredentials">
-<em class="property">exception </em><code class="sig-prename descclassname">mycqu.auth.</code><code class="sig-name descname">IncorrectLoginCredentials</code><a class="headerlink" href="#mycqu.auth.IncorrectLoginCredentials" title="永久链接至目标">¶</a></dt>
-<dd><p>使用无效的的登录凭据（如错误的用户、密码）</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="mycqu.auth.UnknownAuthserverException">
-<em class="property">exception </em><code class="sig-prename descclassname">mycqu.auth.</code><code class="sig-name descname">UnknownAuthserverException</code><a class="headerlink" href="#mycqu.auth.UnknownAuthserverException" title="永久链接至目标">¶</a></dt>
-<dd><p>登录或认证服务过程中未知错误</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="mycqu.auth.NotLogined">
-<em class="property">exception </em><code class="sig-prename descclassname">mycqu.auth.</code><code class="sig-name descname">NotLogined</code><a class="headerlink" href="#mycqu.auth.NotLogined" title="永久链接至目标">¶</a></dt>
-<dd><p>未登陆或登陆过期的会话被用于进行需要统一身份认证登陆的操作</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="mycqu.auth.is_logined">
-<code class="sig-prename descclassname">mycqu.auth.</code><code class="sig-name descname">is_logined</code><span class="sig-paren">(</span><em class="sig-param">session: requests.sessions.Session</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#mycqu.auth.is_logined" title="永久链接至目标">¶</a></dt>
-<dd><p>判断是否处于统一身份认证登陆状态</p>
-<dl class="field-list simple">
-<dt class="field-odd">参数</dt>
-<dd class="field-odd"><p><strong>session</strong> (<em>Session</em>) – 会话</p>
-</dd>
-<dt class="field-even">返回</dt>
-<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code> 如果处于登陆状态，<code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code> 如果处于未登陆或登陆过期状态</p>
-</dd>
-<dt class="field-odd">返回类型</dt>
-<dd class="field-odd"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="mycqu.auth.logout">
-<code class="sig-prename descclassname">mycqu.auth.</code><code class="sig-name descname">logout</code><span class="sig-paren">(</span><em class="sig-param">session: requests.sessions.Session</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#mycqu.auth.logout" title="永久链接至目标">¶</a></dt>
-<dd><p>注销统一身份认证登录状态</p>
-<dl class="field-list simple">
-<dt class="field-odd">参数</dt>
-<dd class="field-odd"><p><strong>session</strong> (<em>Session</em>) – 进行过登录的会话</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="mycqu.auth.login">
-<code class="sig-prename descclassname">mycqu.auth.</code><code class="sig-name descname">login</code><span class="sig-paren">(</span><em class="sig-param">session: requests.sessions.Session, username: str, password: str, service: Optional[str] = None, timeout: int = 10, force_relogin: bool = False, captcha_callback: Optional[Callable[[bytes, str], Optional[str]]] = None</em><span class="sig-paren">)</span> &#x2192; requests.models.Response<a class="headerlink" href="#mycqu.auth.login" title="永久链接至目标">¶</a></dt>
-<dd><p>登录统一身份认证</p>
-<dl class="field-list simple">
-<dt class="field-odd">参数</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>session</strong> (<em>Session</em>) – 用于登录统一身份认证的会话</p></li>
-<li><p><strong>username</strong> (<em>str</em>) – 统一身份认证号或学工号</p></li>
-<li><p><strong>password</strong> (<em>str</em>) – 统一身份认证密码</p></li>
-<li><p><strong>service</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 需要登录的服务，默认（<code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>）则先不登陆任何服务</p></li>
-<li><p><strong>timeout</strong> (<em>int</em><em>, </em><em>optional</em>) – 连接超时时限，默认为 10（单位秒）</p></li>
-<li><p><strong>force_relogin</strong> (<em>bool</em><em>, </em><em>optional</em>) – 强制重登，当会话中已经有有效的登陆 cookies 时依然重新登录，默认为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></p></li>
-<li><p><strong>captcha_callback</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><em>bytes</em><em>, </em><em>str</em><em>]</em><em>, </em><em>Optional</em><em>[</em><em>str</em><em>]</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – 需要输入验证码时调用的回调函数，默认为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code> 即不设置回调；
-当需要输入验证码，但回调没有设置或回调返回 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code> 时，抛出异常 <a class="reference internal" href="#mycqu.auth.NeedCaptcha" title="mycqu.auth.NeedCaptcha"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeedCaptcha</span></code></a>；
-该函数接受一个 <code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code> 型参数为验证码图片的文件数据，一个 <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> 型参数为图片的 MIME 类型，
-返回验证码文本或 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>。</p></li>
-</ul>
-</dd>
-<dt class="field-even">引发</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><a class="reference internal" href="#mycqu.auth.UnknownAuthserverException" title="mycqu.auth.UnknownAuthserverException"><strong>UnknownAuthserverException</strong></a> – 未知认证错误</p></li>
-<li><p><a class="reference internal" href="#mycqu.auth.InvaildCaptcha" title="mycqu.auth.InvaildCaptcha"><strong>InvaildCaptcha</strong></a> – 无效的验证码</p></li>
-<li><p><a class="reference internal" href="#mycqu.auth.IncorrectLoginCredentials" title="mycqu.auth.IncorrectLoginCredentials"><strong>IncorrectLoginCredentials</strong></a> – 错误的登陆凭据（如错误的密码、用户名）</p></li>
-<li><p><a class="reference internal" href="#mycqu.auth.NeedCaptcha" title="mycqu.auth.NeedCaptcha"><strong>NeedCaptcha</strong></a> – 需要提供验证码，获得验证码文本之后可调用所抛出异常的 <a class="reference internal" href="#mycqu.auth.NeedCaptcha.after_captcha" title="mycqu.auth.NeedCaptcha.after_captcha"><code class="xref py py-func docutils literal notranslate"><span class="pre">NeedCaptcha.after_captcha()</span></code></a> 函数来继续登陆</p></li>
-</ul>
-</dd>
-<dt class="field-odd">返回</dt>
-<dd class="field-odd"><p>登陆了统一身份认证后所跳转到的地址的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></p>
-</dd>
-<dt class="field-even">返回类型</dt>
-<dd class="field-even"><p>Response</p>
-</dd>
-</dl>
-</dd></dl>
-
-<div class="toctree-wrapper compound">
-</div>
-</div>
-<div class="section" id="indices-and-tables">
+  <section id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="永久链接至标题">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">索引</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">模块索引</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">搜索页面</span></a></p></li>
 </ul>
-</div>
+</section>
+<section id="api">
+<h1>API 文档<a class="headerlink" href="#api" title="永久链接至标题">¶</a></h1>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_stubs/mycqu.auth.html#module-mycqu.auth" title="mycqu.auth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mycqu.auth</span></code></a></p></td>
+<td><p>统一身份认证相关的模块</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_stubs/mycqu.course.html#module-mycqu.course" title="mycqu.course"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mycqu.course</span></code></a></p></td>
+<td><p>课程相关的模块</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_stubs/mycqu.exam.html#module-mycqu.exam" title="mycqu.exam"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mycqu.exam</span></code></a></p></td>
+<td><p>考试相关的模块</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_stubs/mycqu.mycqu.html#module-mycqu.mycqu" title="mycqu.mycqu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mycqu.mycqu</span></code></a></p></td>
+<td><p>my.cqu.edu.cn 认证相关的模块</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
-          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="#">pymycqu</a></h1>
-
-
-
-
-
-
-
-
-<h3>导航</h3>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="#">Documentation overview</a><ul>
-  </ul></li>
+  <h3><a href="#">目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Indices and tables</a></li>
+<li><a class="reference internal" href="#api">API 文档</a></li>
 </ul>
-</div>
+
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="_stubs/mycqu.auth.html"
+                        title="下一章">mycqu.auth</a></p>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">快速搜索</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="转向" />
     </form>
     </div>
 </div>
 <script>$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;2021, Hagb.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/index.rst.txt"
-          rel="nofollow">Page source</a>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="_stubs/mycqu.auth.html" title="mycqu.auth"
+             >下一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">pymycqu 0.1.0 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Indices and tables</a></li> 
+      </ul>
     </div>
-
-    
-
-    
+    <div class="footer" role="contentinfo">
+        &#169; 版权所有 2021, Hagb.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
+    </div>
   </body>
 </html>

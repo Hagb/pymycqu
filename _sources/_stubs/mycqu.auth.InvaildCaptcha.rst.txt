@@ -1,0 +1,6 @@
+mycqu.auth.InvaildCaptcha
+=========================
+
+.. currentmodule:: mycqu.auth
+
+.. autoexception:: InvaildCaptcha

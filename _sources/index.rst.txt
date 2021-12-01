@@ -3,20 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to pymycqu's documentation!
-===================================
-
-.. automodule:: mycqu.course
-   :members:
-
-.. automodule:: mycqu.auth
-   :members:
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-
+:tocdepth: 4
 
 Indices and tables
 ==================
@@ -24,3 +11,16 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+API 文档
+========
+
+.. autosummary::
+   :toctree: _stubs
+   :recursive:
+
+   mycqu.auth
+   mycqu.course
+   mycqu.exam
+   mycqu.mycqu
+

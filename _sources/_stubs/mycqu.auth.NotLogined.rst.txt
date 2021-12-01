@@ -1,0 +1,6 @@
+mycqu.auth.NotLogined
+=====================
+
+.. currentmodule:: mycqu.auth
+
+.. autoexception:: NotLogined

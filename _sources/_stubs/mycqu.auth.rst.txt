@@ -1,0 +1,46 @@
+﻿mycqu.auth
+==========
+
+.. automodule:: mycqu.auth
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      access_service
+      get_formdata
+      is_logined
+      login
+      logout
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+      :toctree:
+   
+      IncorrectLoginCredentials
+      InvaildCaptcha
+      NeedCaptcha
+      NotAllowedService
+      NotLogined
+      UnknownAuthserverException
+   
+   
+
+
+
