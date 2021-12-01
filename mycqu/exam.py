@@ -1,23 +1,12 @@
 from __future__ import annotations
-from typing import Dict, Any, Optional, List, Tuple, List
+from typing import Dict, Any, Optional, List
 import requests
 from .course import Course
 from .utils.datetimes import date_from_str, time_from_str
 # from pydantic.dataclasses import dataclass
-from .dataclass import dataclass
+from ._lib_wrapper.dataclass import dataclass
 from datetime import date, time
-
-try:
-    from Cryptodome.Cipher import AES
-    from Cryptodome.Util.Padding import pad
-except ModuleNotFoundError:
-    from Crypto.Cipher import AES
-    from Crypto.Util.Padding import pad
-    from Crypto import version_info
-    if version_info[0] == 2:
-        # pylint: ignore disable=raise-missing-from
-        raise ModuleNotFoundError(
-            'Need either `pycryptodome` or `pycryptodomex`!')
+from ._lib_wrapper.Crypto import pad, AES
 
 __all__ = ("Exam",)
 
@@ -42,8 +31,8 @@ class Invigilator:
     @staticmethod
     def from_dict(data: Dict[str, Optional[str]]) -> Invigilator:
         return Invigilator(
-            name=data["instructor"],
-            dept=data["instDeptShortName"]
+            name=data["instructor"],  # type: ignore
+            dept=data["instDeptShortName"]  # type: ignore
         )
 
 

@@ -4,8 +4,11 @@ https://github.com/samuelcolvin/pydantic/issues/650#issuecomment-709945440
 """
 
 from typing import TYPE_CHECKING
-from pydantic.dataclasses import dataclass
 
 # Trick
 if TYPE_CHECKING:
-    from dataclasses import dataclass as dataclass
+    from dataclasses import dataclass
+else:
+    from pydantic.dataclasses import dataclass
+
+__all__ = ("dataclass",)

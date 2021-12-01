@@ -3,18 +3,9 @@ import random
 import re
 from base64 import b64encode
 from requests import Session, Response
-from bs4 import BeautifulSoup
-try:
-    from Cryptodome.Cipher import AES
-    from Cryptodome.Util.Padding import pad
-except ModuleNotFoundError:
-    from Crypto.Cipher import AES
-    from Crypto.Util.Padding import pad
-    from Crypto import version_info
-    if version_info[0] == 2:
-        # pylint: ignore disable=raise-missing-from
-        raise ModuleNotFoundError(
-            'Need either `pycryptodome` or `pycryptodomex`!')
+from bs4 import BeautifulSoup  # type: ignore
+from ._lib_wrapper.Crypto import pad, AES
+
 __all__ = ("NotAllowedService", "NeedCaptcha", "InvaildCaptcha",
            "IncorrectLoginCredentials", "UnknownAuthserverException", "NotLogined",
            "is_logined", "logout", "access_service", "login")
@@ -64,6 +55,8 @@ class NotLogined(Exception):
         super().__init__("not in logined status")
 
 # from https://github.com/CQULHW/CQUQueryGrade
+
+
 def get_formdata(html: str, username: str, password: str) -> Dict[str, Union[str, bytes]]:
     soup = BeautifulSoup(html, 'html.parser')
 
@@ -147,7 +140,11 @@ def login(session: Session,
     formdata = get_formdata(login_page.text, username, password)
 
     def after_captcha(captcha_str: Optional[str]):
-        formdata["captchaResponse"] = captcha_str
+        if captcha_str is None:
+            if "captchaResponse" in formdata:
+                del formdata["captchaResponse"]
+        else:
+            formdata["captchaResponse"] = captcha_str
         login_resp = session.post(
             url=AUTHSERVER_URL, data=formdata, allow_redirects=False)
         if login_resp.status_code != 302:
