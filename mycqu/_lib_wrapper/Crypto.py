@@ -1,3 +1,5 @@
+"""从两种模块不同的模块名字中加载加密模块
+"""
 try:
     from Cryptodome.Cipher import AES
     from Cryptodome.Util.Padding import pad as pad

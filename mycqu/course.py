@@ -1,12 +1,15 @@
+"""课程相关的模块
+"""
 from __future__ import annotations
 from typing import Any, Dict, Optional, Tuple, List, Union, ClassVar
 # from pydantic.dataclasses import dataclass
+import re
+from datetime import date
+from requests import Session, get
 from ._lib_wrapper.dataclass import dataclass
 from .utils.datetimes import parse_period_str, parse_weeks_str, parse_weekday_str, date_from_str
 from .mycqu import MycquUnauthorized
-from requests import Session, get
-from datetime import date
-import re
+
 __all__ = ("CQUSession", "CQUSessionInfo",
            "CourseTimetable", "CourseDayTime", "Course")
 
@@ -37,6 +40,9 @@ class CQUSession:
     def get_id(self) -> int:
         """获取该学期在 my.cqu.edu.cn 中的 id
 
+        >>> CQUSession(2021, True).get_id()
+        1038
+
         :return: 学期的 id
         :rtype: int
         """
@@ -45,6 +51,11 @@ class CQUSession:
     @staticmethod
     def from_str(string: str) -> CQUSession:
         """从学期字符串中解析学期
+
+        >>> CQUSession.from_str("2021春")
+        CQUSession(year=2021, is_autumn=False)
+        >>> CQUSession.from_str("2020年秋")
+        CQUSession(year=2020, is_autumn=True)
 
         :param string: 学期字符串，如“2021春”、“2020年秋”
         :type string: str
@@ -93,9 +104,9 @@ class CQUSessionInfo:
 
     @staticmethod
     def fetch(session: Session) -> CQUSessionInfo:
-        """从 my.cqu.edu.cn 上获取当前学期的学期信息，需要登陆并认证了 mycqu 的会话
+        """从 my.cqu.edu.cn 上获取当前学期的学期信息，需要登录并认证了 mycqu 的会话
 
-        :param session: 登陆了统一身份认证（:func:`.auth.login`）并在 mycqu 进行了认证（:func:`.mycqu.access_mycqu`）的 requests 会话
+        :param session: 登录了统一身份认证（:func:`.auth.login`）并在 mycqu 进行了认证（:func:`.mycqu.access_mycqu`）的 requests 会话
         :type session: Session
         :raises MycquUnauthorized: 若会话未在 my.cqu.edu.cn 认证
         :return: 本学期信息对象
@@ -167,12 +178,12 @@ class Course:
 
         :param data: 反序列化成字典的课表或考表 json
         :type data: Dict[str, Any]
-        :param session: 学期字符串或学期对象，留空则尝试从 `data` 中获取
+        :param session: 学期字符串或学期对象，留空则尝试从 ``data`` 中获取
         :type session: Optional[Union[str, CQUSession]], optional
         :return: 对应的课程对象
         :rtype: Course
         """
-        if session is None and not (data.get("session") is None):
+        if session is None and not data.get("session") is None:
             session = CQUSession.from_str(data["session"])
         if isinstance(session, str):
             session = CQUSession.from_str(session)
@@ -220,7 +231,7 @@ class CourseTimetable:
             stu_num=data["selectedStuNum"],
             classroom=data["roomName"],
             weeks=parse_weeks_str(data.get("weeks")
-                                  or data.get("teachingWeekFormat")), # type: ignore
+                                  or data.get("teachingWeekFormat")),  # type: ignore
             day_time=CourseDayTime.from_dict(data),
             whole_week=bool(data["wholeWeekOccupy"])
         )
@@ -229,7 +240,7 @@ class CourseTimetable:
     def fetch(session: Session, id_: str, cqu_session: Optional[Union[CQUSession, str]] = None) -> List[CourseTimetable]:
         """从 my.cqu.edu.cn 上获取学生或老师的课表
 
-        :param session: 登陆了统一身份认证（:func:`.auth.login`）并在 mycqu 进行了认证（:func:`.mycqu.access_mycqu`）的 requests 会话
+        :param session: 登录了统一身份认证（:func:`.auth.login`）并在 mycqu 进行了认证（:func:`.mycqu.access_mycqu`）的 requests 会话
         :type session: Session
         :param id_: 学生或教师的学工号
         :type id_: str

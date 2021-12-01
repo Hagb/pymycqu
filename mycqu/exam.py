@@ -1,11 +1,13 @@
+"""考试相关的模块
+"""
 from __future__ import annotations
 from typing import Dict, Any, Optional, List
+from datetime import date, time
 import requests
 from .course import Course
 from .utils.datetimes import date_from_str, time_from_str
 # from pydantic.dataclasses import dataclass
 from ._lib_wrapper.dataclass import dataclass
-from datetime import date, time
 from ._lib_wrapper.Crypto import pad, AES
 
 __all__ = ("Exam",)
@@ -25,6 +27,8 @@ def get_exam_raw(student_id: str) -> Dict[str, Any]:
 
 @dataclass
 class Invigilator:
+    """监考员信息
+    """
     name: str
     dept: str
 
@@ -38,6 +42,8 @@ class Invigilator:
 
 @dataclass
 class Exam:
+    """考试信息
+    """
     course: Course
     batch: str
     batch_id: int
@@ -81,5 +87,12 @@ class Exam:
 
     @staticmethod
     def fetch(student_id: str) -> List[Exam]:
+        """从 my.cqu.edu.cn 上获取指定学生的考表
+
+        :param student_id: 学生学号
+        :type student_id: str
+        :return: 本学期的考表
+        :rtype: List[Exam]
+        """
         return [Exam.from_dict(exam)
                 for exam in get_exam_raw(student_id)["data"]["content"]]

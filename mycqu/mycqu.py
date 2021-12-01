@@ -1,7 +1,9 @@
+"""my.cqu.edu.cn 认证相关的模块
+"""
 from typing import Dict
 import re
-from .auth import access_service
 from requests import Session
+from .auth import access_service
 __all__ = ("access_mycqu",)
 
 MYCQU_TOKEN_INDEX_URL = "http://my.cqu.edu.cn/enroll/token-index"
@@ -31,6 +33,15 @@ def get_oauth_token(session: Session) -> str:
 
 
 def access_mycqu(session: Session, add_to_header: bool = True) -> Dict[str, str]:
+    """用登陆了统一身份认证的会话在 my.cqu.edu.cn 进行认证
+
+    :param session: 登陆了统一身份认证的会话
+    :type session: Session
+    :param add_to_header: 是否将 mycqu 的认证信息写入会话属性，默认为 :obj:`True`
+    :type add_to_header: bool, optional
+    :return: mycqu 认证信息的请求头，当 ``add_to_header`` 参数为 :obj:`True` 时无需手动使用该返回值
+    :rtype: Dict[str, str]
+    """
     access_service(session, MYCQU_SERVICE_URL)
     token = get_oauth_token(session)
     if add_to_header:
