@@ -33,6 +33,7 @@
             
   <div class="section" id="module-mycqu.course">
 <span id="welcome-to-pymycqu-s-documentation"></span><h1>Welcome to pymycqu’s documentation!<a class="headerlink" href="#module-mycqu.course" title="永久链接至标题">¶</a></h1>
+<p>课程相关的模块</p>
 <dl class="class">
 <dt id="mycqu.course.CQUSession">
 <em class="property">class </em><code class="sig-prename descclassname">mycqu.course.</code><code class="sig-name descname">CQUSession</code><span class="sig-paren">(</span><em class="sig-param">year: int</em>, <em class="sig-param">is_autumn: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.course.CQUSession" title="永久链接至目标">¶</a></dt>
@@ -61,6 +62,12 @@
 <dt id="mycqu.course.CQUSession.from_str">
 <em class="property">static </em><code class="sig-name descname">from_str</code><span class="sig-paren">(</span><em class="sig-param">string: str</em><span class="sig-paren">)</span> &#x2192; mycqu.course.CQUSession<a class="headerlink" href="#mycqu.course.CQUSession.from_str" title="永久链接至目标">¶</a></dt>
 <dd><p>从学期字符串中解析学期</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">CQUSession</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">&quot;2021春&quot;</span><span class="p">)</span>
+<span class="go">CQUSession(year=2021, is_autumn=False)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">CQUSession</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">&quot;2020年秋&quot;</span><span class="p">)</span>
+<span class="go">CQUSession(year=2020, is_autumn=True)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
 <dd class="field-odd"><p><strong>string</strong> (<em>str</em>) – 学期字符串，如“2021春”、“2020年秋”</p>
@@ -81,6 +88,10 @@
 <dt id="mycqu.course.CQUSession.get_id">
 <code class="sig-name descname">get_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#mycqu.course.CQUSession.get_id" title="永久链接至目标">¶</a></dt>
 <dd><p>获取该学期在 my.cqu.edu.cn 中的 id</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">CQUSession</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
+<span class="go">1038</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">返回</dt>
 <dd class="field-odd"><p>学期的 id</p>
@@ -124,10 +135,10 @@
 <dl class="method">
 <dt id="mycqu.course.CQUSessionInfo.fetch">
 <em class="property">static </em><code class="sig-name descname">fetch</code><span class="sig-paren">(</span><em class="sig-param">session: requests.sessions.Session</em><span class="sig-paren">)</span> &#x2192; mycqu.course.CQUSessionInfo<a class="headerlink" href="#mycqu.course.CQUSessionInfo.fetch" title="永久链接至目标">¶</a></dt>
-<dd><p>从 my.cqu.edu.cn 上获取当前学期的学期信息，需要登陆并认证了 mycqu 的会话</p>
+<dd><p>从 my.cqu.edu.cn 上获取当前学期的学期信息，需要登录并认证了 mycqu 的会话</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
-<dd class="field-odd"><p><strong>session</strong> (<em>Session</em>) – 登陆了统一身份认证（<code class="xref py py-func docutils literal notranslate"><span class="pre">auth.login()</span></code>）并在 mycqu 进行了认证（<code class="xref py py-func docutils literal notranslate"><span class="pre">mycqu.access_mycqu()</span></code>）的 requests 会话</p>
+<dd class="field-odd"><p><strong>session</strong> (<em>Session</em>) – 登录了统一身份认证（<a class="reference internal" href="#mycqu.auth.login" title="mycqu.auth.login"><code class="xref py py-func docutils literal notranslate"><span class="pre">auth.login()</span></code></a>）并在 mycqu 进行了认证（<code class="xref py py-func docutils literal notranslate"><span class="pre">mycqu.access_mycqu()</span></code>）的 requests 会话</p>
 </dd>
 <dt class="field-even">引发</dt>
 <dd class="field-even"><p><strong>MycquUnauthorized</strong> – 若会话未在 my.cqu.edu.cn 认证</p>
@@ -179,7 +190,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>session</strong> (<em>Session</em>) – 登陆了统一身份认证（<code class="xref py py-func docutils literal notranslate"><span class="pre">auth.login()</span></code>）并在 mycqu 进行了认证（<code class="xref py py-func docutils literal notranslate"><span class="pre">mycqu.access_mycqu()</span></code>）的 requests 会话</p></li>
+<li><p><strong>session</strong> (<em>Session</em>) – 登录了统一身份认证（<a class="reference internal" href="#mycqu.auth.login" title="mycqu.auth.login"><code class="xref py py-func docutils literal notranslate"><span class="pre">auth.login()</span></code></a>）并在 mycqu 进行了认证（<code class="xref py py-func docutils literal notranslate"><span class="pre">mycqu.access_mycqu()</span></code>）的 requests 会话</p></li>
 <li><p><strong>id</strong> (<em>str</em>) – 学生或教师的学工号</p></li>
 <li><p><strong>cqu_session</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><em>CQUSession</em></a><em>, </em><em>str</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – 需要获取课表的学期，留空获取当前年级的课表</p></li>
 </ul>
@@ -305,7 +316,7 @@
 <dt class="field-odd">参数</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 反序列化成字典的课表或考表 json</p></li>
-<li><p><strong>session</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><em>CQUSession</em></a><em>]</em><em>]</em><em>, </em><em>optional</em>) – 学期字符串或学期对象，留空则尝试从 <cite>data</cite> 中获取</p></li>
+<li><p><strong>session</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><em>CQUSession</em></a><em>]</em><em>]</em><em>, </em><em>optional</em>) – 学期字符串或学期对象，留空则尝试从 <code class="docutils literal notranslate"><span class="pre">data</span></code> 中获取</p></li>
 </ul>
 </dd>
 <dt class="field-even">返回</dt>
@@ -337,35 +348,124 @@
 
 </dd></dl>
 
-<span class="target" id="module-mycqu.auth"></span><dl class="exception">
+<span class="target" id="module-mycqu.auth"></span><p>统一身份认证相关的模块</p>
+<dl class="exception">
 <dt id="mycqu.auth.NotAllowedService">
 <em class="property">exception </em><code class="sig-prename descclassname">mycqu.auth.</code><code class="sig-name descname">NotAllowedService</code><a class="headerlink" href="#mycqu.auth.NotAllowedService" title="永久链接至目标">¶</a></dt>
-<dd></dd></dl>
+<dd><p>试图认证不允许的服务时抛出</p>
+</dd></dl>
 
 <dl class="exception">
 <dt id="mycqu.auth.NeedCaptcha">
 <em class="property">exception </em><code class="sig-prename descclassname">mycqu.auth.</code><code class="sig-name descname">NeedCaptcha</code><span class="sig-paren">(</span><em class="sig-param">image: bytes, image_type: str, after_captcha: Callable[[str], requests.models.Response]</em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.auth.NeedCaptcha" title="永久链接至目标">¶</a></dt>
-<dd></dd></dl>
+<dd><p>登录统一身份认证时需要输入验证码时拋出</p>
+<dl class="attribute">
+<dt id="mycqu.auth.NeedCaptcha.after_captcha">
+<code class="sig-name descname">after_captcha</code><em class="property">: Callable[[str], Response]</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.auth.NeedCaptcha.after_captcha" title="永久链接至目标">¶</a></dt>
+<dd><p>将验证码传入，调用以继续进行登陆</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mycqu.auth.NeedCaptcha.image">
+<code class="sig-name descname">image</code><em class="property">: bytes</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.auth.NeedCaptcha.image" title="永久链接至目标">¶</a></dt>
+<dd><p>验证码图片文件数据</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mycqu.auth.NeedCaptcha.image_type">
+<code class="sig-name descname">image_type</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#mycqu.auth.NeedCaptcha.image_type" title="永久链接至目标">¶</a></dt>
+<dd><p>验证码图片 MIME 类型</p>
+</dd></dl>
+
+</dd></dl>
 
 <dl class="exception">
 <dt id="mycqu.auth.InvaildCaptcha">
 <em class="property">exception </em><code class="sig-prename descclassname">mycqu.auth.</code><code class="sig-name descname">InvaildCaptcha</code><a class="headerlink" href="#mycqu.auth.InvaildCaptcha" title="永久链接至目标">¶</a></dt>
-<dd></dd></dl>
+<dd><p>登录统一身份认证输入了无效验证码时抛出</p>
+</dd></dl>
 
 <dl class="exception">
 <dt id="mycqu.auth.IncorrectLoginCredentials">
 <em class="property">exception </em><code class="sig-prename descclassname">mycqu.auth.</code><code class="sig-name descname">IncorrectLoginCredentials</code><a class="headerlink" href="#mycqu.auth.IncorrectLoginCredentials" title="永久链接至目标">¶</a></dt>
-<dd></dd></dl>
+<dd><p>使用无效的的登录凭据（如错误的用户、密码）</p>
+</dd></dl>
 
 <dl class="exception">
 <dt id="mycqu.auth.UnknownAuthserverException">
 <em class="property">exception </em><code class="sig-prename descclassname">mycqu.auth.</code><code class="sig-name descname">UnknownAuthserverException</code><a class="headerlink" href="#mycqu.auth.UnknownAuthserverException" title="永久链接至目标">¶</a></dt>
-<dd></dd></dl>
+<dd><p>登录或认证服务过程中未知错误</p>
+</dd></dl>
 
 <dl class="exception">
 <dt id="mycqu.auth.NotLogined">
 <em class="property">exception </em><code class="sig-prename descclassname">mycqu.auth.</code><code class="sig-name descname">NotLogined</code><a class="headerlink" href="#mycqu.auth.NotLogined" title="永久链接至目标">¶</a></dt>
-<dd></dd></dl>
+<dd><p>未登陆或登陆过期的会话被用于进行需要统一身份认证登陆的操作</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mycqu.auth.is_logined">
+<code class="sig-prename descclassname">mycqu.auth.</code><code class="sig-name descname">is_logined</code><span class="sig-paren">(</span><em class="sig-param">session: requests.sessions.Session</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#mycqu.auth.is_logined" title="永久链接至目标">¶</a></dt>
+<dd><p>判断是否处于统一身份认证登陆状态</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>session</strong> (<em>Session</em>) – 会话</p>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code> 如果处于登陆状态，<code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code> 如果处于未登陆或登陆过期状态</p>
+</dd>
+<dt class="field-odd">返回类型</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="mycqu.auth.logout">
+<code class="sig-prename descclassname">mycqu.auth.</code><code class="sig-name descname">logout</code><span class="sig-paren">(</span><em class="sig-param">session: requests.sessions.Session</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#mycqu.auth.logout" title="永久链接至目标">¶</a></dt>
+<dd><p>注销统一身份认证登录状态</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>session</strong> (<em>Session</em>) – 进行过登录的会话</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="mycqu.auth.login">
+<code class="sig-prename descclassname">mycqu.auth.</code><code class="sig-name descname">login</code><span class="sig-paren">(</span><em class="sig-param">session: requests.sessions.Session, username: str, password: str, service: Optional[str] = None, timeout: int = 10, force_relogin: bool = False, captcha_callback: Optional[Callable[[bytes, str], Optional[str]]] = None</em><span class="sig-paren">)</span> &#x2192; requests.models.Response<a class="headerlink" href="#mycqu.auth.login" title="永久链接至目标">¶</a></dt>
+<dd><p>登录统一身份认证</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> (<em>Session</em>) – 用于登录统一身份认证的会话</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – 统一身份认证号或学工号</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – 统一身份认证密码</p></li>
+<li><p><strong>service</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 需要登录的服务，默认（<code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>）则先不登陆任何服务</p></li>
+<li><p><strong>timeout</strong> (<em>int</em><em>, </em><em>optional</em>) – 连接超时时限，默认为 10（单位秒）</p></li>
+<li><p><strong>force_relogin</strong> (<em>bool</em><em>, </em><em>optional</em>) – 强制重登，当会话中已经有有效的登陆 cookies 时依然重新登录，默认为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p><strong>captcha_callback</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><em>bytes</em><em>, </em><em>str</em><em>]</em><em>, </em><em>Optional</em><em>[</em><em>str</em><em>]</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – 需要输入验证码时调用的回调函数，默认为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code> 即不设置回调；
+当需要输入验证码，但回调没有设置或回调返回 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code> 时，抛出异常 <a class="reference internal" href="#mycqu.auth.NeedCaptcha" title="mycqu.auth.NeedCaptcha"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeedCaptcha</span></code></a>；
+该函数接受一个 <code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code> 型参数为验证码图片的文件数据，一个 <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> 型参数为图片的 MIME 类型，
+返回验证码文本或 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>。</p></li>
+</ul>
+</dd>
+<dt class="field-even">引发</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#mycqu.auth.UnknownAuthserverException" title="mycqu.auth.UnknownAuthserverException"><strong>UnknownAuthserverException</strong></a> – 未知认证错误</p></li>
+<li><p><a class="reference internal" href="#mycqu.auth.InvaildCaptcha" title="mycqu.auth.InvaildCaptcha"><strong>InvaildCaptcha</strong></a> – 无效的验证码</p></li>
+<li><p><a class="reference internal" href="#mycqu.auth.IncorrectLoginCredentials" title="mycqu.auth.IncorrectLoginCredentials"><strong>IncorrectLoginCredentials</strong></a> – 错误的登陆凭据（如错误的密码、用户名）</p></li>
+<li><p><a class="reference internal" href="#mycqu.auth.NeedCaptcha" title="mycqu.auth.NeedCaptcha"><strong>NeedCaptcha</strong></a> – 需要提供验证码，获得验证码文本之后可调用所抛出异常的 <a class="reference internal" href="#mycqu.auth.NeedCaptcha.after_captcha" title="mycqu.auth.NeedCaptcha.after_captcha"><code class="xref py py-func docutils literal notranslate"><span class="pre">NeedCaptcha.after_captcha()</span></code></a> 函数来继续登陆</p></li>
+</ul>
+</dd>
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>登陆了统一身份认证后所跳转到的地址的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>Response</p>
+</dd>
+</dl>
+</dd></dl>
 
 <div class="toctree-wrapper compound">
 </div>
