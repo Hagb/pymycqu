@@ -12,7 +12,7 @@ try:
     from Cryptodome.Util.Padding import pad
 except ModuleNotFoundError:
     from Crypto.Cipher import AES
-    from Cryptodome.Util.Padding import pad
+    from Crypto.Util.Padding import pad
     from Crypto import version_info
     if version_info[0] == 2:
         # pylint: ignore disable=raise-missing-from
