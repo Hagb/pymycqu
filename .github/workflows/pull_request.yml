@@ -7,6 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - uses: Hagb/sphinx-action@d84d1e6496de90ccb3e4cafd2eef0463f3b82b3b
+    - uses: Hagb/sphinx-action@master
       with:
         docs-folder: "docs/"
