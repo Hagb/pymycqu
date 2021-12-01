@@ -3,4 +3,5 @@ mycqu.auth.NotAllowedService
 
 .. currentmodule:: mycqu.auth
 
-.. autoexception:: NotAllowedService
+.. autoclass:: NotAllowedService
+   :members:

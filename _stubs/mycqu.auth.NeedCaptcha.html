@@ -49,10 +49,28 @@
             
   <section id="mycqu-auth-needcaptcha">
 <h1>mycqu.auth.NeedCaptcha<a class="headerlink" href="#mycqu-auth-needcaptcha" title="永久链接至标题">¶</a></h1>
-<dl class="py exception">
+<dl class="py class">
 <dt class="sig sig-object py" id="mycqu.auth.NeedCaptcha">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mycqu.auth.</span></span><span class="sig-name descname"><span class="pre">NeedCaptcha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">after_captcha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">requests.models.Response</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.auth.NeedCaptcha" title="永久链接至目标">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mycqu.auth.</span></span><span class="sig-name descname"><span class="pre">NeedCaptcha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">after_captcha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">requests.models.Response</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.auth.NeedCaptcha" title="永久链接至目标">¶</a></dt>
 <dd><p>登录统一身份认证时需要输入验证码时拋出</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.auth.NeedCaptcha.after_captcha">
+<span class="sig-name descname"><span class="pre">after_captcha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">requests.models.Response</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mycqu.auth.NeedCaptcha.after_captcha" title="永久链接至目标">¶</a></dt>
+<dd><p>将验证码传入，调用以继续进行登陆</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.auth.NeedCaptcha.image">
+<span class="sig-name descname"><span class="pre">image</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bytes</span></em><a class="headerlink" href="#mycqu.auth.NeedCaptcha.image" title="永久链接至目标">¶</a></dt>
+<dd><p>验证码图片文件数据</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.auth.NeedCaptcha.image_type">
+<span class="sig-name descname"><span class="pre">image_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#mycqu.auth.NeedCaptcha.image_type" title="永久链接至目标">¶</a></dt>
+<dd><p>验证码图片 MIME 类型</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>

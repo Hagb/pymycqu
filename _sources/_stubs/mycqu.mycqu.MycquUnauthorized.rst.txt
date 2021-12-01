@@ -3,4 +3,5 @@ mycqu.mycqu.MycquUnauthorized
 
 .. currentmodule:: mycqu.mycqu
 
-.. autoexception:: MycquUnauthorized
+.. autoclass:: MycquUnauthorized
+   :members:

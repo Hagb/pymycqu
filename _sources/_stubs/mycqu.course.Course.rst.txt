@@ -4,10 +4,9 @@ mycqu.course.Course
 .. currentmodule:: mycqu.course
 
 .. autoclass:: Course
+   :members:
 
    
-   .. automethod:: __init__
-
    
    .. rubric:: Methods
 
@@ -33,3 +32,5 @@ mycqu.course.Course
       ~Course.session
    
    
+
+   .. rubric:: Details

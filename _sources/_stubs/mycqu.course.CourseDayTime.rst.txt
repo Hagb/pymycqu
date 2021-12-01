@@ -4,10 +4,9 @@ mycqu.course.CourseDayTime
 .. currentmodule:: mycqu.course
 
 .. autoclass:: CourseDayTime
+   :members:
 
    
-   .. automethod:: __init__
-
    
    .. rubric:: Methods
 
@@ -28,3 +27,5 @@ mycqu.course.CourseDayTime
       ~CourseDayTime.period
    
    
+
+   .. rubric:: Details

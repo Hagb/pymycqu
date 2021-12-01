@@ -4,10 +4,9 @@ mycqu.course.CQUSession
 .. currentmodule:: mycqu.course
 
 .. autoclass:: CQUSession
+   :members:
 
    
-   .. automethod:: __init__
-
    
    .. rubric:: Methods
 
@@ -32,3 +31,5 @@ mycqu.course.CQUSession
       ~CQUSession.is_autumn
    
    
+
+   .. rubric:: Details

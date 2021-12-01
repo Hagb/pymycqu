@@ -4,10 +4,9 @@ mycqu.exam.Exam
 .. currentmodule:: mycqu.exam
 
 .. autoclass:: Exam
+   :members:
 
    
-   .. automethod:: __init__
-
    
    .. rubric:: Methods
 
@@ -43,3 +42,5 @@ mycqu.exam.Exam
       ~Exam.asst_invi
    
    
+
+   .. rubric:: Details

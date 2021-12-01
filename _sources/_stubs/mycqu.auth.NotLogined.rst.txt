@@ -3,4 +3,5 @@ mycqu.auth.NotLogined
 
 .. currentmodule:: mycqu.auth
 
-.. autoexception:: NotLogined
+.. autoclass:: NotLogined
+   :members:

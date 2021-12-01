@@ -4,10 +4,9 @@ mycqu.exam.Invigilator
 .. currentmodule:: mycqu.exam
 
 .. autoclass:: Invigilator
+   :members:
 
    
-   .. automethod:: __init__
-
    
    .. rubric:: Methods
 
@@ -28,3 +27,5 @@ mycqu.exam.Invigilator
       ~Invigilator.dept
    
    
+
+   .. rubric:: Details

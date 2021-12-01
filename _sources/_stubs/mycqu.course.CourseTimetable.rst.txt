@@ -4,10 +4,9 @@ mycqu.course.CourseTimetable
 .. currentmodule:: mycqu.course
 
 .. autoclass:: CourseTimetable
+   :members:
 
    
-   .. automethod:: __init__
-
    
    .. rubric:: Methods
 
@@ -33,3 +32,5 @@ mycqu.course.CourseTimetable
       ~CourseTimetable.whole_week
    
    
+
+   .. rubric:: Details

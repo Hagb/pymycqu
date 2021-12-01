@@ -53,11 +53,6 @@
 <dt class="sig sig-object py" id="mycqu.course.Course">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mycqu.course.</span></span><span class="sig-name descname"><span class="pre">Course</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">course_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">credit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instructor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mycqu.course.CQUSession.html#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><span class="pre">mycqu.course.CQUSession</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.course.Course" title="永久链接至目标">¶</a></dt>
 <dd><p>与具体行课时间无关的课程信息</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="mycqu.course.Course.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">course_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">credit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instructor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mycqu.course.CQUSession.html#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><span class="pre">mycqu.course.CQUSession</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#mycqu.course.Course.__init__" title="永久链接至目标">¶</a></dt>
-<dd></dd></dl>
-
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -65,10 +60,10 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.course.Course.__init__" title="mycqu.course.Course.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(name, code, course_num, dept, ...)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code>(name, code, course_num, dept, ...)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(data[, session])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.course.Course.from_dict" title="mycqu.course.Course.from_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code></a>(data[, session])</p></td>
 <td><p>从反序列化的（一个）课表或考表 json 中返回课程</p></td>
 </tr>
 </tbody>
@@ -80,29 +75,92 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.course.Course.name" title="mycqu.course.Course.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
 <td><p>课程名称</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">code</span></code></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.course.Course.code" title="mycqu.course.Course.code"><code class="xref py py-obj docutils literal notranslate"><span class="pre">code</span></code></a></p></td>
 <td><p>课程代码</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">course_num</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.course.Course.course_num" title="mycqu.course.Course.course_num"><code class="xref py py-obj docutils literal notranslate"><span class="pre">course_num</span></code></a></p></td>
 <td><p>教学班号，在无法获取时（如考表 <a class="reference internal" href="mycqu.exam.Exam.html#mycqu.exam.Exam" title="mycqu.exam.Exam"><code class="xref py py-class docutils literal notranslate"><span class="pre">exam.Exam</span></code></a> 中）设为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dept</span></code></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.course.Course.dept" title="mycqu.course.Course.dept"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dept</span></code></a></p></td>
 <td><p>开课学院</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">credit</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.course.Course.credit" title="mycqu.course.Course.credit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">credit</span></code></a></p></td>
 <td><p>学分，无法获取到则为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None`（如在考表</span> <span class="pre">:class:</span></code>.exam.Exam` 中）</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">instructor</span></code></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.course.Course.instructor" title="mycqu.course.Course.instructor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">instructor</span></code></a></p></td>
 <td><p>教师</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">session</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.course.Course.session" title="mycqu.course.Course.session"><code class="xref py py-obj docutils literal notranslate"><span class="pre">session</span></code></a></p></td>
 <td><p>学期，无法获取时则为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p></td>
 </tr>
 </tbody>
 </table>
+<p class="rubric">Details</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.course.Course.code">
+<span class="sig-name descname"><span class="pre">code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#mycqu.course.Course.code" title="永久链接至目标">¶</a></dt>
+<dd><p>课程代码</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.course.Course.course_num">
+<span class="sig-name descname"><span class="pre">course_num</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mycqu.course.Course.course_num" title="永久链接至目标">¶</a></dt>
+<dd><p>教学班号，在无法获取时（如考表 <a class="reference internal" href="mycqu.exam.Exam.html#mycqu.exam.Exam" title="mycqu.exam.Exam"><code class="xref py py-class docutils literal notranslate"><span class="pre">exam.Exam</span></code></a> 中）设为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.course.Course.credit">
+<span class="sig-name descname"><span class="pre">credit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mycqu.course.Course.credit" title="永久链接至目标">¶</a></dt>
+<dd><p>学分，无法获取到则为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None`（如在考表</span> <span class="pre">:class:</span></code>.exam.Exam` 中）</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.course.Course.dept">
+<span class="sig-name descname"><span class="pre">dept</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#mycqu.course.Course.dept" title="永久链接至目标">¶</a></dt>
+<dd><p>开课学院</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mycqu.course.Course.from_dict">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="mycqu.course.CQUSession.html#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><span class="pre">mycqu.course.CQUSession</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mycqu.course.Course" title="mycqu.course.Course"><span class="pre">mycqu.course.Course</span></a></span></span><a class="headerlink" href="#mycqu.course.Course.from_dict" title="永久链接至目标">¶</a></dt>
+<dd><p>从反序列化的（一个）课表或考表 json 中返回课程</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 反序列化成字典的课表或考表 json</p></li>
+<li><p><strong>session</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="mycqu.course.CQUSession.html#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><em>CQUSession</em></a><em>]</em><em>]</em><em>, </em><em>optional</em>) – 学期字符串或学期对象，留空则尝试从 <code class="docutils literal notranslate"><span class="pre">data</span></code> 中获取</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>对应的课程对象</p>
+</dd>
+<dt class="field-odd">返回类型</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mycqu.course.Course" title="mycqu.course.Course">Course</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.course.Course.instructor">
+<span class="sig-name descname"><span class="pre">instructor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mycqu.course.Course.instructor" title="永久链接至目标">¶</a></dt>
+<dd><p>教师</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.course.Course.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#mycqu.course.Course.name" title="永久链接至目标">¶</a></dt>
+<dd><p>课程名称</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.course.Course.session">
+<span class="sig-name descname"><span class="pre">session</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mycqu.course.CQUSession.html#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><span class="pre">mycqu.course.CQUSession</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mycqu.course.Course.session" title="永久链接至目标">¶</a></dt>
+<dd><p>学期，无法获取时则为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd></dl>
+
 </dd></dl>
 
 </section>

@@ -3,4 +3,5 @@ mycqu.auth.InvaildCaptcha
 
 .. currentmodule:: mycqu.auth
 
-.. autoexception:: InvaildCaptcha
+.. autoclass:: InvaildCaptcha
+   :members:

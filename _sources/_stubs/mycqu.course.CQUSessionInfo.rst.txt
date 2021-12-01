@@ -4,10 +4,9 @@ mycqu.course.CQUSessionInfo
 .. currentmodule:: mycqu.course
 
 .. autoclass:: CQUSessionInfo
+   :members:
 
    
-   .. automethod:: __init__
-
    
    .. rubric:: Methods
 
@@ -29,3 +28,5 @@ mycqu.course.CQUSessionInfo
       ~CQUSessionInfo.end_date
    
    
+
+   .. rubric:: Details
