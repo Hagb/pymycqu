@@ -30,7 +30,7 @@ release = '0.1.0'
 # ones.
 extensions = ["sphinx.ext.autodoc", "sphinx.ext.autosummary"]
 #html_sidebars = {'**': ['fulltoc.html', 'relations.html', 'sourcelink.html', 'searchbox.html']}
-autodoc_default_flags = ['members', 'attributes']
+#autodoc_default_flags = ['members', 'attributes']
 autosummary_generate = True
 autosummary_ignore_module_all = False
 #autosummary_imported_members = True
