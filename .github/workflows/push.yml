@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     # Standard drop-in approach that should work for most people.
-    - uses: ammaraskar/sphinx-action@35082eb35b69713fe335801c4d5846a4cc3c91ff
+    - uses: Hagb/sphinx-action@d84d1e6496de90ccb3e4cafd2eef0463f3b82b3b
       with:
         docs-folder: "docs/"
     - name: Commit documentation changes
