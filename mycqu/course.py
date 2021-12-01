@@ -93,7 +93,7 @@ CQUSession.CQUSESSION_MIN = CQUSession(2020, True)
 
 @dataclass
 class CQUSessionInfo:
-    """某学期的一些额外信息，目前只找到当个学期这些信息的 web api
+    """某学期的一些额外信息，目前只找到获取当个学期这些信息的 web api
     """
     session: CQUSession
     """对应的学期"""

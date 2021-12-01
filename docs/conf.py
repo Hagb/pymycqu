@@ -23,15 +23,17 @@ author = 'Hagb'
 
 # The full version, including alpha/beta/rc tags
 release = '0.1.0'
-
-
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ["sphinx.ext.autodoc"]
-
+extensions = ["sphinx.ext.autodoc", "sphinx.ext.autosummary"]
+#html_sidebars = {'**': ['fulltoc.html', 'relations.html', 'sourcelink.html', 'searchbox.html']}
+autodoc_default_flags = ['members', 'attributes']
+autosummary_generate = True
+autosummary_ignore_module_all = False
+#autosummary_imported_members = True
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -53,9 +55,10 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
-
+#html_theme = 'alabaster'
+html_theme = "classic"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
