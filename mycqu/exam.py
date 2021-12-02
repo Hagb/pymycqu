@@ -59,7 +59,7 @@ class Exam:
     stu_id: str
     seat_num: int
     chief_invi: List[Invigilator]
-    asst_invi: List[Invigilator]
+    asst_invi: Optional[List[Invigilator]]
 
     @staticmethod
     def from_dict(data: Dict[str, Any]):
@@ -81,8 +81,8 @@ class Exam:
             stu_num=data["examStuNum"],
             chief_invi=[Invigilator.from_dict(invi)
                         for invi in data["simpleChiefinvigilatorVOS"]],
-            asst_invi=[Invigilator.from_dict(invi)
-                       for invi in data["simpleAssistantInviVOS"]]
+            asst_invi=data["simpleAssistantInviVOS"] and [Invigilator.from_dict(invi)
+                                                          for invi in data["simpleAssistantInviVOS"]]
         )
 
     @staticmethod
