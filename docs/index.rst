@@ -6,6 +6,13 @@
 开始
 ====
 
+安装
+---
+
+.. code-block:: shell
+
+   pip install pymycqu
+
 考表
 ----
 

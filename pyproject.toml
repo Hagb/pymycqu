@@ -1,9 +1,21 @@
 [tool.poetry]
 name = "mycqu"
-version = "0.1.0"
+version = "0.2.0"
 description = "重庆重庆大学新教务网及相关 api 的封装"
 authors = ["Hagb <hagb_green@qq.com>"]
 license = "AGPL-3.0-or-later"
+readme = "README.md"
+homepage = "https://pymycqu.hagb.name"
+repository = "https://github.com/Hagb/pymycqu"
+documentation = "https://pymycqu.hagb.name"
+keywords = ["cqu", "Chongqing University", "data model"]
+classifiers = [
+	"Development Status :: 4 - Beta",
+	"Natural Language :: Chinese (Simplified)",
+	"Operating System :: OS Independent",
+	"Topic :: Internet :: WWW/HTTP",
+	"Topic :: Software Development :: Libraries",
+]
 
 [tool.poetry.dependencies]
 python = "^3.7"

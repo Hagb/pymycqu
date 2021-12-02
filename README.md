@@ -9,7 +9,7 @@ Work in progress... 欢迎反馈和补充
 ## 安装
 
 ```bash
-pip install .
+pip install mycqu
 ```
 
 ## 例子及文档
