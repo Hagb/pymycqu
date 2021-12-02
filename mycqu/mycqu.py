@@ -6,10 +6,10 @@ from requests import Session
 from .auth import access_service
 __all__ = ("access_mycqu",)
 
-MYCQU_TOKEN_INDEX_URL = "http://my.cqu.edu.cn/enroll/token-index"
-MYCQU_TOKEN_URL = "http://my.cqu.edu.cn/authserver/oauth/token"
-MYCQU_AUTHORIZE_URL = f"http://my.cqu.edu.cn/authserver/oauth/authorize?client_id=enroll-prod&response_type=code&scope=all&state=&redirect_uri={MYCQU_TOKEN_INDEX_URL}"
-MYCQU_SERVICE_URL = "http://my.cqu.edu.cn/authserver/authentication/cas"
+MYCQU_TOKEN_INDEX_URL = "https://my.cqu.edu.cn/enroll/token-index"
+MYCQU_TOKEN_URL = "https://my.cqu.edu.cn/authserver/oauth/token"
+MYCQU_AUTHORIZE_URL = f"https://my.cqu.edu.cn/authserver/oauth/authorize?client_id=enroll-prod&response_type=code&scope=all&state=&redirect_uri={MYCQU_TOKEN_INDEX_URL}"
+MYCQU_SERVICE_URL = "https://my.cqu.edu.cn/authserver/authentication/cas"
 CODE_RE = re.compile(r"\?code=([^&]+)&")
 
 

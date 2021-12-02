@@ -14,9 +14,9 @@ __all__ = ("CQUSession", "CQUSessionInfo",
            "CourseTimetable", "CourseDayTime", "Course")
 
 
-CQUSESSIONS_URL = "http://my.cqu.edu.cn/api/timetable/optionFinder/session?blankOption=false"
-CUR_SESSION_URL = "http://my.cqu.edu.cn/api/resourceapi/session/cur-active-session"
-TIMETABLE_URL = "http://my.cqu.edu.cn/api/timetable/class/timetable/student/table-detail"
+CQUSESSIONS_URL = "https://my.cqu.edu.cn/api/timetable/optionFinder/session?blankOption=false"
+CUR_SESSION_URL = "https://my.cqu.edu.cn/api/resourceapi/session/cur-active-session"
+TIMETABLE_URL = "https://my.cqu.edu.cn/api/timetable/class/timetable/student/table-detail"
 
 
 @dataclass(order=True)

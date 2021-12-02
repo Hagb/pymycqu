@@ -17,7 +17,7 @@
 ----
 
 获取考表的例子，主要使用了 :py:func:`mycqu.exam.Exam.fetch` 方法从
-my.cqu.edu.cn 上获取考试数据并生成 :py:class:`mycqu.exam.Exam` 对象：
+https://my.cqu.edu.cn 上获取考试数据并生成 :py:class:`mycqu.exam.Exam` 对象：
 
 .. code-block:: python
 

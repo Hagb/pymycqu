@@ -13,7 +13,7 @@ from ._lib_wrapper.Crypto import pad, AES
 __all__ = ("Exam",)
 
 EXAM_AES = AES.new("cquisse123456789".encode(), AES.MODE_ECB)
-EXAM_LIST_URL = "http://my.cqu.edu.cn/api/exam/examTask/get-student-exam-list-outside"
+EXAM_LIST_URL = "https://my.cqu.edu.cn/api/exam/examTask/get-student-exam-list-outside"
 
 
 def get_exam_raw(student_id: str) -> Dict[str, Any]:
