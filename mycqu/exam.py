@@ -17,6 +17,13 @@ EXAM_LIST_URL = "https://my.cqu.edu.cn/api/exam/examTask/get-student-exam-list-o
 
 
 def get_exam_raw(student_id: str) -> Dict[str, Any]:
+    """获取考表的原始 json 数据（被反序列化为 python 字典对象）
+
+    :param student_id: 学号
+    :type student_id: str
+    :return: 反序列化后的课表 json 数据
+    :rtype: Dict[str, Any]
+    """
     return requests.get(EXAM_LIST_URL,
                         params={"studentId":
                                 EXAM_AES.encrypt(
@@ -30,10 +37,19 @@ class Invigilator:
     """监考员信息
     """
     name: str
+    """监考员姓名"""
     dept: str
+    """监考员所在学院（可能是简称，如 :obj:`"数统"`）"""
 
     @staticmethod
     def from_dict(data: Dict[str, Optional[str]]) -> Invigilator:
+        """从反序列化后的 json 数据中一名正/副监考员的数据中生成 :class:`Invigilator` 对象。
+
+        :param data: 反序列化后的 json 数据中的一次考试数据
+        :type data: Dict[str, Optional[str]]
+        :return: 对应的 :class:`Invigilator` 对象
+        :rtype: Invigilator
+        """
         return Invigilator(
             name=data["instructor"],  # type: ignore
             dept=data["instDeptShortName"]  # type: ignore
@@ -45,24 +61,47 @@ class Exam:
     """考试信息
     """
     course: Course
+    """考试对应的课程，其中学分``credit``、教师``instructor``、教学班号``course_num``可能无法获取（其值会设置为 :obj:`None`）"""
     batch: str
+    """考试批次，如 :obj:`"非集中考试周"`"""
     batch_id: int
+    """选课系统中考试批次的内部id"""
     building: str
+    """考场楼栋"""
     floor: int
+    """考场楼层"""
     room: str
+    """考场地点"""
     stu_num: int
+    """考场人数"""
     date: date
+    """考试日期"""
     start_time: time
+    """考试开始时间"""
     end_time: time
+    """考试结束时间"""
     week: int
+    """周次"""
     weekday: int
+    """星期，0为周一，6为周日"""
     stu_id: str
+    """考生学号"""
     seat_num: int
+    """考生座号"""
     chief_invi: List[Invigilator]
+    """监考员"""
     asst_invi: Optional[List[Invigilator]]
+    """副监考员"""
 
     @staticmethod
-    def from_dict(data: Dict[str, Any]):
+    def from_dict(data: Dict[str, Any]) -> Exam:
+        """从反序列化后的 json 数据中的一次考试数据生成 :class:`Exam` 对象
+
+        :param data: 反序列化后的 json 数据中的一次考试数据
+        :type data: Dict[str, Any]
+        :return: 对应的 :class:`Exam` 对象
+        :rtype: [type]
+        """
         course = Course.from_dict(data)
         return Exam(
             course=course,
