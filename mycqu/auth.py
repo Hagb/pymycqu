@@ -6,7 +6,7 @@ import re
 from base64 import b64encode
 from requests import Session, Response
 from bs4 import BeautifulSoup  # type: ignore
-from ._lib_wrapper.Crypto import pad, AES
+from ._lib_wrapper.encrypt import pad, aes_cbc_encryptor
 
 __all__ = ("NotAllowedService", "NeedCaptcha", "InvaildCaptcha",
            "IncorrectLoginCredentials", "UnknownAuthserverException", "NotLogined",
@@ -69,6 +69,7 @@ class UnknownAuthserverException(Exception):
 class NotLogined(Exception):
     """未登陆或登陆过期的会话被用于进行需要统一身份认证登陆的操作
     """
+
     def __init__(self):
         super().__init__("not in logined status")
 
@@ -93,11 +94,9 @@ def get_formdata(html: str, username: str, password: str) -> Dict[str, Union[str
     salt_js = soup.find("script", {"type": "text/javascript"}).string
     assert (match := _SALT_RE.search(salt_js))
     key = match[1]  # 获取盐，被用来加密
-    passwd_pkcs7 = pad((_random_str(64)+str(password)
-                        ).encode(), 16, style='pkcs7')
-    aes = AES.new(key=key.encode(), iv=_random_str(
-        16).encode(), mode=AES.MODE_CBC)
-    passwd_encrypted = b64encode(aes.encrypt(passwd_pkcs7))
+    passwd_pkcs7 = pad((_random_str(64)+str(password)).encode())
+    encryptor = aes_cbc_encryptor(key.encode(), _random_str(16).encode())
+    passwd_encrypted = b64encode(encryptor(passwd_pkcs7))
     # 传入数据进行统一认证登录
     return {
         'username': username,

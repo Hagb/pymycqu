@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mycqu"
-version = "0.2.3"
+version = "0.2.4"
 description = "重庆重庆大学新教务网及相关 api 的封装"
 authors = ["Hagb <hagb_green@qq.com>"]
 license = "AGPL-3.0-or-later"
@@ -22,9 +22,15 @@ python = "^3.7"
 requests = "^2"
 beautifulsoup4 = "^4"
 pydantic = "^1"
-pycryptodome = "^3"
+pycryptodome = {version = "^3", optional = true}
+pycryptodomex = {version = "^3", optional = true}
+pyaes = {version = ">= 1.2.0", optional = true}
 
 [tool.poetry.dev-dependencies]
+
+pycryptodome = ["pycryptodome"]
+pycryptodomex = ["pycryptodomex"]
+pyaes = ["pyaes"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -8,11 +8,11 @@ from .course import Course
 from .utils.datetimes import date_from_str, time_from_str
 # from pydantic.dataclasses import dataclass
 from ._lib_wrapper.dataclass import dataclass
-from ._lib_wrapper.Crypto import pad, AES
+from ._lib_wrapper.encrypt import pad, aes_ecb_encryptor
 
 __all__ = ("Exam",)
 
-EXAM_AES = AES.new("cquisse123456789".encode(), AES.MODE_ECB)
+__exam_encryptor = aes_ecb_encryptor("cquisse123456789".encode())
 EXAM_LIST_URL = "https://my.cqu.edu.cn/api/exam/examTask/get-student-exam-list-outside"
 
 
@@ -26,8 +26,8 @@ def get_exam_raw(student_id: str) -> Dict[str, Any]:
     """
     return requests.get(EXAM_LIST_URL,
                         params={"studentId":
-                                EXAM_AES.encrypt(
-                                    pad(student_id.encode(), 16, style='pkcs7')).hex().upper()
+                                __exam_encryptor(
+                                    pad(student_id.encode())).hex().upper()
                                 }
                         ).json()
 
