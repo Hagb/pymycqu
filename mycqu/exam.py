@@ -61,7 +61,7 @@ class Exam:
     """考试信息
     """
     course: Course
-    """考试对应的课程，其中学分``credit``、教师``instructor``、教学班号``course_num``可能无法获取（其值会设置为 :obj:`None`）"""
+    """考试对应的课程，其中学分 :attr:`credit`、教师 :attr:`instructor`、教学班号 :attr:`course_num` 可能无法获取（其值会设置为 :obj:`None`）"""
     batch: str
     """考试批次，如 :obj:`"非集中考试周"`"""
     batch_id: int
