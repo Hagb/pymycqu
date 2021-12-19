@@ -7,11 +7,11 @@ aes_ecb_encryptor: Callable[[bytes], Callable[[bytes], bytes]]
 try:
     from Cryptodome.Cipher import AES as AES_
     from Cryptodome.Util.Padding import pad as pad_
-except ImportError:
+except (OSError, ImportError):
     try:
         from Crypto.Cipher import AES as AES__
         from Crypto.Util.Padding import pad as pad__
-    except ImportError:
+    except (OSError, ImportError):
         try:
             from pyaes.util import append_PKCS7_padding  # type: ignore
             from pyaes import AESModeOfOperationCBC  # type: ignore

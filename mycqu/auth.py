@@ -5,7 +5,7 @@ import random
 import re
 from base64 import b64encode
 from requests import Session, Response
-from bs4 import BeautifulSoup  # type: ignore
+from html.parser import HTMLParser
 from ._lib_wrapper.encrypt import pad, aes_cbc_encryptor
 
 __all__ = ("NotAllowedService", "NeedCaptcha", "InvaildCaptcha",
@@ -21,9 +21,6 @@ _CHAR_SET = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'
 
 def _random_str(length: int):
     return ''.join(random.choices(_CHAR_SET, k=length))
-
-
-_SALT_RE: re.Pattern = re.compile('var pwdDefaultEncryptSalt = "([^"]+)"')
 
 
 class NotAllowedService(Exception):
@@ -76,37 +73,92 @@ class NotLogined(Exception):
 # from https://github.com/CQULHW/CQUQueryGrade
 
 
-def get_formdata(html: str, username: str, password: str) -> Dict[str, Union[str, bytes]]:
-    soup = BeautifulSoup(html, 'html.parser')
+class AuthPageParser(HTMLParser):
+    _SALT_RE: re.Pattern = re.compile('var pwdDefaultEncryptSalt = "([^"]+)"')
 
-    errors = soup.find("div", {"id": "msg", "class": "errors"})
-    if not errors is None:
-        error_str = errors.text.strip()
-        if error_str == "应用未注册\n不允许使用认证服务来认证您访问的目标应用。":
-            raise NotAllowedService(error_str)
-        raise UnknownAuthserverException(
-            "Error message before login: "+errors)
-    lt = soup.find("input", {"name": "lt"})['value']
-    dllt = soup.find("input", {"name": "dllt"})['value']
-    execution = soup.find("input", {"name": "execution"})['value']
-    _event_id = soup.find("input", {"name": "_eventId"})['value']
-    rm_shown = soup.find("input", {"name": "rmShown"})['value']
-    salt_js = soup.find("script", {"type": "text/javascript"}).string
-    assert (match := _SALT_RE.search(salt_js))
-    key = match[1]  # 获取盐，被用来加密
+    def __init__(self):
+        super().__init__()
+        self.input_data: Dict[str, Optional[str]] = \
+            {'lt': None, 'dllt': None,
+                'execution': None, '_eventId': None, 'rmShown': None}
+        """几个关键的标签数据"""
+        self.salt: Optional[str] = None
+        """加密所用的盐"""
+        self._js_start: bool = False
+        self._js_end: bool = False
+        self._error: bool = False
+        self._error_head: bool = False
+
+    def handle_starttag(self, tag, attrs):
+        if tag == 'input':
+            name: Optional[str] = None
+            value: Optional[str] = None
+            for attr in attrs:
+                if attr[0] == 'name':
+                    if attr[1] in self.input_data:
+                        name = attr[1]
+                    else:
+                        break
+                elif attr[0] == 'value':
+                    value = attr[1]
+            if name:
+                self.input_data[name] = value
+        elif tag == 'script' and attrs and attrs[0] == ("type", "text/javascript"):
+            self._js_start = True
+        elif tag == "div" and attrs == [("id", "msg"), ("class", "errors")]:
+            self._error = True
+        elif tag == 'h2' and self._error:
+            self._error_head = True
+
+    def handle_data(self, data):
+        if self._js_start and not self._js_end:
+            match = self._SALT_RE.search(data)
+            if match:
+                self.salt = match[1]
+            self._js_end = True
+        elif self._error_head:
+            error_str = data.strip()
+            if error_str == "应用未注册":
+                raise NotAllowedService(error_str)
+            raise UnknownAuthserverException(
+                "Error message before login: "+error_str)
+
+
+class LoginedPageParser(HTMLParser):
+    def __init__(self, status_code):
+        super().__init__()
+        self._msg = False
+        self.status_code = status_code
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "span" and attrs == [("id", "msg"), ("class", "login_auth_error")]:
+            self._msg = True
+
+    def handle_data(self, data):
+        if self._msg:
+            error_str = data.strip()
+            if error_str == "无效的验证码":
+                raise InvaildCaptcha()
+            elif error_str == "您提供的用户名或者密码有误":
+                raise IncorrectLoginCredentials()
+            else:
+                raise UnknownAuthserverException(
+                    f"status code {self.status_code} is got (302 expected)"
+                    f" when sending login post, {error_str}"
+                )
+
+
+def get_formdata(html: str, username: str, password: str) -> Dict[str, Optional[str]]:
+    parser = AuthPageParser()
+    parser.feed(html)
+    assert parser.salt, "无法获取盐"
     passwd_pkcs7 = pad((_random_str(64)+str(password)).encode())
-    encryptor = aes_cbc_encryptor(key.encode(), _random_str(16).encode())
-    passwd_encrypted = b64encode(encryptor(passwd_pkcs7))
-    # 传入数据进行统一认证登录
-    return {
-        'username': username,
-        'password': passwd_encrypted,
-        'lt': lt,
-        'dllt': dllt,
-        'execution': execution,
-        '_eventId': _event_id,
-        'rmShown': rm_shown
-    }
+    encryptor = aes_cbc_encryptor(
+        parser.salt.encode(), _random_str(16).encode())
+    passwd_encrypted = b64encode(encryptor(passwd_pkcs7)).decode()
+    parser.input_data['username'] = username
+    parser.input_data['password'] = passwd_encrypted
+    return parser.input_data
 
 
 def is_logined(session: Session) -> bool:
@@ -134,10 +186,7 @@ def access_service(session: Session, service: str) -> Response:
                        params={"service": service},
                        allow_redirects=False)
     if resp.status_code != 302:
-        errors = BeautifulSoup(resp.text).find(
-            "div", {"id": "msg", "class": "errors"})
-        if not errors is None:
-            raise NotAllowedService(errors.text[:-5].strip())
+        AuthPageParser().feed(resp.text)
         raise NotLogined()
     return session.get(url=resp.headers['Location'], allow_redirects=False)
 
@@ -203,24 +252,11 @@ def login(session: Session,
         login_resp = session.post(
             url=AUTHSERVER_URL, data=formdata, allow_redirects=False)
         if login_resp.status_code != 302:
-            soup = BeautifulSoup(login_resp.text, 'html.parser')
-            errors = soup.find(
-                "span", {"id": "msg", "class": "login_auth_error"})
-            if errors is None:
-                raise UnknownAuthserverException(
-                    f"status code {login_resp.status_code} is got (302 expected) when sending login post, "
-                    "but can not find the element span.login_auth_error#msg")
-            else:
-                error_str = errors.text.strip()
-                if error_str == "无效的验证码":
-                    raise InvaildCaptcha()
-                elif error_str == "您提供的用户名或者密码有误":
-                    raise IncorrectLoginCredentials()
-                else:
-                    raise UnknownAuthserverException(
-                        f"status code {login_resp.status_code} is got (302 expected)"
-                        f" when sending login post, {error_str}"
-                    )
+            parser = LoginedPageParser(login_resp)
+            parser.feed(login_resp.text)
+            raise UnknownAuthserverException(
+                f"status code {login_resp.status_code} is got (302 expected) when sending login post, "
+                "but can not find the element span.login_auth_error#msg")
         return session.get(url=login_resp.headers['Location'], allow_redirects=False)
 
     captcha_str = None
