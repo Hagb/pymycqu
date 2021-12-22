@@ -239,6 +239,11 @@ def login(session: Session,
                 pass
         else:
             logout(session)
+            login_page = session.get(
+                url=AUTHSERVER_URL,
+                params=None if service is None else {"service": service},
+                allow_redirects=False,
+                timeout=timeout)
     elif login_page.status_code != 200:
         raise UnknownAuthserverException()
     formdata = get_formdata(login_page.text, username, password)

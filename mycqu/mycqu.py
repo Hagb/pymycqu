@@ -43,6 +43,8 @@ def access_mycqu(session: Session, add_to_header: bool = True) -> Dict[str, str]
     :return: mycqu 认证信息的请求头，当 ``add_to_header`` 参数为 :obj:`True` 时无需手动使用该返回值
     :rtype: Dict[str, str]
     """
+    if "Authorization" in session.headers:
+        del session.headers["Authorization"]
     session.get(access_service(session, MYCQU_SERVICE_URL).headers['Location'],
                 allow_redirects=False)  # http 302 to https
     token = get_oauth_token(session)

@@ -237,13 +237,13 @@ class CourseTimetable:
         )
 
     @staticmethod
-    def fetch(session: Session, id_: str, cqu_session: Optional[Union[CQUSession, str]] = None) -> List[CourseTimetable]:
+    def fetch(session: Session, code: str, cqu_session: Optional[Union[CQUSession, str]] = None) -> List[CourseTimetable]:
         """从 my.cqu.edu.cn 上获取学生或老师的课表
 
         :param session: 登录了统一身份认证（:func:`.auth.login`）并在 mycqu 进行了认证（:func:`.mycqu.access_mycqu`）的 requests 会话
         :type session: Session
-        :param id_: 学生或教师的学工号
-        :type id_: str
+        :param code: 学生或教师的学工号
+        :type code: str
         :param cqu_session: 需要获取课表的学期，留空获取当前年级的课表
         :type cqu_session: Optional[Union[CQUSession, str]], optional
         :raises MycquUnauthorized: 若会话未在 my.cqu.edu.cn 进行认证
@@ -256,7 +256,7 @@ class CourseTimetable:
             cqu_session = CQUSession.from_str(cqu_session)
         resp = session.post(TIMETABLE_URL,
                             params={"sessionId": cqu_session.get_id()},
-                            json=[id_],
+                            json=[code],
                             )
         if resp.status_code == 401:
             raise MycquUnauthorized()

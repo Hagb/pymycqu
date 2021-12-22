@@ -1,7 +1,7 @@
 from typing import List, Tuple, Dict
-from datetime import date, time
+from datetime import date, time, datetime
 import pytz
-TIMEZONE = pytz.timezone("Asia/Shanghai")
+TIMEZONE = datetime.now(pytz.timezone("Asia/Shanghai")).tzinfo
 WEEKDAY: Dict[str, int] = {
     "一": 0,
     "二": 1,
@@ -15,7 +15,7 @@ WEEKDAY: Dict[str, int] = {
 
 def time_from_str(string: str) -> time:
     hour, minute = map(int, string.split(":"))
-    return time(hour, minute, second=0, tzinfo=TIMEZONE)
+    return time(hour, minute, tzinfo=TIMEZONE)
 
 
 def parse_period_str(string: str) -> Tuple[int, int]:
