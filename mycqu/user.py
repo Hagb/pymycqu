@@ -2,6 +2,7 @@ from __future__ import annotations
 from ._lib_wrapper.dataclass import dataclass
 from .mycqu import MycquUnauthorized
 from requests import Session
+__all__ = ("User",)
 
 
 @dataclass
