@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>mycqu.user.User &#8212; pymycqu 0.2.6+1 文档</title>
+    <title>mycqu.user.User &#8212; pymycqu 0.2.6.1 文档</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
     
@@ -32,7 +32,7 @@
         <li class="right" >
           <a href="mycqu.user.html" title="mycqu.user"
              accesskey="P">上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu 0.2.6+1 文档</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu 0.2.6.1 文档</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="mycqu.user.html" accesskey="U">mycqu.user</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">mycqu.user.User</a></li> 
       </ul>
@@ -59,8 +59,8 @@
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code>(name, uniform_id, code, role, ...)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fetch_self</span></code>(session)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.user.User.fetch_self" title="mycqu.user.User.fetch_self"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fetch_self</span></code></a>(session)</p></td>
+<td><p>从在 mycqu 认证了的会话获取当前登录用户的信息</p></td>
 </tr>
 </tbody>
 </table>
@@ -102,6 +102,26 @@
 <dt class="sig sig-object py" id="mycqu.user.User.email">
 <span class="sig-name descname"><span class="pre">email</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#mycqu.user.User.email" title="永久链接至目标">¶</a></dt>
 <dd><p>电子邮箱</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mycqu.user.User.fetch_self">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fetch_self</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">requests.sessions.Session</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mycqu.user.User" title="mycqu.user.User"><span class="pre">mycqu.user.User</span></a></span></span><a class="headerlink" href="#mycqu.user.User.fetch_self" title="永久链接至目标">¶</a></dt>
+<dd><p>从在 mycqu 认证了的会话获取当前登录用户的信息</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>session</strong> (<em>Session</em>) – 登陆了统一身份认证的会话</p>
+</dd>
+<dt class="field-even">引发</dt>
+<dd class="field-even"><p><a class="reference internal" href="mycqu.mycqu.MycquUnauthorized.html#mycqu.mycqu.MycquUnauthorized" title="mycqu.mycqu.MycquUnauthorized"><strong>MycquUnauthorized</strong></a> – 若会话未在 my.cqu.edu.cn 进行认证</p>
+</dd>
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>当前用户信息</p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mycqu.user.User" title="mycqu.user.User">User</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -175,7 +195,7 @@
         <li class="right" >
           <a href="mycqu.user.html" title="mycqu.user"
              >上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu 0.2.6+1 文档</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu 0.2.6.1 文档</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="mycqu.user.html" >mycqu.user</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">mycqu.user.User</a></li> 
       </ul>
