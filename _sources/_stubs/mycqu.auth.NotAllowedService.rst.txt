@@ -1,7 +1,0 @@
-mycqu.auth.NotAllowedService
-============================
-
-.. currentmodule:: mycqu.auth
-
-.. autoclass:: NotAllowedService
-   :members:

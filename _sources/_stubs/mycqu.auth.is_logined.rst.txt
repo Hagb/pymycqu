@@ -1,6 +1,0 @@
-mycqu.auth.is\_logined
-======================
-
-.. currentmodule:: mycqu.auth
-
-.. autofunction:: is_logined

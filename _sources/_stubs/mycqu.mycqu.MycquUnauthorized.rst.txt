@@ -1,7 +1,0 @@
-mycqu.mycqu.MycquUnauthorized
-=============================
-
-.. currentmodule:: mycqu.mycqu
-
-.. autoclass:: MycquUnauthorized
-   :members:

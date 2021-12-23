@@ -1,6 +1,0 @@
-mycqu.exam.get\_exam\_raw
-=========================
-
-.. currentmodule:: mycqu.exam
-
-.. autofunction:: get_exam_raw

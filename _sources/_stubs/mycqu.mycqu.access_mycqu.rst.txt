@@ -1,6 +1,0 @@
-mycqu.mycqu.access\_mycqu
-=========================
-
-.. currentmodule:: mycqu.mycqu
-
-.. autofunction:: access_mycqu

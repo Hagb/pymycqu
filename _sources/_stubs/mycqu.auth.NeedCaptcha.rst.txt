@@ -1,7 +1,0 @@
-mycqu.auth.NeedCaptcha
-======================
-
-.. currentmodule:: mycqu.auth
-
-.. autoclass:: NeedCaptcha
-   :members:

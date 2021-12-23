@@ -1,7 +1,0 @@
-mycqu.auth.NotLogined
-=====================
-
-.. currentmodule:: mycqu.auth
-
-.. autoclass:: NotLogined
-   :members:
