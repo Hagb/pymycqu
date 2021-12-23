@@ -19,7 +19,7 @@ jobs:
     - name: Commit documentation changes
       run: |
         git clone https://github.com/$GITHUB_REPOSITORY.git --branch gh-pages --single-branch gh-pages
-        find -maxdepth 1 -mindepth 1 ! -name CNAME ! -name .git -exec rm -r '{}' ';'
+        find gh-pages/ -maxdepth 1 -mindepth 1 ! -name CNAME ! -name .git -exec rm -r '{}' ';'
         cp -r docs/_build/html/* gh-pages/
         cd gh-pages
         touch .nojekyll
