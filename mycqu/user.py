@@ -1,3 +1,5 @@
+"""用户信息相关的模块
+"""
 from __future__ import annotations
 from ._lib_wrapper.dataclass import dataclass
 from .mycqu import MycquUnauthorized
@@ -24,6 +26,14 @@ class User:
 
     @staticmethod
     def fetch_self(session: Session) -> User:
+        """从在 mycqu 认证了的会话获取当前登录用户的信息
+
+        :param session: 登陆了统一身份认证的会话
+        :type session: Session
+        :raises MycquUnauthorized: 若会话未在 my.cqu.edu.cn 进行认证
+        :return: 当前用户信息
+        :rtype: User
+        """
         resp = session.get("https://my.cqu.edu.cn/authserver/simple-user")
         if resp.status_code == 401:
             raise MycquUnauthorized()
