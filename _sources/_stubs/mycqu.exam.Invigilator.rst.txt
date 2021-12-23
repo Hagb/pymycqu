@@ -1,0 +1,31 @@
+mycqu.exam.Invigilator
+======================
+
+.. currentmodule:: mycqu.exam
+
+.. autoclass:: Invigilator
+   :members:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Invigilator.__init__
+      ~Invigilator.from_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Invigilator.name
+      ~Invigilator.dept
+   
+   
+
+   .. rubric:: Details

@@ -1,0 +1,6 @@
+mycqu.auth.login
+================
+
+.. currentmodule:: mycqu.auth
+
+.. autofunction:: login
