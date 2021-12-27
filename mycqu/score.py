@@ -1,18 +1,25 @@
 import requests
+from requests import Session
 import json
 from typing import Dict, Any, Union, Optional, List
 from ._lib_wrapper.dataclass import dataclass
 from .course import Course, CQUSession
 
+__all__ = ("Score",)
 
-def get_score_raw(authorization: str):
+
+def get_score_raw(auth: Union[Session, str]):
     """
     获取学生原始成绩
-    :param authorization: 登陆后获取的authorization
-    :type authorization: str
+    :param auth: 登陆后获取的authorization或者调用过mycqu.access_mycqu的session
+    :type auth: Union[Session, str]
     :return: 反序列化获取的score列表
     :rtype: Dict
     """
+    if isinstance(auth, requests.Session):
+        authorization = auth.headers['Authorization']
+    else:
+        authorization = auth
     headers = {
         'Referer': 'https://my.cqu.edu.cn/sam/home',
         'User-Agent': 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0)',
@@ -22,7 +29,7 @@ def get_score_raw(authorization: str):
     return json.loads(res.content)['data']
 
 
-@dataclass(order=True)
+@dataclass
 class Score:
     """
     成绩对象
@@ -63,16 +70,15 @@ class Score:
         )
 
     @staticmethod
-    def fetch(authorization: str) -> List:
+    def fetch(auth: Union[str, Session]) -> List:
         """
         从网站获取成绩信息
-
-        @param: authorization 登陆后获取的authorization
-        @type: str
-        @return: 返回成绩对象
-        @rtype: List
+        :param auth: 登陆后获取的authorization或者调用过mycqu.access_mycqu的session
+        :type auth: Union[Session, str]
+        :return: 返回成绩对象
+        :rtype: List[Score]
         """
-        temp = get_score_raw(authorization)
+        temp = get_score_raw(auth)
         score = []
         for term, courses in temp.items():
             for course in courses:

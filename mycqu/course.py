@@ -188,7 +188,7 @@ class Course:
     course_num: Optional[str]
     """教学班号，在无法获取时（如考表 :class:`.exam.Exam` 中）设为 :obj:`None`"""
     dept: Optional[str]
-    """开课学院， 在无法获取时（如成绩：class：'.score.Score'中）设为:obj:'None'"""
+    """开课学院， 在无法获取时（如成绩 :class:`.score.Score`中）设为 :obj:`None`"""
     credit: Optional[float]
     """学分，无法获取到则为 :obj:`None`（如在考表 :class:`.exam.Exam` 中）"""
     instructor: Optional[str]
@@ -218,7 +218,7 @@ class Course:
             course_num=data.get("classNbr"),
             dept=data.get(
                 "courseDepartmentName") or data.get("courseDeptShortName"),
-            credit=data.get("credit") or data['courseCredit'],
+            credit=data.get("credit") or data.get("courseCredit"),
             instructor=data.get("instructorName"),
             session=session,
         )
@@ -262,8 +262,8 @@ class CourseTimetable:
         )
 
     @staticmethod
-    def fetch(session: Session, code: str, cqu_session: Optional[Union[CQUSession, str]] = None) -> List[
-        CourseTimetable]:
+    def fetch(session: Session, code: str, cqu_session: Optional[Union[CQUSession, str]] = None)\
+            -> List[CourseTimetable]:
         """从 my.cqu.edu.cn 上获取学生或老师的课表
 
         :param session: 登录了统一身份认证（:func:`.auth.login`）并在 mycqu 进行了认证（:func:`.mycqu.access_mycqu`）的 requests 会话
