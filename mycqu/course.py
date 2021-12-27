@@ -187,8 +187,8 @@ class Course:
     """课程代码"""
     course_num: Optional[str]
     """教学班号，在无法获取时（如考表 :class:`.exam.Exam` 中）设为 :obj:`None`"""
-    dept: str
-    """开课学院"""
+    dept: Optional[str]
+    """开课学院， 在无法获取时（如成绩：class：'.score.Score'中）设为:obj:'None'"""
     credit: Optional[float]
     """学分，无法获取到则为 :obj:`None`（如在考表 :class:`.exam.Exam` 中）"""
     instructor: Optional[str]
@@ -217,8 +217,8 @@ class Course:
             code=data["courseCode"],
             course_num=data.get("classNbr"),
             dept=data.get(
-                "courseDepartmentName") or data["courseDeptShortName"],
-            credit=data.get("credit"),
+                "courseDepartmentName") or data.get("courseDeptShortName"),
+            credit=data.get("credit") or data['courseCredit'],
             instructor=data.get("instructorName"),
             session=session,
         )
