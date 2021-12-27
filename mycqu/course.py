@@ -56,6 +56,9 @@ class CQUSession:
     CQUSESSION_MIN: ClassVar[CQUSession]
     """my.cqu.edu.cn 支持的最早学期"""
 
+    def __str__(self):
+        return str(self.year) + ('秋' if self.is_autumn else '春')
+
     def __post_init_post_parse__(self):
         if hasattr(CQUSession, "CQUSESSION_MIN"):
             if self < CQUSession.CQUSESSION_MIN:
