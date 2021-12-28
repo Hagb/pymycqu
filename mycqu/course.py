@@ -13,10 +13,35 @@ from .mycqu import MycquUnauthorized
 __all__ = ("CQUSession", "CQUSessionInfo",
            "CourseTimetable", "CourseDayTime", "Course")
 
-
 CQUSESSIONS_URL = "https://my.cqu.edu.cn/api/timetable/optionFinder/session?blankOption=false"
 CUR_SESSION_URL = "https://my.cqu.edu.cn/api/resourceapi/session/cur-active-session"
 TIMETABLE_URL = "https://my.cqu.edu.cn/api/timetable/class/timetable/student/table-detail"
+
+
+def get_course_raw(session: Session, code: str, cqu_session: Optional[Union[CQUSession, str]] = None):
+    """从 my.cqu.edu.cn 上获取学生或老师的课表
+
+    :param session: 登录了统一身份认证（:func:`.auth.login`）并在 mycqu 进行了认证（:func:`.mycqu.access_mycqu`）的 requests 会话
+    :type session: Session
+    :param code: 学生或教师的学工号
+    :type code: str
+    :param cqu_session: 需要获取课表的学期，留空获取当前年级的课表
+    :type cqu_session: Optional[Union[CQUSession, str]], optional
+    :raises MycquUnauthorized: 若会话未在 my.cqu.edu.cn 进行认证
+    :return: 反序列化获取课表的json
+    :rtype: List[CourseTimetable]
+    """
+    if cqu_session is None:
+        cqu_session = CQUSessionInfo.fetch(session).session
+    elif isinstance(cqu_session, str):
+        cqu_session = CQUSession.from_str(cqu_session)
+    resp = session.post(TIMETABLE_URL,
+                        params={"sessionId": cqu_session.get_id()},
+                        json=[code],
+                        )
+    if resp.status_code == 401:
+        raise MycquUnauthorized()
+    return resp.json()['classTimetableVOList']
 
 
 @dataclass(order=True)
@@ -30,6 +55,9 @@ class CQUSession:
     SESSION_RE: ClassVar = re.compile("^([0-9]{4})年?(春|秋)$")
     CQUSESSION_MIN: ClassVar[CQUSession]
     """my.cqu.edu.cn 支持的最早学期"""
+
+    def __str__(self):
+        return str(self.year) + ('秋' if self.is_autumn else '春')
 
     def __post_init_post_parse__(self):
         if hasattr(CQUSession, "CQUSESSION_MIN"):
@@ -46,7 +74,7 @@ class CQUSession:
         :return: 学期的 id
         :rtype: int
         """
-        return (self.year-1503)*2 + int(self.is_autumn) + 1
+        return (self.year - 1503) * 2 + int(self.is_autumn) + 1
 
     @staticmethod
     def from_str(string: str) -> CQUSession:
@@ -162,8 +190,8 @@ class Course:
     """课程代码"""
     course_num: Optional[str]
     """教学班号，在无法获取时（如考表 :class:`.exam.Exam` 中）设为 :obj:`None`"""
-    dept: str
-    """开课学院"""
+    dept: Optional[str]
+    """开课学院， 在无法获取时（如成绩 :class:`.score.Score`中）设为 :obj:`None`"""
     credit: Optional[float]
     """学分，无法获取到则为 :obj:`None`（如在考表 :class:`.exam.Exam` 中）"""
     instructor: Optional[str]
@@ -171,7 +199,7 @@ class Course:
     session: Optional[CQUSession]
     """学期，无法获取时则为 :obj:`None`"""
 
-    @ staticmethod
+    @staticmethod
     def from_dict(data: Dict[str, Any],
                   session: Optional[Union[str, CQUSession]] = None) -> Course:
         """从反序列化的（一个）课表或考表 json 中返回课程
@@ -192,8 +220,8 @@ class Course:
             code=data["courseCode"],
             course_num=data.get("classNbr"),
             dept=data.get(
-                "courseDepartmentName") or data["courseDeptShortName"],
-            credit=data.get("credit"),
+                "courseDepartmentName") or data.get("courseDeptShortName"),
+            credit=data.get("credit") or data.get("courseCredit"),
             instructor=data.get("instructorName"),
             session=session,
         )
@@ -237,7 +265,8 @@ class CourseTimetable:
         )
 
     @staticmethod
-    def fetch(session: Session, code: str, cqu_session: Optional[Union[CQUSession, str]] = None) -> List[CourseTimetable]:
+    def fetch(session: Session, code: str, cqu_session: Optional[Union[CQUSession, str]] = None)\
+            -> List[CourseTimetable]:
         """从 my.cqu.edu.cn 上获取学生或老师的课表
 
         :param session: 登录了统一身份认证（:func:`.auth.login`）并在 mycqu 进行了认证（:func:`.mycqu.access_mycqu`）的 requests 会话
@@ -250,16 +279,7 @@ class CourseTimetable:
         :return: 获取的课表对象的列表
         :rtype: List[CourseTimetable]
         """
-        if cqu_session is None:
-            cqu_session = CQUSessionInfo.fetch(session).session
-        elif isinstance(cqu_session, str):
-            cqu_session = CQUSession.from_str(cqu_session)
-        resp = session.post(TIMETABLE_URL,
-                            params={"sessionId": cqu_session.get_id()},
-                            json=[code],
-                            )
-        if resp.status_code == 401:
-            raise MycquUnauthorized()
-        return [CourseTimetable.from_dict(timetable) for timetable in resp.json()["classTimetableVOList"]
+        resp = get_course_raw(session, code, cqu_session)
+        return [CourseTimetable.from_dict(timetable) for timetable in resp
                 if timetable["teachingWeekFormat"]
                 ]
