@@ -1,3 +1,7 @@
+"""
+成绩相关模块
+"""
+from __future__ import annotations
 import requests
 from requests import Session
 import json
@@ -17,14 +21,14 @@ def get_score_raw(auth: Union[Session, str]):
     :rtype: Dict
     """
     if isinstance(auth, requests.Session):
-        authorization = auth.headers['Authorization']
+        headers = auth.headers
     else:
         authorization = auth
-    headers = {
-        'Referer': 'https://my.cqu.edu.cn/sam/home',
-        'User-Agent': 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0)',
-        'Authorization': authorization
-    }
+        headers = {
+            'Referer': 'https://my.cqu.edu.cn/sam/home',
+            'User-Agent': 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0)',
+            'Authorization': authorization
+        }
     res = requests.get('http://my.cqu.edu.cn/api/sam/score/student/score', headers=headers)
     return json.loads(res.content)['data']
 
@@ -46,8 +50,7 @@ class Score:
     """必修/选修"""
 
     @staticmethod
-    def from_dict(data: Dict[str, Any],
-                  session: Optional[Union[str, CQUSession]] = None):
+    def from_dict(data: Dict[str, Any]) -> Score:
         """
         从反序列化的字典生成Score对象
 
@@ -56,21 +59,16 @@ class Score:
         @return: 返回成绩对象
         @rtype: Score
         """
-        if session is None and not data.get("session") is None:
-            session = CQUSession.from_str(data["session"])
-        if isinstance(session, str):
-            session = CQUSession.from_str(session)
-        course = Course.from_dict(data)
         return Score(
-            session=session,
-            course=course,
+            session=CQUSession.from_str(data["sessionName"]),
+            course=Course.from_dict(data),
             score=data['effectiveScoreShow'],
             study_nature=data['studyNature'],
             course_nature=data['courseNature']
         )
 
     @staticmethod
-    def fetch(auth: Union[str, Session]) -> List:
+    def fetch(auth: Union[str, Session]) -> List[Score]:
         """
         从网站获取成绩信息
         :param auth: 登陆后获取的authorization或者调用过mycqu.access_mycqu的session
@@ -82,5 +80,5 @@ class Score:
         score = []
         for term, courses in temp.items():
             for course in courses:
-                score.append(Score.from_dict(course, term))
+                score.append(Score.from_dict(course))
         return score
