@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>mycqu.auth.UnknownAuthserverException &#8212; pymycqu 0.2.7 文档</title>
+    <title>mycqu.score &#8212; pymycqu 0.2.7 文档</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
     
@@ -18,8 +18,8 @@
     
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="mycqu.course" href="mycqu.course.html" />
-    <link rel="prev" title="mycqu.auth.NotLogined" href="mycqu.auth.NotLogined.html" /> 
+    <link rel="next" title="mycqu.score.get_score_raw" href="mycqu.score.get_score_raw.html" />
+    <link rel="prev" title="mycqu.mycqu.MycquUnauthorized" href="mycqu.mycqu.MycquUnauthorized.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>导航</h3>
@@ -31,14 +31,13 @@
           <a href="../py-modindex.html" title="Python 模块索引"
              >模块</a> |</li>
         <li class="right" >
-          <a href="mycqu.course.html" title="mycqu.course"
+          <a href="mycqu.score.get_score_raw.html" title="mycqu.score.get_score_raw"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
-          <a href="mycqu.auth.NotLogined.html" title="mycqu.auth.NotLogined"
+          <a href="mycqu.mycqu.MycquUnauthorized.html" title="mycqu.mycqu.MycquUnauthorized"
              accesskey="P">上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">pymycqu 0.2.7 文档</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="mycqu.auth.html" accesskey="U">mycqu.auth</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">mycqu.auth.UnknownAuthserverException</a></li> 
+        <li class="nav-item nav-item-this"><a href="">mycqu.score</a></li> 
       </ul>
     </div>  
 
@@ -47,14 +46,33 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="mycqu-auth-unknownauthserverexception">
-<h1>mycqu.auth.UnknownAuthserverException<a class="headerlink" href="#mycqu-auth-unknownauthserverexception" title="永久链接至标题">¶</a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="mycqu.auth.UnknownAuthserverException">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mycqu.auth.</span></span><span class="sig-name descname"><span class="pre">UnknownAuthserverException</span></span><a class="headerlink" href="#mycqu.auth.UnknownAuthserverException" title="永久链接至目标">¶</a></dt>
-<dd><p>登录或认证服务过程中未知错误</p>
-</dd></dl>
-
+  <section id="module-mycqu.score">
+<span id="mycqu-score"></span><h1>mycqu.score<a class="headerlink" href="#module-mycqu.score" title="永久链接至标题">¶</a></h1>
+<p>成绩相关模块</p>
+<p class="rubric">Functions</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="mycqu.score.get_score_raw.html#mycqu.score.get_score_raw" title="mycqu.score.get_score_raw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_score_raw</span></code></a>(auth)</p></td>
+<td><p>获取学生原始成绩 :param auth: 登陆后获取的authorization或者调用过mycqu.access_mycqu的session :type auth: Union[Session, str] :return: 反序列化获取的score列表 :rtype: Dict</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="mycqu.score.Score.html#mycqu.score.Score" title="mycqu.score.Score"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Score</span></code></a>(session, course, score, study_nature, ...)</p></td>
+<td><p>成绩对象</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 
 
@@ -65,15 +83,15 @@
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>上一个主题</h4>
-  <p class="topless"><a href="mycqu.auth.NotLogined.html"
-                        title="上一章">mycqu.auth.NotLogined</a></p>
+  <p class="topless"><a href="mycqu.mycqu.MycquUnauthorized.html"
+                        title="上一章">mycqu.mycqu.MycquUnauthorized</a></p>
   <h4>下一个主题</h4>
-  <p class="topless"><a href="mycqu.course.html"
-                        title="下一章">mycqu.course</a></p>
+  <p class="topless"><a href="mycqu.score.get_score_raw.html"
+                        title="下一章">mycqu.score.get_score_raw</a></p>
   <div role="note" aria-label="source link">
     <h3>本页</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/_stubs/mycqu.auth.UnknownAuthserverException.rst.txt"
+      <li><a href="../_sources/_stubs/mycqu.score.rst.txt"
             rel="nofollow">显示源代码</a></li>
     </ul>
    </div>
@@ -101,14 +119,13 @@
           <a href="../py-modindex.html" title="Python 模块索引"
              >模块</a> |</li>
         <li class="right" >
-          <a href="mycqu.course.html" title="mycqu.course"
+          <a href="mycqu.score.get_score_raw.html" title="mycqu.score.get_score_raw"
              >下一页</a> |</li>
         <li class="right" >
-          <a href="mycqu.auth.NotLogined.html" title="mycqu.auth.NotLogined"
+          <a href="mycqu.mycqu.MycquUnauthorized.html" title="mycqu.mycqu.MycquUnauthorized"
              >上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">pymycqu 0.2.7 文档</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="mycqu.auth.html" >mycqu.auth</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">mycqu.auth.UnknownAuthserverException</a></li> 
+        <li class="nav-item nav-item-this"><a href="">mycqu.score</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
