@@ -125,5 +125,6 @@ API 文档
    mycqu.course
    mycqu.exam
    mycqu.mycqu
+   mycqu.score
    mycqu.user
 
