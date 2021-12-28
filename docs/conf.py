@@ -12,7 +12,7 @@
 #
 import os
 import sys
-import toml
+import pkg_resources
 sys.path.insert(0, os.path.abspath('..'))
 
 
@@ -22,8 +22,7 @@ project = 'pymycqu'
 copyright = '2021, Hagb'
 author = 'Hagb'
 # The full version, including alpha/beta/rc tags
-with open('../pyproject.toml') as file:
-    release = toml.load(file)['tool']['poetry']['version']
+release = pkg_resources.get_distribution('mycqu').version
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
