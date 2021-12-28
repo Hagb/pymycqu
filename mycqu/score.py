@@ -21,7 +21,8 @@ def get_score_raw(auth: Union[Session, str]):
     :rtype: Dict
     """
     if isinstance(auth, requests.Session):
-        headers = auth.headers
+        res = auth.get('http://my.cqu.edu.cn/api/sam/score/student/score')
+        return json.loads(res.content)['data']
     else:
         authorization = auth
         headers = {
@@ -29,8 +30,8 @@ def get_score_raw(auth: Union[Session, str]):
             'User-Agent': 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0)',
             'Authorization': authorization
         }
-    res = requests.get('http://my.cqu.edu.cn/api/sam/score/student/score', headers=headers)
-    return json.loads(res.content)['data']
+        res = requests.get('http://my.cqu.edu.cn/api/sam/score/student/score', headers=headers)
+        return json.loads(res.content)['data']
 
 
 @dataclass
