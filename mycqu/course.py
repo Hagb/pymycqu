@@ -5,6 +5,7 @@ from typing import Any, Dict, Optional, Tuple, List, Union, ClassVar
 # from pydantic.dataclasses import dataclass
 import re
 from datetime import date
+from functools import lru_cache
 from requests import Session, get
 from ._lib_wrapper.dataclass import dataclass
 from .utils.datetimes import parse_period_str, parse_weeks_str, parse_weekday_str, date_from_str
@@ -46,7 +47,7 @@ def get_course_raw(session: Session, code: str, cqu_session: Optional[Union[CQUS
     return resp.json()['classTimetableVOList']
 
 
-@dataclass(order=True)
+@dataclass(order=True, frozen=True)
 class CQUSession:
     """重大的某一学期
     """
@@ -57,6 +58,10 @@ class CQUSession:
     SESSION_RE: ClassVar = re.compile("^([0-9]{4})年?(春|秋)$")
     CQUSESSION_MIN: ClassVar[CQUSession]
     """my.cqu.edu.cn 支持的最早学期"""
+
+    @lru_cache(maxsize=32)  # 这个缓存可以管 16 年的学期
+    def __new__(cls, year: int, is_autumn: bool):
+        return super(CQUSession, cls).__new__(cls)
 
     def __str__(self):
         return str(self.year) + ('秋' if self.is_autumn else '春')
