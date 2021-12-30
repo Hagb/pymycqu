@@ -8,6 +8,7 @@ import json
 from typing import Dict, Any, Union, Optional, List
 from ._lib_wrapper.dataclass import dataclass
 from .course import Course, CQUSession
+from .mycqu import MycquUnauthorized
 
 __all__ = ("Score",)
 
@@ -21,7 +22,7 @@ def get_score_raw(auth: Union[Session, str]):
     :rtype: Dict
     """
     if isinstance(auth, requests.Session):
-        res = auth.get('http://my.cqu.edu.cn/api/sam/score/student/score')
+        res = auth.get('https://my.cqu.edu.cn/api/sam/score/student/score')
         return json.loads(res.content)['data']
     else:
         authorization = auth
@@ -30,8 +31,10 @@ def get_score_raw(auth: Union[Session, str]):
             'User-Agent': 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0)',
             'Authorization': authorization
         }
-        res = requests.get('http://my.cqu.edu.cn/api/sam/score/student/score', headers=headers)
-        return json.loads(res.content)['data']
+        res = requests.get('https://my.cqu.edu.cn/api/sam/score/student/score', headers=headers)
+    if res.status_code == 401:
+        raise MycquUnauthorized()
+    return json.loads(res.content)['data']
 
 
 @dataclass
