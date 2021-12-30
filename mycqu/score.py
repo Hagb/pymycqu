@@ -75,14 +75,14 @@ class Score:
     def fetch(auth: Union[str, Session]) -> List[Score]:
         """
         从网站获取成绩信息
-        :param auth: 登陆后获取的authorization或者调用过mycqu.access_mycqu的session
+        :param auth: 登陆后获取的 authorization 或者调用过 :func:`.mycqu.access_mycqu` 的 Session
         :type auth: Union[Session, str]
         :return: 返回成绩对象
         :rtype: List[Score]
         """
         temp = get_score_raw(auth)
         score = []
-        for term, courses in temp.items():
+        for courses in temp.values():
             for course in courses:
                 score.append(Score.from_dict(course))
         return score
