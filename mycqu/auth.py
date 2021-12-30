@@ -198,7 +198,8 @@ def login(session: Session,
           timeout: int = 10,
           force_relogin: bool = False,
           captcha_callback: Optional[
-              Callable[[bytes, str], Optional[str]]] = None
+              Callable[[bytes, str], Optional[str]]] = None,
+          keep_longer: bool = False
           ) -> Response:
     """登录统一身份认证
 
@@ -219,6 +220,8 @@ def login(session: Session,
                              该函数接受一个 :class:`bytes` 型参数为验证码图片的文件数据，一个 :class:`str` 型参数为图片的 MIME 类型，
                              返回验证码文本或 :obj:`None`。
     :type captcha_callback: Optional[Callable[[bytes, str], Optional[str]]], optional
+    :param keep_longer: 保持更长时间的登录状态（保持一周）
+    :type keep_longer: bool
     :raises UnknownAuthserverException: 未知认证错误
     :raises InvaildCaptcha: 无效的验证码
     :raises IncorrectLoginCredentials: 错误的登陆凭据（如错误的密码、用户名）
@@ -247,6 +250,8 @@ def login(session: Session,
     elif login_page.status_code != 200:
         raise UnknownAuthserverException()
     formdata = get_formdata(login_page.text, username, password)
+    if keep_longer:
+        formdata['rememberMe'] = 'on'
 
     def after_captcha(captcha_str: Optional[str]):
         if captcha_str is None:
