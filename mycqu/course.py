@@ -10,11 +10,13 @@ from ._lib_wrapper.dataclass import dataclass
 from .utils.datetimes import parse_period_str, parse_weeks_str, parse_weekday_str, date_from_str
 from .mycqu import MycquUnauthorized
 
+
 __all__ = ("CQUSession", "CQUSessionInfo",
            "CourseTimetable", "CourseDayTime", "Course")
 
 CQUSESSIONS_URL = "https://my.cqu.edu.cn/api/timetable/optionFinder/session?blankOption=false"
 CUR_SESSION_URL = "https://my.cqu.edu.cn/api/resourceapi/session/cur-active-session"
+ALL_SESSIONSINFO_URL = "https://my.cqu.edu.cn/api/resourceapi/session/list"
 TIMETABLE_URL = "https://my.cqu.edu.cn/api/timetable/class/timetable/student/table-detail"
 
 
@@ -121,7 +123,7 @@ CQUSession.CQUSESSION_MIN = CQUSession(2020, True)
 
 @dataclass
 class CQUSessionInfo:
-    """某学期的一些额外信息，目前只找到获取当个学期这些信息的 web api
+    """某学期的一些额外信息
     """
     session: CQUSession
     """对应的学期"""
@@ -129,6 +131,42 @@ class CQUSessionInfo:
     """学期的开始日期"""
     end_date: date
     """学期的结束日期"""
+
+    @staticmethod
+    def from_dict(data: dict[str, Any]) -> CQUSessionInfo:
+        """从反序列化的（一个）学期信息 json 中获取学期信息
+
+        :param data: json 反序列化得到的字典
+        :type data: dict[str, Any]
+        :return: 学期信息对象
+        :rtype: CQUSessionInfo
+        """
+        return CQUSessionInfo(
+            session=CQUSession(year=data["year"],
+                               is_autumn=data["term"] == "秋"),
+            begin_date=date_from_str(data["beginDate"]),
+            end_date=date_from_str(data["endDate"])
+        )
+
+    @staticmethod
+    def fetch_all(session: Session) -> List[CQUSessionInfo]:
+        """获取所有学期信息
+
+        :param session: 登录了统一身份认证（:func:`.auth.login`）并在 mycqu 进行了认证（:func:`.mycqu.access_mycqu`）的 requests 会话
+        :type session: Session
+        :return: 按时间降序排序的学期（最新学期可能尚未到来，其信息准确度也无法保障！）
+        :rtype: List[CQUSessionInfo]
+        """
+        resp = session.get(ALL_SESSIONSINFO_URL)
+        if resp.status_code == 401:
+            raise MycquUnauthorized()
+        cqusesions: List[CQUSessionInfo] = []
+        for data in resp.json()['sessionVOList']:
+            try:
+                cqusesions.append(CQUSessionInfo.from_dict(data))
+            except ValueError:
+                break
+        return cqusesions
 
     @staticmethod
     def fetch(session: Session) -> CQUSessionInfo:
@@ -143,13 +181,7 @@ class CQUSessionInfo:
         resp = session.get(CUR_SESSION_URL)
         if resp.status_code == 401:
             raise MycquUnauthorized()
-        data = resp.json()["data"]
-        return CQUSessionInfo(
-            session=CQUSession(year=data["year"],
-                               is_autumn=data["term"] == "秋"),
-            begin_date=date_from_str(data["beginDate"]),
-            end_date=date_from_str(data["endDate"])
-        )
+        return CQUSessionInfo.from_dict(resp.json()["data"])
 
 
 @dataclass
