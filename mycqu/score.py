@@ -13,6 +13,11 @@ from .mycqu import MycquUnauthorized
 __all__ = ("Score",)
 
 
+class CQUWebsiteError(Exception):
+    def __init__(self, error_msg):
+        super().__init__('CQU website return error: ' + error_msg)
+
+
 def get_score_raw(auth: Union[Session, str]):
     """
     获取学生原始成绩
@@ -23,7 +28,10 @@ def get_score_raw(auth: Union[Session, str]):
     """
     if isinstance(auth, requests.Session):
         res = auth.get('https://my.cqu.edu.cn/api/sam/score/student/score')
-        return json.loads(res.content)['data']
+        content = json.loads(res.content)
+        if content['status'] == 'error':
+            raise CQUWebsiteError(content['msg'])
+        return content['data']
     else:
         authorization = auth
         headers = {
@@ -79,6 +87,7 @@ class Score:
         :type auth: Union[Session, str]
         :return: 返回成绩对象
         :rtype: List[Score]
+        :raises CQUWebsiteError: 查询成绩时教务网报错
         """
         temp = get_score_raw(auth)
         score = []
