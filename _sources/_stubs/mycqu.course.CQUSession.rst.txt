@@ -25,7 +25,6 @@ mycqu.course.CQUSession
 
    .. autosummary::
    
-      ~CQUSession.CQUSESSION_MIN
       ~CQUSession.SESSION_RE
       ~CQUSession.year
       ~CQUSession.is_autumn
