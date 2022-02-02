@@ -83,6 +83,6 @@ class Score:
         temp = get_score_raw(auth)
         score = []
         for courses in temp.values():
-            for course in courses:
+            for course in courses['stuScoreHomePgVoS']:
                 score.append(Score.from_dict(course))
         return score

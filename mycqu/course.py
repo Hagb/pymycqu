@@ -56,8 +56,6 @@ class CQUSession:
     is_autumn: bool
     """是否为秋冬季学期"""
     SESSION_RE: ClassVar = re.compile("^([0-9]{4})年?(春|秋)$")
-    CQUSESSION_MIN: ClassVar[CQUSession]
-    """my.cqu.edu.cn 支持的最早学期"""
 
     @lru_cache(maxsize=32)  # 这个缓存可以管 16 年的学期
     def __new__(cls, year: int, is_autumn: bool):
@@ -65,12 +63,6 @@ class CQUSession:
 
     def __str__(self):
         return str(self.year) + ('秋' if self.is_autumn else '春')
-
-    def __post_init_post_parse__(self):
-        if hasattr(CQUSession, "CQUSESSION_MIN"):
-            if self < CQUSession.CQUSESSION_MIN:
-                raise ValueError(
-                    f"session should not be earlier than {CQUSession.CQUSESSION_MIN}")
 
     def get_id(self) -> int:
         """获取该学期在 my.cqu.edu.cn 中的 id
@@ -116,14 +108,8 @@ class CQUSession:
         """
         session_list = []
         for session in get(CQUSESSIONS_URL).json():
-            try:
-                session_list.append(CQUSession.from_str(session["name"]))
-            except ValueError:
-                pass
+            session_list.append(CQUSession.from_str(session["name"]))
         return session_list
-
-
-CQUSession.CQUSESSION_MIN = CQUSession(2020, True)
 
 
 @dataclass
@@ -167,10 +153,7 @@ class CQUSessionInfo:
             raise MycquUnauthorized()
         cqusesions: List[CQUSessionInfo] = []
         for data in resp.json()['sessionVOList']:
-            try:
-                cqusesions.append(CQUSessionInfo.from_dict(data))
-            except ValueError:
-                break
+            cqusesions.append(CQUSessionInfo.from_dict(data))
         return cqusesions
 
     @staticmethod
