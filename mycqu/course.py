@@ -56,6 +56,7 @@ class CQUSession:
     is_autumn: bool
     """是否为秋冬季学期"""
     SESSION_RE: ClassVar = re.compile("^([0-9]{4})年?(春|秋)$")
+    _SPECIAL_IDS: ClassVar[Tuple[int, ...]] = (239259, 102, 101, 103, 1028, 1029, 1030, 1032) # 2015 ~ 2018
 
     @lru_cache(maxsize=32)  # 这个缓存可以管 16 年的学期
     def __new__(cls, year: int, is_autumn: bool):
@@ -73,7 +74,12 @@ class CQUSession:
         :return: 学期的 id
         :rtype: int
         """
-        return (self.year - 1503) * 2 + int(self.is_autumn) + 1
+        if self.year >= 2019:
+            return (self.year - 1503) * 2 + int(self.is_autumn) + 1
+        elif 2015 <= self.year <= 2018:
+            return self._SPECIAL_IDS[(self.year - 2015) * 2 + int(self.is_autumn)]
+        else:
+            return (2015 - self.year) * 2 - int(self.is_autumn)
 
     @staticmethod
     def from_str(string: str) -> CQUSession:
@@ -153,6 +159,8 @@ class CQUSessionInfo:
             raise MycquUnauthorized()
         cqusesions: List[CQUSessionInfo] = []
         for data in resp.json()['sessionVOList']:
+            if not data['beginDate']:
+                break
             cqusesions.append(CQUSessionInfo.from_dict(data))
         return cqusesions
 
