@@ -45,7 +45,6 @@
    
       IncorrectLoginCredentials
       InvaildCaptcha
-      MultiSessionConflict
       NeedCaptcha
       NotAllowedService
       NotLogined

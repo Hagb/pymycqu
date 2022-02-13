@@ -14,8 +14,6 @@ mycqu.course.CQUSessionInfo
    
       ~CQUSessionInfo.__init__
       ~CQUSessionInfo.fetch
-      ~CQUSessionInfo.fetch_all
-      ~CQUSessionInfo.from_dict
    
    
 

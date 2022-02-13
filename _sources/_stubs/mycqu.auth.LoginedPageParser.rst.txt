@@ -50,11 +50,7 @@ mycqu.auth.LoginedPageParser
 
    .. autosummary::
    
-      ~LoginedPageParser.CANCEL_POST_ATTRS
       ~LoginedPageParser.CDATA_CONTENT_ELEMENTS
-      ~LoginedPageParser.KICK_POST_ATTRS
-      ~LoginedPageParser.KICK_TABLE_ATTRS
-      ~LoginedPageParser.MSG_ATTRS
    
    
 
