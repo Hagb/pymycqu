@@ -11,7 +11,7 @@
 
 .. code-block:: shell
 
-   pip install pymycqu
+   pip install mycqu
 
 考表
 ----
