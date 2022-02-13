@@ -38,6 +38,7 @@ def get_course_raw(session: Session, code: str, cqu_session: Optional[Union[CQUS
         cqu_session = CQUSessionInfo.fetch(session).session
     elif isinstance(cqu_session, str):
         cqu_session = CQUSession.from_str(cqu_session)
+    assert isinstance(cqu_session, CQUSession)
     resp = session.post(TIMETABLE_URL,
                         params={"sessionId": cqu_session.get_id()},
                         json=[code],
@@ -56,10 +57,11 @@ class CQUSession:
     is_autumn: bool
     """是否为秋冬季学期"""
     SESSION_RE: ClassVar = re.compile("^([0-9]{4})年?(春|秋)$")
-    _SPECIAL_IDS: ClassVar[Tuple[int, ...]] = (239259, 102, 101, 103, 1028, 1029, 1030, 1032) # 2015 ~ 2018
+    _SPECIAL_IDS: ClassVar[Tuple[int, ...]] = (
+        239259, 102, 101, 103, 1028, 1029, 1030, 1032)  # 2015 ~ 2018
 
-    @lru_cache(maxsize=32)  # 这个缓存可以管 16 年的学期
-    def __new__(cls, year: int, is_autumn: bool):
+    @lru_cache(maxsize=32)  # type: ignore
+    def __new__(cls, year: int, is_autumn: bool): # pylint: disable=unused-argument
         return super(CQUSession, cls).__new__(cls)
 
     def __str__(self):
@@ -243,6 +245,7 @@ class Course:
             session = CQUSession.from_str(data["session"])
         if isinstance(session, str):
             session = CQUSession.from_str(session)
+        assert isinstance(session, CQUSession) or session is None
         return Course(
             name=data["courseName"],
             code=data["courseCode"],

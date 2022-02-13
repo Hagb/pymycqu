@@ -1,14 +1,11 @@
 """统一身份认证相关的模块
 """
-from typing import Dict, Optional, Callable, Union
+from typing import Dict, Optional, Callable
 import random
 import re
 from base64 import b64encode
-from ipaddress import IPv4Address
-from datetime import datetime
 from html.parser import HTMLParser
 from requests import Session, Response
-from ._lib_wrapper.dataclass import dataclass
 from ._lib_wrapper.encrypt import pad, aes_cbc_encryptor
 
 __all__ = ("NotAllowedService", "NeedCaptcha", "InvaildCaptcha",
