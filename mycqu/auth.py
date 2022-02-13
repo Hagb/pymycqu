@@ -188,7 +188,8 @@ def get_formdata(html: str, username: str, password: str) -> Dict[str, Optional[
     # from https://github.com/CQULHW/CQUQueryGrade
     parser = AuthPageParser()
     parser.feed(html)
-    assert parser.salt, "无法获取盐"
+    if not parser.salt:
+        ValueError("无法获取盐")
     passwd_pkcs7 = pad((_random_str(64)+str(password)).encode())
     encryptor = aes_cbc_encryptor(
         parser.salt.encode(), _random_str(16).encode())
@@ -271,27 +272,26 @@ def login(session: Session,
     :return: 登陆了统一身份认证后所跳转到的地址的 :class:`Response`
     :rtype: Response
     """
-    login_page = session.get(
-        url=AUTHSERVER_URL,
-        params=None if service is None else {"service": service},
-        allow_redirects=False,
-        timeout=timeout)
+    def get_login_page():
+        return session.get(
+            url=AUTHSERVER_URL,
+            params=None if service is None else {"service": service},
+            allow_redirects=False,
+            timeout=timeout)
+    login_page = get_login_page()
     if login_page.status_code == 302:
         if not force_relogin:
-            try:
-                return login_page
-            except NotLogined:
-                pass
+            return login_page
         else:
             logout(session)
-            login_page = session.get(
-                url=AUTHSERVER_URL,
-                params=None if service is None else {"service": service},
-                allow_redirects=False,
-                timeout=timeout)
+            login_page = get_login_page()
     elif login_page.status_code != 200:
         raise UnknownAuthserverException()
-    formdata = get_formdata(login_page.text, username, password)
+    try:
+        formdata = get_formdata(login_page.text, username, password)
+    except ValueError:
+        logout(session)
+        formdata = get_formdata(get_login_page().text, username, password)
     if keep_longer:
         formdata['rememberMe'] = 'on'
 
