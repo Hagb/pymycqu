@@ -1,0 +1,7 @@
+mycqu.auth.MultiSessionConflict
+===============================
+
+.. currentmodule:: mycqu.auth
+
+.. autoclass:: MultiSessionConflict
+   :members:

@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>mycqu.course.CQUSessionInfo &#8212; pymycqu 0.3.0rc1 文档</title>
+    <title>mycqu.course.CQUSessionInfo &#8212; pymycqu 0.4.0 文档</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
     
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="mycqu.course.CQUSession.html" title="mycqu.course.CQUSession"
              accesskey="P">上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu 0.3.0rc1 文档</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu 0.4.0 文档</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="mycqu.course.html" accesskey="U">mycqu.course</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">mycqu.course.CQUSessionInfo</a></li> 
       </ul>
@@ -52,7 +52,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="mycqu.course.CQUSessionInfo">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mycqu.course.</span></span><span class="sig-name descname"><span class="pre">CQUSessionInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="mycqu.course.CQUSession.html#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><span class="pre">mycqu.course.CQUSession</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">begin_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime.date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime.date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.course.CQUSessionInfo" title="永久链接至目标">¶</a></dt>
-<dd><p>某学期的一些额外信息，目前只找到获取当个学期这些信息的 web api</p>
+<dd><p>某学期的一些额外信息</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -65,6 +65,12 @@
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#mycqu.course.CQUSessionInfo.fetch" title="mycqu.course.CQUSessionInfo.fetch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fetch</span></code></a>(session)</p></td>
 <td><p>从 my.cqu.edu.cn 上获取当前学期的学期信息，需要登录并认证了 mycqu 的会话</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.course.CQUSessionInfo.fetch_all" title="mycqu.course.CQUSessionInfo.fetch_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fetch_all</span></code></a>(session)</p></td>
+<td><p>获取所有学期信息</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.course.CQUSessionInfo.from_dict" title="mycqu.course.CQUSessionInfo.from_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code></a>(data)</p></td>
+<td><p>从反序列化的（一个）学期信息 json 中获取学期信息</p></td>
 </tr>
 </tbody>
 </table>
@@ -115,6 +121,40 @@
 </dd>
 <dt class="field-even">返回类型</dt>
 <dd class="field-even"><p><a class="reference internal" href="#mycqu.course.CQUSessionInfo" title="mycqu.course.CQUSessionInfo">CQUSessionInfo</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mycqu.course.CQUSessionInfo.fetch_all">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fetch_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">requests.sessions.Session</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#mycqu.course.CQUSessionInfo" title="mycqu.course.CQUSessionInfo"><span class="pre">mycqu.course.CQUSessionInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#mycqu.course.CQUSessionInfo.fetch_all" title="永久链接至目标">¶</a></dt>
+<dd><p>获取所有学期信息</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>session</strong> (<em>Session</em>) – 登录了统一身份认证（<a class="reference internal" href="mycqu.auth.login.html#mycqu.auth.login" title="mycqu.auth.login"><code class="xref py py-func docutils literal notranslate"><span class="pre">auth.login()</span></code></a>）并在 mycqu 进行了认证（<a class="reference internal" href="mycqu.mycqu.access_mycqu.html#mycqu.mycqu.access_mycqu" title="mycqu.mycqu.access_mycqu"><code class="xref py py-func docutils literal notranslate"><span class="pre">mycqu.access_mycqu()</span></code></a>）的 requests 会话</p>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>按时间降序排序的学期（最新学期可能尚未到来，其信息准确度也无法保障！）</p>
+</dd>
+<dt class="field-odd">返回类型</dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#mycqu.course.CQUSessionInfo" title="mycqu.course.CQUSessionInfo">CQUSessionInfo</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mycqu.course.CQUSessionInfo.from_dict">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mycqu.course.CQUSessionInfo" title="mycqu.course.CQUSessionInfo"><span class="pre">mycqu.course.CQUSessionInfo</span></a></span></span><a class="headerlink" href="#mycqu.course.CQUSessionInfo.from_dict" title="永久链接至目标">¶</a></dt>
+<dd><p>从反序列化的（一个）学期信息 json 中获取学期信息</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – json 反序列化得到的字典</p>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>学期信息对象</p>
+</dd>
+<dt class="field-odd">返回类型</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mycqu.course.CQUSessionInfo" title="mycqu.course.CQUSessionInfo">CQUSessionInfo</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -178,7 +218,7 @@
         <li class="right" >
           <a href="mycqu.course.CQUSession.html" title="mycqu.course.CQUSession"
              >上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu 0.3.0rc1 文档</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu 0.4.0 文档</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="mycqu.course.html" >mycqu.course</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">mycqu.course.CQUSessionInfo</a></li> 
       </ul>
