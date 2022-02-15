@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mycqu"
-version = "0.3.0rc1"
+version = "0.4.0"
 description = "重庆重庆大学新教务网及相关 api 的封装"
 authors = ["Hagb <hagb_green@qq.com>"]
 license = "AGPL-3.0-or-later"

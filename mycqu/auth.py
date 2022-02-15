@@ -1,11 +1,11 @@
 """统一身份认证相关的模块
 """
-from typing import Dict, Optional, Callable, Union
+from typing import Dict, Optional, Callable
 import random
 import re
 from base64 import b64encode
-from requests import Session, Response
 from html.parser import HTMLParser
+from requests import Session, Response
 from ._lib_wrapper.encrypt import pad, aes_cbc_encryptor
 
 __all__ = ("NotAllowedService", "NeedCaptcha", "InvaildCaptcha",
@@ -70,7 +70,16 @@ class NotLogined(Exception):
     def __init__(self):
         super().__init__("not in logined status")
 
-# from https://github.com/CQULHW/CQUQueryGrade
+
+class MultiSessionConflict(Exception):
+    """当前用户启用单处登录，并且存在其他登录会话时抛出"""
+
+    def __init__(self, kick: Callable[[], Response], cancel: Callable[[], Response]):
+        super().__init__("单处登录 enabled, kick other sessions of the user or cancel")
+        self.kick: Callable[[], Response] = kick
+        """踢掉其他会话并登录"""
+        self.cancel: Callable[[], Response] = cancel
+        """取消登录"""
 
 
 class AuthPageParser(HTMLParser):
@@ -124,15 +133,42 @@ class AuthPageParser(HTMLParser):
                 "Error message before login: "+error_str)
 
 
-class LoginedPageParser(HTMLParser):
-    def __init__(self, status_code):
+class LoginedPageParser(HTMLParser):  # pylint: ignore disable=missing-class-docstring
+    MSG_ATTRS = [("id", "msg"), ("class", "login_auth_error")]
+    KICK_TABLE_ATTRS = [("class", "kick_table")]
+    KICK_POST_ATTRS = [('method', 'post'), ('id', 'continue')]
+    CANCEL_POST_ATTRS = [('method', 'post'), ('id', 'cancel')]
+
+    def __init__(self, status_code: int):
         super().__init__()
-        self._msg = False
-        self.status_code = status_code
+        self._msg: bool = False
+        self._kick: bool = False
+        self._waiting_kick_excution: bool = False
+        self._kick_execution: str = ""
+        self._waiting_cancel_excution: bool = False
+        self._cancel_execution: str = ""
+        self.status_code: int = status_code
 
     def handle_starttag(self, tag, attrs):
-        if tag == "span" and attrs == [("id", "msg"), ("class", "login_auth_error")]:
+        if tag == "span" and attrs == self.MSG_ATTRS:
             self._msg = True
+        elif tag == "table" and attrs == self.KICK_TABLE_ATTRS:
+            self._kick = True
+        elif tag == "form" and attrs == self.CANCEL_POST_ATTRS:
+            self._waiting_cancel_excution = True
+        elif tag == "form" and attrs == self.KICK_POST_ATTRS:
+            self._waiting_kick_excution = True
+        elif tag == "input" and ("name", "execution") in attrs:
+            if self._waiting_kick_excution:
+                for key, value in attrs:
+                    if key == "value":
+                        self._kick_execution = value
+                        self._waiting_kick_excution = False
+            elif self._waiting_cancel_excution:
+                for key, value in attrs:
+                    if key == "value":
+                        self._cancel_execution = value
+                        self._waiting_cancel_excution = False
 
     def handle_data(self, data):
         if self._msg:
@@ -149,9 +185,11 @@ class LoginedPageParser(HTMLParser):
 
 
 def get_formdata(html: str, username: str, password: str) -> Dict[str, Optional[str]]:
+    # from https://github.com/CQULHW/CQUQueryGrade
     parser = AuthPageParser()
     parser.feed(html)
-    assert parser.salt, "无法获取盐"
+    if not parser.salt:
+        ValueError("无法获取盐")
     passwd_pkcs7 = pad((_random_str(64)+str(password)).encode())
     encryptor = aes_cbc_encryptor(
         parser.salt.encode(), _random_str(16).encode())
@@ -199,7 +237,8 @@ def login(session: Session,
           force_relogin: bool = False,
           captcha_callback: Optional[
               Callable[[bytes, str], Optional[str]]] = None,
-          keep_longer: bool = False
+          keep_longer: bool = False,
+          kick_others: bool = False
           ) -> Response:
     """登录统一身份认证
 
@@ -222,34 +261,37 @@ def login(session: Session,
     :type captcha_callback: Optional[Callable[[bytes, str], Optional[str]]], optional
     :param keep_longer: 保持更长时间的登录状态（保持一周）
     :type keep_longer: bool
+    :param kick_others: 当目标用户开启了“单处登录”并有其他登录会话时，踢出其他会话并登录单前会话；若该参数为 :obj:`False` 则抛出
+                       :class:`MultiSessionConflict`
+    :type kick_others: bool
     :raises UnknownAuthserverException: 未知认证错误
     :raises InvaildCaptcha: 无效的验证码
     :raises IncorrectLoginCredentials: 错误的登陆凭据（如错误的密码、用户名）
     :raises NeedCaptcha: 需要提供验证码，获得验证码文本之后可调用所抛出异常的 :func:`NeedCaptcha.after_captcha` 函数来继续登陆
+    :raises MultiSessionConflict: 和其他会话冲突
     :return: 登陆了统一身份认证后所跳转到的地址的 :class:`Response`
     :rtype: Response
     """
-    login_page = session.get(
-        url=AUTHSERVER_URL,
-        params=None if service is None else {"service": service},
-        allow_redirects=False,
-        timeout=timeout)
+    def get_login_page():
+        return session.get(
+            url=AUTHSERVER_URL,
+            params=None if service is None else {"service": service},
+            allow_redirects=False,
+            timeout=timeout)
+    login_page = get_login_page()
     if login_page.status_code == 302:
         if not force_relogin:
-            try:
-                return login_page
-            except NotLogined:
-                pass
+            return login_page
         else:
             logout(session)
-            login_page = session.get(
-                url=AUTHSERVER_URL,
-                params=None if service is None else {"service": service},
-                allow_redirects=False,
-                timeout=timeout)
+            login_page = get_login_page()
     elif login_page.status_code != 200:
         raise UnknownAuthserverException()
-    formdata = get_formdata(login_page.text, username, password)
+    try:
+        formdata = get_formdata(login_page.text, username, password)
+    except ValueError:
+        logout(session)
+        formdata = get_formdata(get_login_page().text, username, password)
     if keep_longer:
         formdata['rememberMe'] = 'on'
 
@@ -261,13 +303,42 @@ def login(session: Session,
             formdata["captchaResponse"] = captcha_str
         login_resp = session.post(
             url=AUTHSERVER_URL, data=formdata, allow_redirects=False)
+
+        def redirect_to_service():
+            return session.get(url=login_resp.headers['Location'], allow_redirects=False)
+
         if login_resp.status_code != 302:
-            parser = LoginedPageParser(login_resp)
+            parser = LoginedPageParser(login_resp.status_code)
             parser.feed(login_resp.text)
+
+            if parser._kick:  # pylint: ignore disable=protected-access
+                def kick():
+                    nonlocal login_resp
+                    # pylint: ignore disable=protected-access
+                    login_resp = session.post(
+                        url=AUTHSERVER_URL,
+                        data={"execution": parser._kick_execution,
+                              "_eventId": "continue"},
+                        allow_redirects=False,
+                        timeout=timeout)
+                    return redirect_to_service()
+
+                if kick_others:
+                    return kick()
+                else:
+                    def cancel():
+                        # pylint: ignore disable=protected-access
+                        return session.post(
+                            url=AUTHSERVER_URL,
+                            data={"execution": parser._cancel_execution,
+                                  "_eventId": "cancel"},
+                            allow_redirects=False,
+                            timeout=timeout)
+                    raise MultiSessionConflict(kick=kick, cancel=cancel)
             raise UnknownAuthserverException(
                 f"status code {login_resp.status_code} is got (302 expected) when sending login post, "
                 "but can not find the element span.login_auth_error#msg")
-        return session.get(url=login_resp.headers['Location'], allow_redirects=False)
+        return redirect_to_service()
 
     captcha_str = None
     if session.get(AUTHSERVER_CAPTCHA_DETERMINE_URL, params={"username": username}).text == "true":

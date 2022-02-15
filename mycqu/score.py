@@ -2,10 +2,10 @@
 成绩相关模块
 """
 from __future__ import annotations
-import requests
-from requests import Session
 import json
 from typing import Dict, Any, Union, Optional, List
+import requests
+from requests import Session
 from ._lib_wrapper.dataclass import dataclass
 from .course import Course, CQUSession
 from .mycqu import MycquUnauthorized
@@ -39,7 +39,8 @@ def get_score_raw(auth: Union[Session, str]):
             'User-Agent': 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0)',
             'Authorization': authorization
         }
-        res = requests.get('https://my.cqu.edu.cn/api/sam/score/student/score', headers=headers)
+        res = requests.get(
+            'https://my.cqu.edu.cn/api/sam/score/student/score', headers=headers)
     if res.status_code == 401:
         raise MycquUnauthorized()
     return json.loads(res.content)['data']
@@ -92,6 +93,6 @@ class Score:
         temp = get_score_raw(auth)
         score = []
         for courses in temp.values():
-            for course in courses:
+            for course in courses['stuScoreHomePgVoS']:
                 score.append(Score.from_dict(course))
         return score
