@@ -5,12 +5,10 @@ from __future__ import annotations
 
 import requests
 from requests import Session
-from lxml import etree
 import json
 from typing import Any, Dict, Optional, Tuple, List, Union, ClassVar
 from ._lib_wrapper.dataclass import dataclass
-
-from .mycqu import MycquUnauthorized
+from html.parser import HTMLParser
 
 __all__ = ("EnergyFees",)
 
@@ -47,16 +45,30 @@ class FeeAcquisitionFailed(Exception):
         super().__init__("获取水电费发生异常，返回状态：" + error_msg)
 
 
-def get_fees_info_raw(session: Session, isHuxi: bool, room: str):
-    """从 my.cqu.edu.cn 上获取学生或老师的课表
+class CardPageParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self._starttag: bool = False
+        self.ssoticket_id: str = ""
 
-    :param session: 登录了统一身份认证（:func:`.auth.login`）并在 mycqu 进行了认证（:func:`.mycqu.access_mycqu`）的 requests 会话
+    def handle_starttag(self, tag, attrs):
+        if not self._starttag and tag == 'input' and ('name', 'ssoticketid') in attrs:
+            self._starttag = True
+            for key, val in attrs:
+                if key == "value":
+                    self.ssoticket_id = val
+                    break
+
+
+def get_fees_info_raw(session: Session, isHuxi: bool, room: str):
+    """ 从card.cqu.edu.cn获取水电费详情
+
+    :param session: 登录了统一身份认证（:func:`.auth.login`）的 requests 会话
     :type session: Session
     :param isHuxi: 房间号是否为虎溪校区的房间
     :type isHuxi: bool
     :param room: 需要获取水电费详情的宿舍
     :type room: str
-    :raises MycquUnauthorized: 若会话未在 my.cqu.edu.cn 进行认证
     :raises NetworkError: 当访问相关网页时statue code不为200时抛出
     :raises TicketGetError: 当未能从网页对应位置中获取到ticket时抛出
     :raises ParseError: 当从返回数据解析所需值失败时抛出
@@ -64,18 +76,16 @@ def get_fees_info_raw(session: Session, isHuxi: bool, room: str):
     :return: 反序列化获取水电费信息的json
     :rtype: dict
     """
-    try:
-        res = session.get(LOGIN_URL)
-    except:
-        raise MycquUnauthorized()
-    else:
-        # 获取ssoticketid
-        html = etree.HTML(res.content)
-        ssoticket_id = html.xpath("//input[@name='ssoticketid']/@value")[0]
-        get_hall_ticket(session, ssoticket_id)
-        ticket = get_ticket(session)
-        synjones_auth = get_synjones_auth(ticket)
-        return get_fee_data(synjones_auth, room, FEE_ITEM_ID['Huxi'] if isHuxi else FEE_ITEM_ID['Old'])
+    res = session.get(LOGIN_URL)
+
+    # 获取ssoticketid
+    parser = CardPageParser()
+    parser.feed(res.text)
+    ssoticket_id = parser.ssoticket_id
+    get_hall_ticket(session, ssoticket_id)
+    ticket = get_ticket(session)
+    synjones_auth = get_synjones_auth(ticket)
+    return get_fee_data(synjones_auth, room, FEE_ITEM_ID['Huxi'] if isHuxi else FEE_ITEM_ID['Old'])
 
 
 @dataclass
@@ -107,16 +117,15 @@ class EnergyFees:
 
     @staticmethod
     def fetch(session: Session, isHuxi: bool, room: str) -> EnergyFees:
-        """从 card.cqu.edu.cn 上获取当前水电费信息，需要登录并认证了 mycqu 的会话
+        """从 card.cqu.edu.cn 上获取当前水电费信息，需要登录了统一身份认证的会话
 
-        :param session: 登录了统一身份认证（:func:`.auth.login`）并在 mycqu 进行了认证（:func:`.mycqu.access_mycqu`）的 requests 会话
+        :param session: 登录了统一身份认证（:func:`.auth.login`）的 requests 会话
         :type session: Session
-        :raises MycquUnauthorized: 若会话未在 my.cqu.edu.cn 认证
         :raises NetworkError: 当访问相关网页时statue code不为200时抛出
         :raises TicketGetError: 当未能从网页对应位置中获取到ticket时抛出
         :raises ParseError: 当从返回数据解析所需值失败时抛出
         :raises FeeAcquisitionFailed: 当网页获取水电费状态码不为success时抛出
-        :return: 本学期信息对象
+        :return: 返回相关宿舍的水电费信息
         :rtype: EnergyFees
         """
         return EnergyFees.from_dict(get_fees_info_raw(session, isHuxi, room)["map"]["showData"])

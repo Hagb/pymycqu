@@ -28,10 +28,6 @@ def get_score_raw(auth: Union[Session, str]):
     """
     if isinstance(auth, requests.Session):
         res = auth.get('https://my.cqu.edu.cn/api/sam/score/student/score')
-        content = json.loads(res.content)
-        if content['status'] == 'error':
-            raise CQUWebsiteError(content['msg'])
-        return content['data']
     else:
         authorization = auth
         headers = {
@@ -41,9 +37,13 @@ def get_score_raw(auth: Union[Session, str]):
         }
         res = requests.get(
             'https://my.cqu.edu.cn/api/sam/score/student/score', headers=headers)
+
+    content = json.loads(res.content)
+    if content['status'] == 'error':
+        raise CQUWebsiteError(content['msg'])
     if res.status_code == 401:
         raise MycquUnauthorized()
-    return json.loads(res.content)['data']
+    return content['data']
 
 
 @dataclass
