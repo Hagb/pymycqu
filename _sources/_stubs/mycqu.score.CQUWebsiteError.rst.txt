@@ -1,0 +1,7 @@
+mycqu.score.CQUWebsiteError
+===========================
+
+.. currentmodule:: mycqu.score
+
+.. autoclass:: CQUWebsiteError
+   :members:
