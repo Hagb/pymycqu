@@ -1,0 +1,6 @@
+mycqu.score.get\_gpa\_ranking\_raw
+==================================
+
+.. currentmodule:: mycqu.score
+
+.. autofunction:: get_gpa_ranking_raw
