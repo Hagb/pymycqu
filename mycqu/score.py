@@ -10,7 +10,7 @@ from ._lib_wrapper.dataclass import dataclass
 from .course import Course, CQUSession
 from .mycqu import MycquUnauthorized
 
-__all__ = ("Score",)
+__all__ = ("Score", "GpaRanking")
 
 
 class CQUWebsiteError(Exception):
@@ -37,6 +37,35 @@ def get_score_raw(auth: Union[Session, str]):
         }
         res = requests.get(
             'https://my.cqu.edu.cn/api/sam/score/student/score', headers=headers)
+
+    content = json.loads(res.content)
+    if content['status'] == 'error':
+        raise CQUWebsiteError(content['msg'])
+    if res.status_code == 401:
+        raise MycquUnauthorized()
+    return content['data']
+
+
+def get_gpa_ranking_raw(auth: Union[Session, str]):
+    """
+    获取学生绩点排名
+
+    :param auth: 登陆后获取的authorization或者调用过mycqu.access_mycqu的session
+    :type auth: Union[Session, str]
+    :return: 反序列化获取的绩点、排名
+    :rtype: Dict
+    """
+    if isinstance(auth, requests.Session):
+        res = auth.get('https://my.cqu.edu.cn/api/sam/score/student/studentGpaRanking')
+    else:
+        authorization = auth
+        headers = {
+            'Referer': 'https://my.cqu.edu.cn/sam/home',
+            'User-Agent': 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0)',
+            'Authorization': authorization
+        }
+        res = requests.get(
+            'https://my.cqu.edu.cn/api/sam/score/student/studentGpaRanking', headers=headers)
 
     content = json.loads(res.content)
     if content['status'] == 'error':
@@ -88,7 +117,7 @@ class Score:
         :type auth: Union[Session, str]
         :return: 返回成绩对象
         :rtype: List[Score]
-        :raises CQUWebsiteError: 查询成绩时教务网报错
+        :raises CQUWebsiteError: 查询时教务网报错
         """
         temp = get_score_raw(auth)
         score = []
@@ -96,3 +125,48 @@ class Score:
             for course in courses['stuScoreHomePgVoS']:
                 score.append(Score.from_dict(course))
         return score
+
+
+@dataclass
+class GpaRanking:
+    """
+    绩点对象
+    """
+    gpa: float
+    """学生总绩点"""
+    majorRanking: Optional[int]
+    """专业排名"""
+    gradeRanking: Optional[int]
+    """年级排名"""
+    classRanking: Optional[int]
+    """班级排名"""
+
+    @staticmethod
+    def from_dict(data: Dict[str, Any]) -> GpaRanking:
+        """
+        从反序列化的字典生成GpaRanking对象
+
+        @param: data
+        @type: dict
+        @return: 返回绩点排名对象
+        @rtype: GpaRanking
+        """
+        return GpaRanking(
+            gpa=float(data['gpa']),
+            majorRanking=data['majorRanking'] and int(data['majorRanking']),
+            gradeRanking=data['gradeRanking'] and int(data['gradeRanking']),
+            classRanking=data['classRanking'] and int(data['classRanking'])
+        )
+
+    @staticmethod
+    def fetch(auth: Union[str, Session]) -> GpaRanking:
+        """
+        从网站获取绩点排名信息
+
+        :param auth: 登陆后获取的 authorization 或者调用过 :func:`.mycqu.access_mycqu` 的 Session
+        :type auth: Union[Session, str]
+        :return: 返回绩点排名对象
+        :rtype: GpaRanking
+        :raises CQUWebsiteError: 查询时教务网报错
+        """
+        return GpaRanking.from_dict(get_gpa_ranking_raw(auth))
