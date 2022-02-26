@@ -132,13 +132,13 @@ class GpaRanking:
     """
     绩点对象
     """
-    gpa: str
+    gpa: float
     """学生总绩点"""
-    majorRanking: Optional[str]
+    majorRanking: Optional[int]
     """专业排名"""
-    gradeRanking: Optional[str]
+    gradeRanking: Optional[int]
     """年级排名"""
-    classRanking: Optional[str]
+    classRanking: Optional[int]
     """班级排名"""
 
     @staticmethod
@@ -152,10 +152,10 @@ class GpaRanking:
         @rtype: GpaRanking
         """
         return GpaRanking(
-            gpa=data['gpa'],
-            majorRanking=data['majorRanking'],
-            gradeRanking=data['gradeRanking'],
-            classRanking=data['classRanking']
+            gpa=float(data['gpa']),
+            majorRanking=data['majorRanking'] and int(data['majorRanking']),
+            gradeRanking=data['gradeRanking'] and int(data['gradeRanking']),
+            classRanking=data['classRanking'] and int(data['classRanking'])
         )
 
     @staticmethod
