@@ -77,7 +77,7 @@
 <ul class="simple">
 <li><p>如果同一帐号连续尝试三次使用错误密码登录，
 那么再次登录时还需要输入二维码，此时 <a class="reference internal" href="_stubs/mycqu.auth.login.html#mycqu.auth.login" title="mycqu.auth.login"><code class="xref py py-func docutils literal notranslate"><span class="pre">mycqu.auth.login()</span></code></a> 会抛出
-<a class="reference internal" href="_stubs/mycqu.auth.NeedCaptcha.html#mycqu.auth.NeedCaptcha" title="mycqu.auth.NeedCaptcha"><code class="xref py py-class docutils literal notranslate"><span class="pre">mycqu.auth.NeedCaptcha</span></code></a> 异常，捕获它之后可以获取验证图片，输入验证码后继续登录</p></li>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">mycqu.auth.NeedCaptcha</span></code> 异常，捕获它之后可以获取验证图片，输入验证码后继续登录</p></li>
 <li><p>在统一身份认证号登录后还需要给 my.cqu.edu.cn 进行授权认证，使用 <a class="reference internal" href="_stubs/mycqu.mycqu.access_mycqu.html#mycqu.mycqu.access_mycqu" title="mycqu.mycqu.access_mycqu"><code class="xref py py-func docutils literal notranslate"><span class="pre">mycqu.mycqu.access_mycqu()</span></code></a></p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mycqu.auth</span> <span class="kn">import</span> <span class="n">login</span><span class="p">,</span> <span class="n">NeedCaptcha</span>

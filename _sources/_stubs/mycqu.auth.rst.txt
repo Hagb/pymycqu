@@ -36,21 +36,6 @@
 
    
    
-   .. rubric:: Exceptions
-
-   .. autosummary::
-      :template: autosummary/exception.rst
-      :toctree:
-
-   
-      IncorrectLoginCredentials
-      InvaildCaptcha
-      MultiSessionConflict
-      NeedCaptcha
-      NotAllowedService
-      NotLogined
-      UnknownAuthserverException
-   
    
 
 

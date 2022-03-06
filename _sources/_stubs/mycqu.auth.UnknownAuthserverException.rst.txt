@@ -1,7 +1,0 @@
-mycqu.auth.UnknownAuthserverException
-=====================================
-
-.. currentmodule:: mycqu.auth
-
-.. autoclass:: UnknownAuthserverException
-   :members:

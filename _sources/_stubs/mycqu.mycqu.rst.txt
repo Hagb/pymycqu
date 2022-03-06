@@ -25,15 +25,6 @@
 
    
    
-   .. rubric:: Exceptions
-
-   .. autosummary::
-      :template: autosummary/exception.rst
-      :toctree:
-
-   
-      MycquUnauthorized
-   
    
 
 
