@@ -9,7 +9,7 @@ from functools import lru_cache
 from requests import Session, get
 from ._lib_wrapper.dataclass import dataclass
 from .utils.datetimes import parse_period_str, parse_weeks_str, parse_weekday_str, date_from_str
-from .mycqu import MycquUnauthorized
+from .exception import MycquUnauthorized
 
 
 __all__ = ("CQUSession", "CQUSessionInfo",

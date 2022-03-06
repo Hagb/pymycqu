@@ -6,45 +6,108 @@ from __future__ import annotations
 import requests
 from requests import Session
 import json
-import time
 import datetime
-from typing import Any, Dict, Optional, Tuple, List, Union, ClassVar
-from ._lib_wrapper.dataclass import dataclass
+from typing import Any, List
 from html.parser import HTMLParser
+from ._lib_wrapper.dataclass import dataclass
+from .utils.datetimes import TIMEZONE
+from .exception import TicketGetError, ParseError, CQUWebsiteError
 
-__all__ = ("EnergyFees", "Bill", "Card")
-
-LOGIN_URL = 'http://authserver.cqu.edu.cn/authserver/login?service=http://card.cqu.edu.cn:7280/ias/prelogin?sysid=FWDT'
+__all__ = ("EnergyFees", "Bill", "Card", "access_card")
 
 # 缴费大厅页面的不同缴费项目的id不同，虎溪和老校区不同
 FEE_ITEM_ID = {'Huxi': '182',
                'Old': '181'}
 
-
-class NetworkError(Exception):
-    """
-    当访问相关网页时statue code不为200时抛出
-    """
+LOGIN_URL = 'http://authserver.cqu.edu.cn/authserver/login?service=http://card.cqu.edu.cn:7280/ias/prelogin?sysid=FWDT'
 
 
-class TicketGetError(Exception):
+def get_fees_raw(session: Session, isHuxi: bool, room: str):
     """
-    当未能从网页对应位置中获取到ticket时抛出
+    从card.cqu.edu.cn获取水电费详情
+
+    :param session: 登录了统一身份认证（:func:`.auth.login`）并在 card.cqu.edu.cn 进行了认证（:func:`.card.access_card`）的 requests 会话
+    :type session: Session
+    :param isHuxi: 房间号是否为虎溪校区的房间
+    :type isHuxi: bool
+    :param room: 需要获取水电费详情的宿舍
+    :type room: str
+    :raises NetworkError: 当访问相关网页时statue code不为200时抛出
+    :raises TicketGetError: 当未能从网页对应位置中获取到ticket时抛出
+    :raises ParseError: 当从返回数据解析所需值失败时抛出
+    :raises CQUWebsiteError: 当网页获取水电费状态码不为success时抛出
+    :return: 反序列化获取水电费信息的json
+    :rtype: dict
     """
+    ticket = get_ticket(session)
+    synjones_auth = get_synjones_auth(ticket)
+    return get_fee_data(synjones_auth, room, FEE_ITEM_ID['Huxi'] if isHuxi else FEE_ITEM_ID['Old'])
 
 
-class ParseError(Exception):
+def get_card_raw(session):
     """
-    当从返回数据解析所需值失败时抛出
+    从card.cqu.edu.cn获取校园卡信息
+
+    :param session: 登录了统一身份认证（:func:`.auth.login`）并在 card.cqu.edu.cn 进行了认证（:func:`.card.access_card`）的 requests 会话
+    :type session: Session
+    :raises CQUWebsiteError: 当网页获取状态码不为0000时抛出
+    :return: 获取的校园卡信息
+    :rtype: dict
     """
+    url = "http://card.cqu.edu.cn/NcAccType/GetCurrentAccountList"
+
+    res = session.post(url)
+    result = json.loads(json.loads(res.text))
+    if result['respCode'] != "0000":
+        raise CQUWebsiteError(error_msg=result['respInfo'])
+
+    return result['objs'][0]
 
 
-class AcquisitionFailed(Exception):
+def get_bill_raw(session: Session, account: int, duration: int):
     """
-    当网页获取信息状态码不为success时抛出
+    从card.cqu.edu.cn获取校园卡账单
+
+    :param session: 登录了统一身份认证（:func:`.auth.login`）并在 card.cqu.edu.cn 进行了认证（:func:`.card.access_card`）的 requests 会话
+    :type session: Session
+    :param account: 校园卡卡号
+    :type account: int
+    :param duration: 查询时间间隔(默认为30天)
+    :type duration: int
+    :return: 获取的校园卡账单信息
+    :rtype: dict
     """
-    def __init__(self, error_msg):
-        super().__init__("获取发生异常，返回状态：" + error_msg)
+    url = 'http://card.cqu.edu.cn/NcReport/GetMyBill'
+
+    end_date = datetime.datetime.now(tz=TIMEZONE)
+    start_date = end_date - datetime.timedelta(duration)
+
+    data = {
+        'sdate': start_date.strftime('%Y-%m-%d'),
+        'edate': end_date.strftime('%Y-%m-%d'),
+        'account': account,
+        'page': 1,
+        'row': 100,
+    }
+
+    res = session.post(url=url, data=data)
+    result = json.loads(res.text)
+
+    return result['rows']
+
+
+def access_card(session):
+    """用登陆了统一身份认证的会话在 card.cqu.edu.cn 进行认证
+
+    :param session: 登陆了统一身份认证的会话
+    :type session: Session
+    """
+    res = session.get(LOGIN_URL)
+
+    parser = CardPageParser()
+    parser.feed(res.text)
+    ssoticket_id = parser.ssoticket_id
+    get_hall_ticket(session, ssoticket_id)
 
 
 class CardPageParser(HTMLParser):
@@ -62,50 +125,18 @@ class CardPageParser(HTMLParser):
                     break
 
 
-def get_fees_info_raw(session: Session, isHuxi: bool, room: str):
-    """
-    从card.cqu.edu.cn获取水电费详情
-
-    :param session: 登录了统一身份认证（:func:`.auth.login`）的 requests 会话
-    :type session: Session
-    :param isHuxi: 房间号是否为虎溪校区的房间
-    :type isHuxi: bool
-    :param room: 需要获取水电费详情的宿舍
-    :type room: str
-    :raises NetworkError: 当访问相关网页时statue code不为200时抛出
-    :raises TicketGetError: 当未能从网页对应位置中获取到ticket时抛出
-    :raises ParseError: 当从返回数据解析所需值失败时抛出
-    :raises AcquisitionFailed: 当网页获取水电费状态码不为success时抛出
-    :return: 反序列化获取水电费信息的json
-    :rtype: dict
-    """
-    card_login(session)
-
-    ticket = get_ticket(session)
-    synjones_auth = get_synjones_auth(ticket)
-    return get_fee_data(synjones_auth, room, FEE_ITEM_ID['Huxi'] if isHuxi else FEE_ITEM_ID['Old'])
-
-
-def get_bill_raw(session: Session, duration: int = 30):
-    """
-    从card.cqu.edu.cn获取校园卡余额及账单
-
-    :param session: 登录了统一身份认证（:func:`.auth.login`）的 requests 会话
-    :type session: Session
-    :param duration: 查询时间间隔(默认为30天)
-    :type duration: int
-    :raises AcquisitionFailed: 当网页获取状态码不为0000时抛出
-    :return: 获取的校园卡账单信息
-    :rtype: dict
-    """
-    card_login(session)
-
-    card = get_card_data(session)[0]
-    account = card['acctNo']
-    amount = card['acctAmt']
-    res = {'amount': amount, 'bills': get_bill_data(session, account, duration)}
-
-    return res
+# 获取hallticket
+def get_hall_ticket(session, ssoticket_id):
+    url = 'http://card.cqu.edu.cn/cassyno/index'
+    data = {
+        'errorcode': '1',
+        'continueurl': 'http://card.cqu.edu.cn/cassyno/index',
+        'ssoticketid': ssoticket_id,
+    }
+    r = session.post(url, data=data)
+    if r.status_code != 200:
+        raise CQUWebsiteError()
+    return session
 
 
 @dataclass
@@ -144,11 +175,11 @@ class EnergyFees:
         :raises NetworkError: 当访问相关网页时statue code不为200时抛出
         :raises TicketGetError: 当未能从网页对应位置中获取到ticket时抛出
         :raises ParseError: 当从返回数据解析所需值失败时抛出
-        :raises AcquisitionFailed: 当网页获取水电费状态码不为success时抛出
+        :raises CQUWebsiteError: 当网页获取水电费状态码不为success时抛出
         :return: 返回相关宿舍的水电费信息
         :rtype: EnergyFees
         """
-        return EnergyFees.from_dict(get_fees_info_raw(session, isHuxi, room)["map"]["showData"])
+        return EnergyFees.from_dict(get_fees_raw(session, isHuxi, room)["map"]["showData"])
 
 
 @dataclass
@@ -158,7 +189,7 @@ class Bill:
     """
     tran_name: str
     """交易名称"""
-    tran_date: str
+    tran_date: datetime.datetime
     """交易时间"""
     tran_place: str
     """交易地点"""
@@ -179,7 +210,7 @@ class Bill:
         """
         return Bill(
             tran_name=data['tranName'],
-            tran_date=data['tranDt'],
+            tran_date=datetime.datetime.strptime(data['tranDt'], "%Y-%m-%d %H:%M:%S").replace(tzinfo=TIMEZONE),
             tran_place=data['mchAcctName'],
             tran_amount=float(data['tranAmt'] / 100),
             acc_amount=float(int(data['acctAmt']) / 100)
@@ -191,46 +222,44 @@ class Card:
     """
     校园卡及其账单信息
     """
+    card_id: int
+    """校园卡id"""
     amount: float
     """账户余额"""
-    bills: List[Bill]
-    """最近交易记录"""
 
     @staticmethod
-    def fetch(session: Session, duration: int = 30) -> Card:
-        res = get_bill_raw(session, duration)
-        bills = []
-        for bill in res['bills']:
-            bills.append(Bill.from_dict(bill))
+    def fetch(session: Session) -> Card:
+        """
+        从card.cqu.edu.cn获取校园卡信息
+
+        :param session: 登录了统一身份认证（:func:`.auth.login`）并在 card.cqu.edu.cn 进行了认证（:func:`.card.access_card`）的 requests 会话
+        :type session: Session
+        :raises CQUWebsiteError: 当网页获取状态码不为0000时抛出
+        :return: 获取的校园卡信息
+        :rtype: Card
+        """
+        card_info = get_card_raw(session)
 
         return Card(
-            amount=float(res['amount'] / 100),
-            bills=bills
+            card_id=int(card_info['acctNo']),
+            amount=float(card_info['acctAmt'] / 100)
         )
 
+    def fetch_bills(self, session: Session) -> List[Bill]:
+        """
+        从card.cqu.edu.cn获取校园卡账单
 
-# 使用登陆统一认证的会话登陆查询网站的辅助函数
-def card_login(session):
-    res = session.get(LOGIN_URL)
+        :param session: 登录了统一身份认证（:func:`.auth.login`）并在 card.cqu.edu.cn 进行了认证（:func:`.card.access_card`）的 requests 会话
+        :type session: Session
+        :return: 获取的校园卡账单信息
+        :rtype: dict
+        """
+        bill_info = get_bill_raw(session, self.card_id, 30)
+        bills = []
+        for bill in bill_info:
+            bills.append(Bill.from_dict(bill))
 
-    parser = CardPageParser()
-    parser.feed(res.text)
-    ssoticket_id = parser.ssoticket_id
-    get_hall_ticket(session, ssoticket_id)
-
-
-# 获取hallticket
-def get_hall_ticket(session, ssoticket_id):
-    url = 'http://card.cqu.edu.cn/cassyno/index'
-    data = {
-        'errorcode': '1',
-        'continueurl': 'http://card.cqu.edu.cn/cassyno/index',
-        'ssoticketid': ssoticket_id,
-    }
-    r = session.post(url, data=data)
-    if r.status_code != 200:
-        raise NetworkError()
-    return session
+        return bills
 
 
 # 利用登录之后的cookie获取一卡通的关键ticket
@@ -245,7 +274,7 @@ def get_ticket(session):
     }
     r = session.post(url, data=data)
     if r.status_code != 200:
-        raise NetworkError()
+        raise CQUWebsiteError()
     ticket_start = r.text.find('ticket=')
     if ticket_start > 0:
         ticket_end = r.text.find("'", ticket_start)
@@ -261,7 +290,7 @@ def get_synjones_auth(ticket):
     data = {'ticket': ticket}
     r = requests.post(url, data=data)
     if r.status_code != 200:
-        raise NetworkError()
+        raise CQUWebsiteError()
     try:
         dic = json.loads(r.text)
         token = dic['data']['access_token']
@@ -284,42 +313,15 @@ def get_fee_data(synjones_auth, room, fee_item_id):
     cookie = {'synjones-auth': synjones_auth}
     r = requests.post(url, data=data, cookies=cookie)
     if r.status_code != 200:
-        raise NetworkError()
+        raise CQUWebsiteError()
     dic = json.loads(r.text)
     if dic['msg'] == 'success':
         return dic
     else:
-        raise AcquisitionFailed(dic['msg'])
+        raise CQUWebsiteError(dic['msg'])
 
 
 # 获取校园卡账号信息
-def get_card_data(session):
-    url = "http://card.cqu.edu.cn/NcAccType/GetCurrentAccountList"
-
-    res = session.post(url)
-    result = json.loads(json.loads(res.text))
-    if result['respCode'] != "0000":
-        raise AcquisitionFailed(error_msg=result['respInfo'])
-
-    return result['objs']
 
 
-# 获取消费账单记录
-def get_bill_data(session, account, duration):
-    url = 'http://card.cqu.edu.cn/NcReport/GetMyBill'
 
-    end_date = datetime.datetime.now()
-    start_date = end_date - datetime.timedelta(duration)
-
-    data = {
-        'sdate': start_date.strftime('%Y-%m-%d'),
-        'edate': end_date.strftime('%Y-%m-%d'),
-        'account': account,
-        'page': 1,
-        'row': 100,
-    }
-
-    res = session.post(url=url, data=data)
-    result = json.loads(res.text)
-
-    return result['rows']
