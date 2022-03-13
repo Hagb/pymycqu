@@ -1,0 +1,7 @@
+mycqu.exception.MycquUnauthorized
+=================================
+
+.. currentmodule:: mycqu.exception
+
+.. autoclass:: MycquUnauthorized
+   :members:

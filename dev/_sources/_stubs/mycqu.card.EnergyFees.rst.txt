@@ -1,0 +1,33 @@
+mycqu.card.EnergyFees
+=====================
+
+.. currentmodule:: mycqu.card
+
+.. autoclass:: EnergyFees
+   :members:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~EnergyFees.__init__
+      ~EnergyFees.fetch
+      ~EnergyFees.from_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~EnergyFees.balance
+      ~EnergyFees.electricity_subsidy
+      ~EnergyFees.water_subsidy
+   
+   
+
+   .. rubric:: Details

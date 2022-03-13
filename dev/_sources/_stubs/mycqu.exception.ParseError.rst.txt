@@ -1,0 +1,7 @@
+mycqu.exception.ParseError
+==========================
+
+.. currentmodule:: mycqu.exception
+
+.. autoclass:: ParseError
+   :members:

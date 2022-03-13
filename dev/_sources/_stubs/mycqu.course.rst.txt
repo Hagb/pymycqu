@@ -1,4 +1,4 @@
-﻿mycqu.course
+mycqu.course
 ============
 
 .. automodule:: mycqu.course

@@ -1,0 +1,6 @@
+mycqu.card.get\_bill\_raw
+=========================
+
+.. currentmodule:: mycqu.card
+
+.. autofunction:: get_bill_raw

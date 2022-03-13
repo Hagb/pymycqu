@@ -1,0 +1,6 @@
+mycqu.utils.datetimes.time\_from\_str
+=====================================
+
+.. currentmodule:: mycqu.utils.datetimes
+
+.. autofunction:: time_from_str

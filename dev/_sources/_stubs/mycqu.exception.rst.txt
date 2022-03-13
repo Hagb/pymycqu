@@ -1,0 +1,42 @@
+mycqu.exception
+===============
+
+.. automodule:: mycqu.exception
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+      :template: autosummary/exception.rst
+      :toctree:
+
+   
+      CQUWebsiteError
+      IncorrectLoginCredentials
+      InvaildCaptcha
+      MultiSessionConflict
+      MycquUnauthorized
+      NeedCaptcha
+      NotAllowedService
+      NotLogined
+      ParseError
+      TicketGetError
+      UnknownAuthserverException
+   
+   
+
+
+

@@ -1,0 +1,32 @@
+mycqu.card.Card
+===============
+
+.. currentmodule:: mycqu.card
+
+.. autoclass:: Card
+   :members:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Card.__init__
+      ~Card.fetch
+      ~Card.fetch_bills
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Card.card_id
+      ~Card.amount
+   
+   
+
+   .. rubric:: Details

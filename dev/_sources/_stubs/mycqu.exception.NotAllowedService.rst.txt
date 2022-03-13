@@ -1,0 +1,7 @@
+mycqu.exception.NotAllowedService
+=================================
+
+.. currentmodule:: mycqu.exception
+
+.. autoclass:: NotAllowedService
+   :members:

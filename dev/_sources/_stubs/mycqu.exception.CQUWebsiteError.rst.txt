@@ -1,0 +1,7 @@
+mycqu.exception.CQUWebsiteError
+===============================
+
+.. currentmodule:: mycqu.exception
+
+.. autoclass:: CQUWebsiteError
+   :members:

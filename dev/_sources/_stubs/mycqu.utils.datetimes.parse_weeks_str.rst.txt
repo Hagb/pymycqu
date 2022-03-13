@@ -1,0 +1,6 @@
+mycqu.utils.datetimes.parse\_weeks\_str
+=======================================
+
+.. currentmodule:: mycqu.utils.datetimes
+
+.. autofunction:: parse_weeks_str

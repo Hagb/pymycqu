@@ -1,0 +1,39 @@
+﻿mycqu
+=====
+
+.. automodule:: mycqu
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   mycqu.auth
+   mycqu.card
+   mycqu.course
+   mycqu.exam
+   mycqu.exception
+   mycqu.mycqu
+   mycqu.score
+   mycqu.user
+   mycqu.utils
+

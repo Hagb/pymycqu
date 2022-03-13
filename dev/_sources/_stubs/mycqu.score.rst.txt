@@ -1,4 +1,4 @@
-﻿mycqu.score
+mycqu.score
 ===========
 
 .. automodule:: mycqu.score

@@ -1,6 +1,0 @@
-mycqu.auth.get\_formdata
-========================
-
-.. currentmodule:: mycqu.auth
-
-.. autofunction:: get_formdata

@@ -1,0 +1,7 @@
+mycqu.exception.NeedCaptcha
+===========================
+
+.. currentmodule:: mycqu.exception
+
+.. autoclass:: NeedCaptcha
+   :members:

@@ -1,0 +1,7 @@
+mycqu.exception.InvaildCaptcha
+==============================
+
+.. currentmodule:: mycqu.exception
+
+.. autoclass:: InvaildCaptcha
+   :members:

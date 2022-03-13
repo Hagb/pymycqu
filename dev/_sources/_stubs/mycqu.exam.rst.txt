@@ -1,4 +1,4 @@
-﻿mycqu.exam
+mycqu.exam
 ==========
 
 .. automodule:: mycqu.exam

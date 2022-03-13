@@ -1,0 +1,6 @@
+mycqu.card.get\_fee\_data
+=========================
+
+.. currentmodule:: mycqu.card
+
+.. autofunction:: get_fee_data

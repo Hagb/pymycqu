@@ -1,4 +1,4 @@
-﻿mycqu.auth
+mycqu.auth
 ==========
 
 .. automodule:: mycqu.auth
@@ -15,7 +15,6 @@
       :toctree:
    
       access_service
-      get_formdata
       is_logined
       login
       logout
@@ -23,14 +22,6 @@
    
 
    
-   
-   .. rubric:: Classes
-
-   .. autosummary::
-      :toctree:
-   
-      AuthPageParser
-      LoginedPageParser
    
    
 

@@ -1,0 +1,34 @@
+mycqu.card.Bill
+===============
+
+.. currentmodule:: mycqu.card
+
+.. autoclass:: Bill
+   :members:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Bill.__init__
+      ~Bill.from_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Bill.tran_name
+      ~Bill.tran_date
+      ~Bill.tran_place
+      ~Bill.tran_amount
+      ~Bill.acc_amount
+   
+   
+
+   .. rubric:: Details

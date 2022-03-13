@@ -1,4 +1,4 @@
-﻿mycqu.user
+mycqu.user
 ==========
 
 .. automodule:: mycqu.user

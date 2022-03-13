@@ -1,0 +1,7 @@
+mycqu.exception.MultiSessionConflict
+====================================
+
+.. currentmodule:: mycqu.exception
+
+.. autoclass:: MultiSessionConflict
+   :members:

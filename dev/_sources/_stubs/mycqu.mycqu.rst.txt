@@ -1,4 +1,4 @@
-﻿mycqu.mycqu
+mycqu.mycqu
 ===========
 
 .. automodule:: mycqu.mycqu
@@ -15,7 +15,6 @@
       :toctree:
    
       access_mycqu
-      get_oauth_token
    
    
 

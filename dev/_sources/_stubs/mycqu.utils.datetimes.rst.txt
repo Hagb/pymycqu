@@ -1,0 +1,34 @@
+mycqu.utils.datetimes
+=====================
+
+.. automodule:: mycqu.utils.datetimes
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      date_from_str
+      parse_period_str
+      parse_weekday_str
+      parse_weeks_str
+      time_from_str
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

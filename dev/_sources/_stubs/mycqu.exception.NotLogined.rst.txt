@@ -1,0 +1,7 @@
+mycqu.exception.NotLogined
+==========================
+
+.. currentmodule:: mycqu.exception
+
+.. autoclass:: NotLogined
+   :members:

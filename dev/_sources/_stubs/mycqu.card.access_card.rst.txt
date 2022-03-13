@@ -1,0 +1,6 @@
+mycqu.card.access\_card
+=======================
+
+.. currentmodule:: mycqu.card
+
+.. autofunction:: access_card

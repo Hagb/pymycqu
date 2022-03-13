@@ -18,7 +18,7 @@
     
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="mycqu.auth.get_formdata" href="mycqu.auth.get_formdata.html" />
+    <link rel="next" title="mycqu.auth.is_logined" href="mycqu.auth.is_logined.html" />
     <link rel="prev" title="mycqu.auth" href="mycqu.auth.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -31,13 +31,14 @@
           <a href="../py-modindex.html" title="Python 模块索引"
              >模块</a> |</li>
         <li class="right" >
-          <a href="mycqu.auth.get_formdata.html" title="mycqu.auth.get_formdata"
+          <a href="mycqu.auth.is_logined.html" title="mycqu.auth.is_logined"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
           <a href="mycqu.auth.html" title="mycqu.auth"
              accesskey="P">上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">pymycqu dev 文档</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="mycqu.auth.html" accesskey="U">mycqu.auth</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="mycqu.html" >mycqu</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mycqu.auth.html" accesskey="U">mycqu.auth</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">mycqu.auth.access_service</a></li> 
       </ul>
     </div>  
@@ -52,7 +53,25 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="mycqu.auth.access_service">
 <span class="sig-prename descclassname"><span class="pre">mycqu.auth.</span></span><span class="sig-name descname"><span class="pre">access_service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">requests.sessions.Session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">requests.models.Response</span></span></span><a class="headerlink" href="#mycqu.auth.access_service" title="永久链接至目标">¶</a></dt>
-<dd></dd></dl>
+<dd><p>从登录了统一身份认证的会话获取指定服务的许可</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> (<em>Session</em>) – 登录了统一身份认证的会话</p></li>
+<li><p><strong>service</strong> (<em>str</em>) – 服务的 url</p></li>
+</ul>
+</dd>
+<dt class="field-even">引发</dt>
+<dd class="field-even"><p><a class="reference internal" href="mycqu.exception.NotLogined.html#mycqu.exception.NotLogined" title="mycqu.exception.NotLogined"><strong>NotLogined</strong></a> – 统一身份认证未登录时抛出</p>
+</dd>
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>访问服务 url 的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>Response</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 
@@ -67,8 +86,8 @@
   <p class="topless"><a href="mycqu.auth.html"
                         title="上一章">mycqu.auth</a></p>
   <h4>下一个主题</h4>
-  <p class="topless"><a href="mycqu.auth.get_formdata.html"
-                        title="下一章">mycqu.auth.get_formdata</a></p>
+  <p class="topless"><a href="mycqu.auth.is_logined.html"
+                        title="下一章">mycqu.auth.is_logined</a></p>
   <div role="note" aria-label="source link">
     <h3>本页</h3>
     <ul class="this-page-menu">
@@ -119,13 +138,14 @@
           <a href="../py-modindex.html" title="Python 模块索引"
              >模块</a> |</li>
         <li class="right" >
-          <a href="mycqu.auth.get_formdata.html" title="mycqu.auth.get_formdata"
+          <a href="mycqu.auth.is_logined.html" title="mycqu.auth.is_logined"
              >下一页</a> |</li>
         <li class="right" >
           <a href="mycqu.auth.html" title="mycqu.auth"
              >上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">pymycqu dev 文档</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="mycqu.auth.html" >mycqu.auth</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="mycqu.html" >mycqu</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mycqu.auth.html" >mycqu.auth</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">mycqu.auth.access_service</a></li> 
       </ul>
     </div>

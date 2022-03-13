@@ -30,6 +30,8 @@ mycqu.course.CourseTimetable
       ~CourseTimetable.weeks
       ~CourseTimetable.day_time
       ~CourseTimetable.whole_week
+      ~CourseTimetable.classroom_name
+      ~CourseTimetable.expr_projects
    
    
 

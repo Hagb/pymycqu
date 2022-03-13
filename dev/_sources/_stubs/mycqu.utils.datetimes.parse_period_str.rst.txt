@@ -1,0 +1,6 @@
+mycqu.utils.datetimes.parse\_period\_str
+========================================
+
+.. currentmodule:: mycqu.utils.datetimes
+
+.. autofunction:: parse_period_str

@@ -1,0 +1,7 @@
+mycqu.exception.TicketGetError
+==============================
+
+.. currentmodule:: mycqu.exception
+
+.. autoclass:: TicketGetError
+   :members:
