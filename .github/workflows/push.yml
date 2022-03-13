@@ -2,8 +2,9 @@ name: CI
 
 on:
   push:
-    branch:
+    branches:
       - master
+      - dev
 
 jobs:
   build:
@@ -12,15 +13,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - run: git branch --track dev origin/dev && git branch --track master origin/master
     # Standard drop-in approach that should work for most people.
     - uses: Hagb/sphinx-action@master
       with:
-        docs-folder: "docs/"
+        docs-folder: "."
+        build-command: "bash -c 'cd docs && sphinx-multiversion . _build 2> >(tee /tmp/sphinx-log >&2) && cp redirect.html _build/index.html'"
+        pre-build-command: "pip install pycryptodome beautifulsoup4 sphinx-multiversion && apt-get update -y && apt-get install -y git"
     - name: Commit documentation changes
       run: |
         git clone https://github.com/$GITHUB_REPOSITORY.git --branch gh-pages --single-branch gh-pages
         find gh-pages/ -maxdepth 1 -mindepth 1 ! -name CNAME ! -name .git -exec rm -r '{}' ';'
-        cp -r docs/_build/html/* gh-pages/
+        cp -r docs/_build/* gh-pages/
         cd gh-pages
         touch .nojekyll
         git config --local user.email "action@github.com"
