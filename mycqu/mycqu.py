@@ -21,7 +21,8 @@ class MycquUnauthorized(Exception):
 def get_oauth_token(session: Session) -> str:
     # from https://github.com/CQULHW/CQUQueryGrade
     resp = session.get(MYCQU_AUTHORIZE_URL, allow_redirects=False)
-    assert (match := CODE_RE.search(resp.headers['Location']))
+    match = CODE_RE.search(resp.headers['Location'])
+    assert match
     token_data = {
         'client_id': 'enroll-prod',
         'client_secret': 'app-a-1234',
