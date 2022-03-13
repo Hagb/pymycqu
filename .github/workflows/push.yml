@@ -19,7 +19,7 @@ jobs:
       with:
         docs-folder: "."
         build-command: "bash -c 'cd docs && sphinx-multiversion . _build 2> >(tee /tmp/sphinx-log >&2) && cp redirect.html _build/index.html'"
-        pre-build-command: "pip install pycryptodome beautifulsoup4 sphinx-multiversion && apt-get update -y && apt-get install -y git"
+        pre-build-command: "pip install pycryptodome beautifulsoup4 sphinx-multiversion jieba && apt-get update -y && apt-get install -y git"
     - name: Commit documentation changes
       run: |
         git clone https://github.com/$GITHUB_REPOSITORY.git --branch gh-pages --single-branch gh-pages
