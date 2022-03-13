@@ -275,6 +275,10 @@ class CourseTimetable:
     则为 :obj:`None`"""
     whole_week: bool
     """是否真实地占用整周（如军训和某些实习是真实地占用、思修实践是“虚拟地占用”）"""
+    classroom_name: Optional[str]
+    """行课教室名称"""
+    expr_projects: List[str]
+    """实验课各次实验内容"""
 
     @staticmethod
     def from_dict(data: Dict[str, Any]) -> CourseTimetable:
@@ -288,11 +292,13 @@ class CourseTimetable:
         return CourseTimetable(
             course=Course.from_dict(data),
             stu_num=data["selectedStuNum"],
-            classroom=data["roomName"],
+            classroom=data["position"],
             weeks=parse_weeks_str(data.get("weeks")
                                   or data.get("teachingWeekFormat")),  # type: ignore
             day_time=CourseDayTime.from_dict(data),
-            whole_week=bool(data["wholeWeekOccupy"])
+            whole_week=bool(data["wholeWeekOccupy"]),
+            classroom_name=data["roomName"],
+            expr_projects=data["exprProjectName"].split(',')
         )
 
     @staticmethod
