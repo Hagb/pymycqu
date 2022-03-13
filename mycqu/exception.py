@@ -1,20 +1,13 @@
-from typing import Dict, Optional, Callable
+from typing import Callable
 from requests import Response
-
-
-class TicketGetError(Exception):
-    """
-    当未能从网页对应位置中获取到ticket时抛出
-    """
-
-
-class ParseError(Exception):
-    """
-    当从返回数据解析所需值失败时抛出
-    """
+__all__ = ("CQUWebsiteError", "NotAllowedService", "NeedCaptcha", "InvaildCaptcha",
+           "IncorrectLoginCredentials", "TicketGetError", "ParseError", "MycquUnauthorized",
+           "UnknownAuthserverException", "NotLogined", "MultiSessionConflict")
 
 
 class CQUWebsiteError(Exception):
+    """重大网站返回未知的错误或异常时抛出"""
+
     def __init__(self, error_msg='No error info'):
         super().__init__('CQU website return error: ' + error_msg)
 
@@ -54,9 +47,20 @@ class IncorrectLoginCredentials(Exception):
         super().__init__("incorrect username or password")
 
 
-class UnknownAuthserverException(Exception):
-    """登录或认证服务过程中未知错误
+class TicketGetError(CQUWebsiteError):
     """
+    当未能从网页对应位置中获取到ticket时抛出
+    """
+
+
+class ParseError(CQUWebsiteError):
+    """
+    当从返回数据解析所需值失败时抛出
+    """
+
+
+class UnknownAuthserverException(CQUWebsiteError):
+    """登录或认证服务过程中未知错误"""
 
 
 class NotLogined(Exception):
@@ -79,6 +83,7 @@ class MultiSessionConflict(Exception):
 
 
 class MycquUnauthorized(Exception):
+    """访问需要 mycqu 认证，但未对 my.cqu.edu.cn 进行认证或认证过期时抛出"""
+
     def __init__(self):
         super().__init__("Unauthorized in mycqu, auth.login firstly and then mycqu.access_mycqu")
-

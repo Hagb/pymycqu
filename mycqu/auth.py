@@ -9,11 +9,9 @@ from requests import Session, Response
 from ._lib_wrapper.encrypt import pad, aes_cbc_encryptor
 
 from .exception import NotAllowedService, NeedCaptcha, InvaildCaptcha, IncorrectLoginCredentials, \
-    UnknownAuthserverException, NotLogined, MultiSessionConflict
+    UnknownAuthserverException, NotLogined, MultiSessionConflict, ParseError
 
-__all__ = ("NotAllowedService", "NeedCaptcha", "InvaildCaptcha",
-           "IncorrectLoginCredentials", "UnknownAuthserverException", "NotLogined",
-           "is_logined", "logout", "access_service", "login")
+__all__ = ("is_logined", "logout", "access_service", "login")
 
 AUTHSERVER_URL = "http://authserver.cqu.edu.cn/authserver/login"
 AUTHSERVER_CAPTCHA_DETERMINE_URL = "http://authserver.cqu.edu.cn/authserver/needCaptcha.html"
@@ -22,11 +20,11 @@ AUTHSERVER_LOGOUT_URL = "http://authserver.cqu.edu.cn/authserver/logout"
 _CHAR_SET = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'
 
 
-def _random_str(length: int):
+def _random_str(length: int) -> str:
     return ''.join(random.choices(_CHAR_SET, k=length))
 
 
-class AuthPageParser(HTMLParser):
+class _AuthPageParser(HTMLParser):
     _SALT_RE: re.Pattern = re.compile('var pwdDefaultEncryptSalt = "([^"]+)"')
 
     def __init__(self):
@@ -77,7 +75,7 @@ class AuthPageParser(HTMLParser):
                 "Error message before login: "+error_str)
 
 
-class LoginedPageParser(HTMLParser):  # pylint: ignore disable=missing-class-docstring
+class _LoginedPageParser(HTMLParser):
     MSG_ATTRS = [("id", "msg"), ("class", "login_auth_error")]
     KICK_TABLE_ATTRS = [("class", "kick_table")]
     KICK_POST_ATTRS = [('method', 'post'), ('id', 'continue')]
@@ -128,15 +126,16 @@ class LoginedPageParser(HTMLParser):  # pylint: ignore disable=missing-class-doc
                 )
 
 
-def get_formdata(html: str, username: str, password: str) -> Dict[str, Optional[str]]:
+def _get_formdata(html: str, username: str, password: str) -> Dict[str, Optional[str]]:
     # from https://github.com/CQULHW/CQUQueryGrade
-    parser = AuthPageParser()
+    parser = _AuthPageParser()
     parser.feed(html)
-    if not parser.salt:
-        ValueError("无法获取盐")
+    salt = parser.salt
+    if not salt:
+        ParseError("无法获取盐")
+    assert salt
     passwd_pkcs7 = pad((_random_str(64)+str(password)).encode())
-    encryptor = aes_cbc_encryptor(
-        parser.salt.encode(), _random_str(16).encode())
+    encryptor = aes_cbc_encryptor(salt.encode(), _random_str(16).encode())
     passwd_encrypted = b64encode(encryptor(passwd_pkcs7)).decode()
     parser.input_data['username'] = username
     parser.input_data['password'] = passwd_encrypted
@@ -164,11 +163,21 @@ def logout(session: Session) -> None:
 
 
 def access_service(session: Session, service: str) -> Response:
+    """从登录了统一身份认证的会话获取指定服务的许可
+
+    :param session: 登录了统一身份认证的会话
+    :type session: Session
+    :param service: 服务的 url
+    :type service: str
+    :raises NotLogined: 统一身份认证未登录时抛出
+    :return: 访问服务 url 的 :class:`Response`
+    :rtype: Response
+    """
     resp = session.get(AUTHSERVER_URL,
                        params={"service": service},
                        allow_redirects=False)
     if resp.status_code != 302:
-        AuthPageParser().feed(resp.text)
+        _AuthPageParser().feed(resp.text)
         raise NotLogined()
     return session.get(url=resp.headers['Location'], allow_redirects=False)
 
@@ -232,10 +241,10 @@ def login(session: Session,
     elif login_page.status_code != 200:
         raise UnknownAuthserverException()
     try:
-        formdata = get_formdata(login_page.text, username, password)
-    except ValueError:
+        formdata = _get_formdata(login_page.text, username, password)
+    except ParseError:
         logout(session)
-        formdata = get_formdata(get_login_page().text, username, password)
+        formdata = _get_formdata(get_login_page().text, username, password)
     if keep_longer:
         formdata['rememberMe'] = 'on'
 
@@ -252,7 +261,7 @@ def login(session: Session,
             return session.get(url=login_resp.headers['Location'], allow_redirects=False)
 
         if login_resp.status_code != 302:
-            parser = LoginedPageParser(login_resp.status_code)
+            parser = _LoginedPageParser(login_resp.status_code)
             parser.feed(login_resp.text)
 
             if parser._kick:  # pylint: ignore disable=protected-access

@@ -3,15 +3,17 @@
 """
 from __future__ import annotations
 
-import requests
-from requests import Session
+
 import json
 import datetime
 from typing import Any, List
 from html.parser import HTMLParser
+import requests
+from requests import Session
 from ._lib_wrapper.dataclass import dataclass
 from .utils.datetimes import TIMEZONE
 from .exception import TicketGetError, ParseError, CQUWebsiteError
+from .auth import access_service
 
 __all__ = ("EnergyFees", "Bill", "Card", "access_card")
 
@@ -19,7 +21,7 @@ __all__ = ("EnergyFees", "Bill", "Card", "access_card")
 FEE_ITEM_ID = {'Huxi': '182',
                'Old': '181'}
 
-LOGIN_URL = 'http://authserver.cqu.edu.cn/authserver/login?service=http://card.cqu.edu.cn:7280/ias/prelogin?sysid=FWDT'
+LOGIN_URL = 'http://card.cqu.edu.cn:7280/ias/prelogin?sysid=FWDT'
 
 
 def get_fees_raw(session: Session, isHuxi: bool, room: str):
@@ -39,8 +41,8 @@ def get_fees_raw(session: Session, isHuxi: bool, room: str):
     :return: 反序列化获取水电费信息的json
     :rtype: dict
     """
-    ticket = get_ticket(session)
-    synjones_auth = get_synjones_auth(ticket)
+    ticket = _get_ticket(session)
+    synjones_auth = _get_synjones_auth(ticket)
     return get_fee_data(synjones_auth, room, FEE_ITEM_ID['Huxi'] if isHuxi else FEE_ITEM_ID['Old'])
 
 
@@ -102,15 +104,16 @@ def access_card(session):
     :param session: 登陆了统一身份认证的会话
     :type session: Session
     """
-    res = session.get(LOGIN_URL)
+    res = access_service(session, LOGIN_URL)
+    res = session.get(res.headers["Location"])
 
-    parser = CardPageParser()
+    parser = _CardPageParser()
     parser.feed(res.text)
     ssoticket_id = parser.ssoticket_id
-    get_hall_ticket(session, ssoticket_id)
+    _get_hall_ticket(session, ssoticket_id)
 
 
-class CardPageParser(HTMLParser):
+class _CardPageParser(HTMLParser):
     def __init__(self):
         super().__init__()
         self._starttag: bool = False
@@ -126,7 +129,7 @@ class CardPageParser(HTMLParser):
 
 
 # 获取hallticket
-def get_hall_ticket(session, ssoticket_id):
+def _get_hall_ticket(session, ssoticket_id):
     url = 'http://card.cqu.edu.cn/cassyno/index'
     data = {
         'errorcode': '1',
@@ -210,7 +213,8 @@ class Bill:
         """
         return Bill(
             tran_name=data['tranName'],
-            tran_date=datetime.datetime.strptime(data['tranDt'], "%Y-%m-%d %H:%M:%S").replace(tzinfo=TIMEZONE),
+            tran_date=datetime.datetime.strptime(
+                data['tranDt'], "%Y-%m-%d %H:%M:%S").replace(tzinfo=TIMEZONE),
             tran_place=data['mchAcctName'],
             tran_amount=float(data['tranAmt'] / 100),
             acc_amount=float(int(data['acctAmt']) / 100)
@@ -263,7 +267,7 @@ class Card:
 
 
 # 利用登录之后的cookie获取一卡通的关键ticket
-def get_ticket(session):
+def _get_ticket(session):
     url = 'http://card.cqu.edu.cn/Page/Page'
     data = {
         'EMenuName': '电费、网费',
@@ -285,7 +289,7 @@ def get_ticket(session):
 
 
 # 利用ticket获取一卡通关键cookie
-def get_synjones_auth(ticket):
+def _get_synjones_auth(ticket):
     url = 'http://card.cqu.edu.cn:8080/blade-auth/token/fwdt'
     data = {'ticket': ticket}
     r = requests.post(url, data=data)
@@ -322,6 +326,3 @@ def get_fee_data(synjones_auth, room, fee_item_id):
 
 
 # 获取校园卡账号信息
-
-
-

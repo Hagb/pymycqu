@@ -10,7 +10,7 @@ from ._lib_wrapper.dataclass import dataclass
 from .course import Course, CQUSession
 from .exception import CQUWebsiteError, MycquUnauthorized
 
-__all__ = ("Score", "GpaRanking", "CQUWebsiteError")
+__all__ = ("Score", "GpaRanking")
 
 
 def get_score_raw(auth: Union[Session, str]):
