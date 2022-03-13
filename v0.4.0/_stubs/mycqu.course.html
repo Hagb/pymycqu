@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mycqu.course &#8212; pymycqu v0.4.0 文档</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="mycqu.course.get_course_raw" href="mycqu.course.get_course_raw.html" />
+    <link rel="prev" title="mycqu.auth.UnknownAuthserverException" href="mycqu.auth.UnknownAuthserverException.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="mycqu.course.get_course_raw.html" title="mycqu.course.get_course_raw"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="mycqu.auth.UnknownAuthserverException.html" title="mycqu.auth.UnknownAuthserverException"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu v0.4.0 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mycqu.course</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-mycqu.course">
+<span id="mycqu-course"></span><h1>mycqu.course<a class="headerlink" href="#module-mycqu.course" title="永久链接至标题">¶</a></h1>
+<p>课程相关的模块</p>
+<p class="rubric">Functions</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="mycqu.course.get_course_raw.html#mycqu.course.get_course_raw" title="mycqu.course.get_course_raw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_course_raw</span></code></a>(session, code[, cqu_session])</p></td>
+<td><p>从 my.cqu.edu.cn 上获取学生或老师的课表</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="mycqu.course.CQUSession.html#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CQUSession</span></code></a>(year, is_autumn)</p></td>
+<td><p>重大的某一学期</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="mycqu.course.CQUSessionInfo.html#mycqu.course.CQUSessionInfo" title="mycqu.course.CQUSessionInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CQUSessionInfo</span></code></a>(session, begin_date, end_date)</p></td>
+<td><p>某学期的一些额外信息</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="mycqu.course.Course.html#mycqu.course.Course" title="mycqu.course.Course"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Course</span></code></a>(name, code, course_num, dept, credit, ...)</p></td>
+<td><p>与具体行课时间无关的课程信息</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="mycqu.course.CourseDayTime.html#mycqu.course.CourseDayTime" title="mycqu.course.CourseDayTime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CourseDayTime</span></code></a>(weekday, period)</p></td>
+<td><p>课程一次的星期和节次</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="mycqu.course.CourseTimetable.html#mycqu.course.CourseTimetable" title="mycqu.course.CourseTimetable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CourseTimetable</span></code></a>(course, stu_num, classroom, ...)</p></td>
+<td><p>课表对象，一个对象存储有相同课程、相同行课节次和相同星期的一批行课安排</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="mycqu.auth.UnknownAuthserverException.html"
+                        title="上一章">mycqu.auth.UnknownAuthserverException</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="mycqu.course.get_course_raw.html"
+                        title="下一章">mycqu.course.get_course_raw</a></p>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/_stubs/mycqu.course.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<h3>Versions</h3>
+<ul>
+  <li><a href="../../v0.5.0/index.html">v0.5.0</a></li>
+  <li><a href="mycqu.course.html">v0.4.0</a></li>
+  <li><a href="../../v0.3.0rc1/index.html">v0.3.0rc1</a></li>
+  <li><a href="../../v0.3.0rc/index.html">v0.3.0rc</a></li>
+  <li><a href="../../v0.3.0/index.html">v0.3.0</a></li>
+  <li><a href="../../v0.2.6.1/index.html">v0.2.6.1</a></li>
+  <li><a href="../../v0.2.6/index.html">v0.2.6</a></li>
+  <li><a href="../../v0.2.5/index.html">v0.2.5</a></li>
+  <li><a href="../../v0.2.4/index.html">v0.2.4</a></li>
+  <li><a href="../../v0.2.3/index.html">v0.2.3</a></li>
+  <li><a href="../../v0.2.2/index.html">v0.2.2</a></li>
+  <li><a href="../../v0.2.1/index.html">v0.2.1</a></li>
+  <li><a href="../../v0.2.0/index.html">v0.2.0</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="mycqu.course.get_course_raw.html" title="mycqu.course.get_course_raw"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="mycqu.auth.UnknownAuthserverException.html" title="mycqu.auth.UnknownAuthserverException"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu v0.4.0 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mycqu.course</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; 版权所有 2021, Hagb.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
+    </div>
+  </body>
+</html>

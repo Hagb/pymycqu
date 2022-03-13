@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>开始 &#8212; pymycqu v0.2.1 文档</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/translations.js"></script>
+    
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="nav-item nav-item-0"><a href="#">pymycqu v0.2.1 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">开始</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="id1">
+<h1>开始<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<section id="id2">
+<h2>安装<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install pymycqu
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>考表<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>获取考表的例子，主要使用了 <code class="xref py py-func docutils literal notranslate"><span class="pre">mycqu.exam.Exam.fetch()</span></code> 方法从
+<a class="reference external" href="https://my.cqu.edu.cn">https://my.cqu.edu.cn</a> 上获取考试数据并生成 <code class="xref py py-class docutils literal notranslate"><span class="pre">mycqu.exam.Exam</span></code> 对象：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mycqu.exam</span> <span class="kn">import</span> <span class="n">Exam</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+<span class="n">exams</span> <span class="o">=</span> <span class="n">Exam</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s2">&quot;201xxxxx&quot;</span><span class="p">)</span> <span class="c1"># 获取学号 201xxxxx 的本学期考表，返回 Exam 对象的列表</span>
+<span class="n">today</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;之后的考试：&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">exam</span> <span class="ow">in</span> <span class="n">exams</span><span class="p">:</span>
+   <span class="k">if</span> <span class="n">exam</span><span class="o">.</span><span class="n">date</span> <span class="o">&gt;=</span> <span class="n">today</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;科目：</span><span class="si">{</span><span class="n">exam</span><span class="o">.</span><span class="n">course</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">, 教室：</span><span class="si">{</span><span class="n">exam</span><span class="o">.</span><span class="n">room</span><span class="si">}</span><span class="s1">, &#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;时间: </span><span class="si">{</span><span class="n">exam</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">exam</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>输出样例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>之后的考试：
+科目：图像处理中的数学方法, 教室：d1242, 时间: 2021-12-06 14:25
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>课表<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>与考表不同的是，获取课表等数据需要先进行登录：</p>
+<ul class="simple">
+<li><p>如果同一帐号连续尝试三次使用错误密码登录，
+那么再次登录时还需要输入二维码，此时 <code class="xref py py-func docutils literal notranslate"><span class="pre">mycqu.auth.login()</span></code> 会抛出
+<code class="xref py py-class docutils literal notranslate"><span class="pre">mycqu.auth.NeedCaptcha</span></code> 异常，捕获它之后可以获取验证图片，输入验证码后继续登录</p></li>
+<li><p>在统一身份认证号登录后还需要给 my.cqu.edu.cn 进行授权认证，使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">mycqu.mycqu.access_mycqu()</span></code></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mycqu.auth</span> <span class="kn">import</span> <span class="n">login</span><span class="p">,</span> <span class="n">NeedCaptcha</span>
+<span class="kn">from</span> <span class="nn">mycqu.mycqu</span> <span class="kn">import</span> <span class="n">access_mycqu</span>
+<span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">Session</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+   <span class="n">login</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="s2">&quot;统一身份认证号&quot;</span><span class="p">,</span> <span class="s2">&quot;统一身份认证密码&quot;</span><span class="p">)</span> <span class="c1"># 需要登陆</span>
+<span class="k">except</span> <span class="n">NeedCaptcha</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> <span class="c1"># 需要输入验证码的情况</span>
+   <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;captcha.jpg&quot;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+      <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">image</span><span class="p">)</span>
+   <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;输入 captcha.jpg 处的验证码并回车: &quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+   <span class="n">e</span><span class="o">.</span><span class="n">after_captcha</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+<span class="n">access_mycqu</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>之后就可以拿 <code class="docutils literal notranslate"><span class="pre">session</span></code> 去获取课表了，下面的代码用  <code class="xref py py-func docutils literal notranslate"><span class="pre">mycqu.course.CourseTimetable.fetch()</span></code>
+获取了整个学期的课表，并从中筛选出第九周的课表</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">timetables</span> <span class="o">=</span> <span class="n">CourseTimetable</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="s2">&quot;201xxxxx&quot;</span><span class="p">)</span>  <span class="c1"># 获取学号 201xxxxx 的本学期课表</span>
+<span class="n">week</span> <span class="o">=</span> <span class="mi">9</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;第 </span><span class="si">{</span><span class="n">week</span><span class="si">}</span><span class="s2"> 周的课&quot;</span><span class="p">)</span>
+<span class="n">weekdays</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;一&quot;</span><span class="p">,</span> <span class="s2">&quot;二&quot;</span><span class="p">,</span> <span class="s2">&quot;三&quot;</span><span class="p">,</span> <span class="s2">&quot;四&quot;</span><span class="p">,</span> <span class="s2">&quot;五&quot;</span><span class="p">,</span> <span class="s2">&quot;六&quot;</span><span class="p">,</span> <span class="s2">&quot;日&quot;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">timetable</span> <span class="ow">in</span> <span class="n">timetables</span><span class="p">:</span>
+   <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">timetable</span><span class="o">.</span><span class="n">weeks</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">start</span> <span class="o">&lt;=</span> <span class="n">week</span> <span class="o">&lt;=</span> <span class="n">end</span><span class="p">:</span>
+            <span class="k">break</span>
+   <span class="k">else</span><span class="p">:</span>
+      <span class="k">continue</span>
+   <span class="k">if</span> <span class="n">timetable</span><span class="o">.</span><span class="n">day_time</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;科目：</span><span class="si">{</span><span class="n">timetable</span><span class="o">.</span><span class="n">course</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, 教室：</span><span class="si">{</span><span class="n">timetable</span><span class="o">.</span><span class="n">classroom</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;周</span><span class="si">{</span><span class="n">weekdays</span><span class="p">[</span><span class="n">timetable</span><span class="o">.</span><span class="n">day_time</span><span class="o">.</span><span class="n">weekday</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">timetable</span><span class="o">.</span><span class="n">day_time</span><span class="o">.</span><span class="n">period</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">~</span><span class="si">{</span><span class="n">timetable</span><span class="o">.</span><span class="n">day_time</span><span class="o">.</span><span class="n">period</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> 节课&quot;</span><span class="p">)</span>
+   <span class="k">elif</span> <span class="n">timetable</span><span class="o">.</span><span class="n">whole_week</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;科目：</span><span class="si">{</span><span class="n">timetable</span><span class="o">.</span><span class="n">course</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, 地点: </span><span class="si">{</span><span class="n">timetable</span><span class="o">.</span><span class="n">classroom</span><span class="si">}</span><span class="s2">, 全周时间&quot;</span><span class="p">)</span>
+   <span class="k">else</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;科目：</span><span class="si">{</span><span class="n">timetable</span><span class="o">.</span><span class="n">course</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, 无明确时间&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>输出样例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>第 9 周的课
+科目：偏微分方程, 教室：d1339, 周三 3~4 节课
+科目：偏微分方程, 教室：d1339, 周一 1~2 节课
+科目：复变函数, 教室：d1335, 周四 3~4 节课
+科目：复变函数, 教室：d1335, 周二 6~7 节课
+科目：运筹学, 教室：d1337, 周二 1~2 节课
+科目：运筹学, 教室：dyc410, 周五 1~2 节课
+科目：图像处理中的数学方法, 教室：d1329, 周三 6~7 节课
+科目：图像处理中的数学方法, 教室：d1329, 周一 6~7 节课
+科目：数据结构, 教室：d1339, 周二 10~11 节课
+科目：数据结构, 教室：d1142, 周一 3~4 节课
+科目：数据结构, 教室：数学实验中心, 周四 6~9 节课
+科目：java程序设计, 教室：d1518, 周三 1~2 节课
+科目：java程序设计, 教室：d1518, 周五 3~4 节课
+</pre></div>
+</div>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="永久链接至标题">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">索引</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">模块索引</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">搜索页面</span></a></p></li>
+</ul>
+</section>
+<section id="api">
+<h1>API 文档<a class="headerlink" href="#api" title="永久链接至标题">¶</a></h1>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+</tbody>
+</table>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">开始</a><ul>
+<li><a class="reference internal" href="#id2">安装</a></li>
+<li><a class="reference internal" href="#id3">考表</a></li>
+<li><a class="reference internal" href="#id4">课表</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+<li><a class="reference internal" href="#api">API 文档</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<h3>Versions</h3>
+<ul>
+  <li><a href="../v0.5.0/index.html">v0.5.0</a></li>
+  <li><a href="../v0.4.0/index.html">v0.4.0</a></li>
+  <li><a href="../v0.3.0rc1/index.html">v0.3.0rc1</a></li>
+  <li><a href="../v0.3.0rc/index.html">v0.3.0rc</a></li>
+  <li><a href="../v0.3.0/index.html">v0.3.0</a></li>
+  <li><a href="../v0.2.6.1/index.html">v0.2.6.1</a></li>
+  <li><a href="../v0.2.6/index.html">v0.2.6</a></li>
+  <li><a href="../v0.2.5/index.html">v0.2.5</a></li>
+  <li><a href="../v0.2.4/index.html">v0.2.4</a></li>
+  <li><a href="../v0.2.3/index.html">v0.2.3</a></li>
+  <li><a href="../v0.2.2/index.html">v0.2.2</a></li>
+  <li><a href="index.html">v0.2.1</a></li>
+  <li><a href="../v0.2.0/index.html">v0.2.0</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="nav-item nav-item-0"><a href="#">pymycqu v0.2.1 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">开始</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; 版权所有 2021, Hagb.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
+    </div>
+  </body>
+</html>

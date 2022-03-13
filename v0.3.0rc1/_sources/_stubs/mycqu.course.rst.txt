@@ -1,0 +1,41 @@
+﻿mycqu.course
+============
+
+.. automodule:: mycqu.course
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      get_course_raw
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+   
+      CQUSession
+      CQUSessionInfo
+      Course
+      CourseDayTime
+      CourseTimetable
+   
+   
+
+   
+   
+   
+
+
+

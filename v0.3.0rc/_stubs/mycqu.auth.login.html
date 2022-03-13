@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mycqu.auth.login &#8212; pymycqu v0.3.0rc 文档</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="mycqu.auth.logout" href="mycqu.auth.logout.html" />
+    <link rel="prev" title="mycqu.auth.is_logined" href="mycqu.auth.is_logined.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="mycqu.auth.logout.html" title="mycqu.auth.logout"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="mycqu.auth.is_logined.html" title="mycqu.auth.is_logined"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu v0.3.0rc 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="mycqu.auth.html" accesskey="U">mycqu.auth</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mycqu.auth.login</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="mycqu-auth-login">
+<h1>mycqu.auth.login<a class="headerlink" href="#mycqu-auth-login" title="永久链接至标题">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="mycqu.auth.login">
+<span class="sig-prename descclassname"><span class="pre">mycqu.auth.</span></span><span class="sig-name descname"><span class="pre">login</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">requests.sessions.Session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_relogin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">captcha_callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">requests.models.Response</span></span></span><a class="headerlink" href="#mycqu.auth.login" title="永久链接至目标">¶</a></dt>
+<dd><p>登录统一身份认证</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> (<em>Session</em>) – 用于登录统一身份认证的会话</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – 统一身份认证号或学工号</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – 统一身份认证密码</p></li>
+<li><p><strong>service</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 需要登录的服务，默认（<code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>）则先不登陆任何服务</p></li>
+<li><p><strong>timeout</strong> (<em>int</em><em>, </em><em>optional</em>) – 连接超时时限，默认为 10（单位秒）</p></li>
+<li><p><strong>force_relogin</strong> (<em>bool</em><em>, </em><em>optional</em>) – 强制重登，当会话中已经有有效的登陆 cookies 时依然重新登录，默认为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p><strong>captcha_callback</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><em>bytes</em><em>, </em><em>str</em><em>]</em><em>, </em><em>Optional</em><em>[</em><em>str</em><em>]</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – 需要输入验证码时调用的回调函数，默认为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code> 即不设置回调；
+当需要输入验证码，但回调没有设置或回调返回 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code> 时，抛出异常 <a class="reference internal" href="mycqu.auth.NeedCaptcha.html#mycqu.auth.NeedCaptcha" title="mycqu.auth.NeedCaptcha"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeedCaptcha</span></code></a>；
+该函数接受一个 <code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code> 型参数为验证码图片的文件数据，一个 <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> 型参数为图片的 MIME 类型，
+返回验证码文本或 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>。</p></li>
+</ul>
+</dd>
+<dt class="field-even">引发</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="mycqu.auth.UnknownAuthserverException.html#mycqu.auth.UnknownAuthserverException" title="mycqu.auth.UnknownAuthserverException"><strong>UnknownAuthserverException</strong></a> – 未知认证错误</p></li>
+<li><p><a class="reference internal" href="mycqu.auth.InvaildCaptcha.html#mycqu.auth.InvaildCaptcha" title="mycqu.auth.InvaildCaptcha"><strong>InvaildCaptcha</strong></a> – 无效的验证码</p></li>
+<li><p><a class="reference internal" href="mycqu.auth.IncorrectLoginCredentials.html#mycqu.auth.IncorrectLoginCredentials" title="mycqu.auth.IncorrectLoginCredentials"><strong>IncorrectLoginCredentials</strong></a> – 错误的登陆凭据（如错误的密码、用户名）</p></li>
+<li><p><a class="reference internal" href="mycqu.auth.NeedCaptcha.html#mycqu.auth.NeedCaptcha" title="mycqu.auth.NeedCaptcha"><strong>NeedCaptcha</strong></a> – 需要提供验证码，获得验证码文本之后可调用所抛出异常的 <a class="reference internal" href="mycqu.auth.NeedCaptcha.html#mycqu.auth.NeedCaptcha.after_captcha" title="mycqu.auth.NeedCaptcha.after_captcha"><code class="xref py py-func docutils literal notranslate"><span class="pre">NeedCaptcha.after_captcha()</span></code></a> 函数来继续登陆</p></li>
+</ul>
+</dd>
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>登陆了统一身份认证后所跳转到的地址的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="mycqu.auth.is_logined.html"
+                        title="上一章">mycqu.auth.is_logined</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="mycqu.auth.logout.html"
+                        title="下一章">mycqu.auth.logout</a></p>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/_stubs/mycqu.auth.login.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<h3>Versions</h3>
+<ul>
+  <li><a href="../../v0.5.0/index.html">v0.5.0</a></li>
+  <li><a href="../../v0.4.0/index.html">v0.4.0</a></li>
+  <li><a href="../../v0.3.0rc1/index.html">v0.3.0rc1</a></li>
+  <li><a href="mycqu.auth.login.html">v0.3.0rc</a></li>
+  <li><a href="../../v0.3.0/index.html">v0.3.0</a></li>
+  <li><a href="../../v0.2.6.1/index.html">v0.2.6.1</a></li>
+  <li><a href="../../v0.2.6/index.html">v0.2.6</a></li>
+  <li><a href="../../v0.2.5/index.html">v0.2.5</a></li>
+  <li><a href="../../v0.2.4/index.html">v0.2.4</a></li>
+  <li><a href="../../v0.2.3/index.html">v0.2.3</a></li>
+  <li><a href="../../v0.2.2/index.html">v0.2.2</a></li>
+  <li><a href="../../v0.2.1/index.html">v0.2.1</a></li>
+  <li><a href="../../v0.2.0/index.html">v0.2.0</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="mycqu.auth.logout.html" title="mycqu.auth.logout"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="mycqu.auth.is_logined.html" title="mycqu.auth.is_logined"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu v0.3.0rc 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="mycqu.auth.html" >mycqu.auth</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mycqu.auth.login</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; 版权所有 2021, Hagb.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
+    </div>
+  </body>
+</html>

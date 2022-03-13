@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mycqu.course.CQUSession &#8212; pymycqu v0.2.6.1 文档</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="mycqu.course.CQUSessionInfo" href="mycqu.course.CQUSessionInfo.html" />
+    <link rel="prev" title="mycqu.course" href="mycqu.course.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="mycqu.course.CQUSessionInfo.html" title="mycqu.course.CQUSessionInfo"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="mycqu.course.html" title="mycqu.course"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu v0.2.6.1 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="mycqu.course.html" accesskey="U">mycqu.course</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mycqu.course.CQUSession</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="mycqu-course-cqusession">
+<h1>mycqu.course.CQUSession<a class="headerlink" href="#mycqu-course-cqusession" title="永久链接至标题">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mycqu.course.CQUSession">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mycqu.course.</span></span><span class="sig-name descname"><span class="pre">CQUSession</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_autumn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.course.CQUSession" title="永久链接至目标">¶</a></dt>
+<dd><p>重大的某一学期</p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code>(year, is_autumn)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.course.CQUSession.fetch" title="mycqu.course.CQUSession.fetch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fetch</span></code></a>()</p></td>
+<td><p>从 my.cqu.edu.cn 上获取各个学期</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.course.CQUSession.from_str" title="mycqu.course.CQUSession.from_str"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_str</span></code></a>(string)</p></td>
+<td><p>从学期字符串中解析学期</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.course.CQUSession.get_id" title="mycqu.course.CQUSession.get_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_id</span></code></a>()</p></td>
+<td><p>获取该学期在 my.cqu.edu.cn 中的 id</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.course.CQUSession.CQUSESSION_MIN" title="mycqu.course.CQUSession.CQUSESSION_MIN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CQUSESSION_MIN</span></code></a></p></td>
+<td><p>my.cqu.edu.cn 支持的最早学期</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SESSION_RE</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.course.CQUSession.year" title="mycqu.course.CQUSession.year"><code class="xref py py-obj docutils literal notranslate"><span class="pre">year</span></code></a></p></td>
+<td><p>主要行课年份</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.course.CQUSession.is_autumn" title="mycqu.course.CQUSession.is_autumn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_autumn</span></code></a></p></td>
+<td><p>是否为秋冬季学期</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Details</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.course.CQUSession.CQUSESSION_MIN">
+<span class="sig-name descname"><span class="pre">CQUSESSION_MIN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><span class="pre">CQUSession</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">CQUSession(year=2020,</span> <span class="pre">is_autumn=True)</span></em><a class="headerlink" href="#mycqu.course.CQUSession.CQUSESSION_MIN" title="永久链接至目标">¶</a></dt>
+<dd><p>my.cqu.edu.cn 支持的最早学期</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mycqu.course.CQUSession.fetch">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fetch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><span class="pre">mycqu.course.CQUSession</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#mycqu.course.CQUSession.fetch" title="永久链接至目标">¶</a></dt>
+<dd><p>从 my.cqu.edu.cn 上获取各个学期</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>各个学期组成的列表</p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="#mycqu.course.CQUSession" title="mycqu.course.CQUSession">CQUSession</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mycqu.course.CQUSession.from_str">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><span class="pre">mycqu.course.CQUSession</span></a></span></span><a class="headerlink" href="#mycqu.course.CQUSession.from_str" title="永久链接至目标">¶</a></dt>
+<dd><p>从学期字符串中解析学期</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">CQUSession</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">&quot;2021春&quot;</span><span class="p">)</span>
+<span class="go">CQUSession(year=2021, is_autumn=False)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">CQUSession</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">&quot;2020年秋&quot;</span><span class="p">)</span>
+<span class="go">CQUSession(year=2020, is_autumn=True)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>string</strong> (<em>str</em>) – 学期字符串，如“2021春”、“2020年秋”</p>
+</dd>
+<dt class="field-even">引发</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – 字符串不是一个预期中的学期字符串时抛出</p>
+</dd>
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>对应的学期</p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mycqu.course.CQUSession" title="mycqu.course.CQUSession">CQUSession</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mycqu.course.CQUSession.get_id">
+<span class="sig-name descname"><span class="pre">get_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#mycqu.course.CQUSession.get_id" title="永久链接至目标">¶</a></dt>
+<dd><p>获取该学期在 my.cqu.edu.cn 中的 id</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">CQUSession</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
+<span class="go">1038</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>学期的 id</p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.course.CQUSession.is_autumn">
+<span class="sig-name descname"><span class="pre">is_autumn</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#mycqu.course.CQUSession.is_autumn" title="永久链接至目标">¶</a></dt>
+<dd><p>是否为秋冬季学期</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.course.CQUSession.year">
+<span class="sig-name descname"><span class="pre">year</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mycqu.course.CQUSession.year" title="永久链接至目标">¶</a></dt>
+<dd><p>主要行课年份</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="mycqu.course.html"
+                        title="上一章">mycqu.course</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="mycqu.course.CQUSessionInfo.html"
+                        title="下一章">mycqu.course.CQUSessionInfo</a></p>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/_stubs/mycqu.course.CQUSession.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<h3>Versions</h3>
+<ul>
+  <li><a href="../../v0.5.0/index.html">v0.5.0</a></li>
+  <li><a href="../../v0.4.0/index.html">v0.4.0</a></li>
+  <li><a href="../../v0.3.0rc1/index.html">v0.3.0rc1</a></li>
+  <li><a href="../../v0.3.0rc/index.html">v0.3.0rc</a></li>
+  <li><a href="../../v0.3.0/index.html">v0.3.0</a></li>
+  <li><a href="mycqu.course.CQUSession.html">v0.2.6.1</a></li>
+  <li><a href="../../v0.2.6/index.html">v0.2.6</a></li>
+  <li><a href="../../v0.2.5/index.html">v0.2.5</a></li>
+  <li><a href="../../v0.2.4/index.html">v0.2.4</a></li>
+  <li><a href="../../v0.2.3/index.html">v0.2.3</a></li>
+  <li><a href="../../v0.2.2/index.html">v0.2.2</a></li>
+  <li><a href="../../v0.2.1/index.html">v0.2.1</a></li>
+  <li><a href="../../v0.2.0/index.html">v0.2.0</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="mycqu.course.CQUSessionInfo.html" title="mycqu.course.CQUSessionInfo"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="mycqu.course.html" title="mycqu.course"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu v0.2.6.1 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="mycqu.course.html" >mycqu.course</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mycqu.course.CQUSession</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; 版权所有 2021, Hagb.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
+    </div>
+  </body>
+</html>

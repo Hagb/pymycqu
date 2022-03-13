@@ -1,0 +1,6 @@
+mycqu.auth.logout
+=================
+
+.. currentmodule:: mycqu.auth
+
+.. autofunction:: logout

@@ -1,0 +1,6 @@
+mycqu.score.get\_score\_raw
+===========================
+
+.. currentmodule:: mycqu.score
+
+.. autofunction:: get_score_raw

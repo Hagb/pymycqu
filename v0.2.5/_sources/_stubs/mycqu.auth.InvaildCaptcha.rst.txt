@@ -1,0 +1,7 @@
+mycqu.auth.InvaildCaptcha
+=========================
+
+.. currentmodule:: mycqu.auth
+
+.. autoclass:: InvaildCaptcha
+   :members:

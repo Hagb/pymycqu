@@ -1,0 +1,37 @@
+﻿mycqu.score
+===========
+
+.. automodule:: mycqu.score
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      get_score_raw
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+   
+      Score
+   
+   
+
+   
+   
+   
+
+
+

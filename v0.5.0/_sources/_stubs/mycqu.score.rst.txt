@@ -1,0 +1,48 @@
+﻿mycqu.score
+===========
+
+.. automodule:: mycqu.score
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      get_gpa_ranking_raw
+      get_score_raw
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+   
+      GpaRanking
+      Score
+   
+   
+
+   
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+      :template: autosummary/exception.rst
+      :toctree:
+
+   
+      CQUWebsiteError
+   
+   
+
+
+

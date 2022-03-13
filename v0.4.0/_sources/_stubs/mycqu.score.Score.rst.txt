@@ -1,0 +1,35 @@
+mycqu.score.Score
+=================
+
+.. currentmodule:: mycqu.score
+
+.. autoclass:: Score
+   :members:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Score.__init__
+      ~Score.fetch
+      ~Score.from_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Score.session
+      ~Score.course
+      ~Score.score
+      ~Score.study_nature
+      ~Score.course_nature
+   
+   
+
+   .. rubric:: Details

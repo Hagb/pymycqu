@@ -1,0 +1,30 @@
+﻿mycqu.user
+==========
+
+.. automodule:: mycqu.user
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+   
+      User
+   
+   
+
+   
+   
+   
+
+
+
