@@ -1,0 +1,6 @@
+mycqu.mycqu.get\_oauth\_token
+=============================
+
+.. currentmodule:: mycqu.mycqu
+
+.. autofunction:: get_oauth_token

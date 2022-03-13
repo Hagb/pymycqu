@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mycqu.course.CourseTimetable &#8212; pymycqu v0.2.2 文档</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="mycqu.exam" href="mycqu.exam.html" />
+    <link rel="prev" title="mycqu.course.CourseDayTime" href="mycqu.course.CourseDayTime.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="mycqu.exam.html" title="mycqu.exam"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="mycqu.course.CourseDayTime.html" title="mycqu.course.CourseDayTime"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu v0.2.2 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="mycqu.course.html" accesskey="U">mycqu.course</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mycqu.course.CourseTimetable</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="mycqu-course-coursetimetable">
+<h1>mycqu.course.CourseTimetable<a class="headerlink" href="#mycqu-course-coursetimetable" title="永久链接至标题">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mycqu.course.CourseTimetable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mycqu.course.</span></span><span class="sig-name descname"><span class="pre">CourseTimetable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="mycqu.course.Course.html#mycqu.course.Course" title="mycqu.course.Course"><span class="pre">mycqu.course.Course</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">stu_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classroom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weeks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">day_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mycqu.course.CourseDayTime.html#mycqu.course.CourseDayTime" title="mycqu.course.CourseDayTime"><span class="pre">mycqu.course.CourseDayTime</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">whole_week</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.course.CourseTimetable" title="永久链接至目标">¶</a></dt>
+<dd><p>课表对象，一个对象存储有相同课程、相同行课节次和相同星期的一批行课安排</p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code>(course, stu_num, classroom, weeks, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.course.CourseTimetable.fetch" title="mycqu.course.CourseTimetable.fetch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fetch</span></code></a>(session, id_[, cqu_session])</p></td>
+<td><p>从 my.cqu.edu.cn 上获取学生或老师的课表</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.course.CourseTimetable.from_dict" title="mycqu.course.CourseTimetable.from_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code></a>(data)</p></td>
+<td><p>从反序列化的一个课表 json 中获取课表</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.course.CourseTimetable.course" title="mycqu.course.CourseTimetable.course"><code class="xref py py-obj docutils literal notranslate"><span class="pre">course</span></code></a></p></td>
+<td><p>对应的课程</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.course.CourseTimetable.stu_num" title="mycqu.course.CourseTimetable.stu_num"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stu_num</span></code></a></p></td>
+<td><p>学生数</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.course.CourseTimetable.classroom" title="mycqu.course.CourseTimetable.classroom"><code class="xref py py-obj docutils literal notranslate"><span class="pre">classroom</span></code></a></p></td>
+<td><p>行课地点，无则为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.course.CourseTimetable.weeks" title="mycqu.course.CourseTimetable.weeks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">weeks</span></code></a></p></td>
+<td><p>行课周数，列表中每个元组 (a,b) 代表一个周数范围 a~b（包含 a, b），在单独的一周则有 b=a</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.course.CourseTimetable.day_time" title="mycqu.course.CourseTimetable.day_time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">day_time</span></code></a></p></td>
+<td><p>行课的星期和节次，若时间是整周（如真实地占用整周的军训和某些实习、虚拟地使用一周的思修实践） 则为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.course.CourseTimetable.whole_week" title="mycqu.course.CourseTimetable.whole_week"><code class="xref py py-obj docutils literal notranslate"><span class="pre">whole_week</span></code></a></p></td>
+<td><p>是否真实地占用整周（如军训和某些实习是真实地占用、思修实践是“虚拟地占用”）</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Details</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.course.CourseTimetable.classroom">
+<span class="sig-name descname"><span class="pre">classroom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mycqu.course.CourseTimetable.classroom" title="永久链接至目标">¶</a></dt>
+<dd><p>行课地点，无则为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.course.CourseTimetable.course">
+<span class="sig-name descname"><span class="pre">course</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="mycqu.course.Course.html#mycqu.course.Course" title="mycqu.course.Course"><span class="pre">mycqu.course.Course</span></a></em><a class="headerlink" href="#mycqu.course.CourseTimetable.course" title="永久链接至目标">¶</a></dt>
+<dd><p>对应的课程</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.course.CourseTimetable.day_time">
+<span class="sig-name descname"><span class="pre">day_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mycqu.course.CourseDayTime.html#mycqu.course.CourseDayTime" title="mycqu.course.CourseDayTime"><span class="pre">mycqu.course.CourseDayTime</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mycqu.course.CourseTimetable.day_time" title="永久链接至目标">¶</a></dt>
+<dd><p>行课的星期和节次，若时间是整周（如真实地占用整周的军训和某些实习、虚拟地使用一周的思修实践）
+则为 <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mycqu.course.CourseTimetable.fetch">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fetch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">requests.sessions.Session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cqu_session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="mycqu.course.CQUSession.html#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><span class="pre">mycqu.course.CQUSession</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#mycqu.course.CourseTimetable" title="mycqu.course.CourseTimetable"><span class="pre">mycqu.course.CourseTimetable</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#mycqu.course.CourseTimetable.fetch" title="永久链接至目标">¶</a></dt>
+<dd><p>从 my.cqu.edu.cn 上获取学生或老师的课表</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> (<em>Session</em>) – 登录了统一身份认证（<a class="reference internal" href="mycqu.auth.login.html#mycqu.auth.login" title="mycqu.auth.login"><code class="xref py py-func docutils literal notranslate"><span class="pre">auth.login()</span></code></a>）并在 mycqu 进行了认证（<a class="reference internal" href="mycqu.mycqu.access_mycqu.html#mycqu.mycqu.access_mycqu" title="mycqu.mycqu.access_mycqu"><code class="xref py py-func docutils literal notranslate"><span class="pre">mycqu.access_mycqu()</span></code></a>）的 requests 会话</p></li>
+<li><p><strong>id</strong> (<em>str</em>) – 学生或教师的学工号</p></li>
+<li><p><strong>cqu_session</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="mycqu.course.CQUSession.html#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><em>CQUSession</em></a><em>, </em><em>str</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – 需要获取课表的学期，留空获取当前年级的课表</p></li>
+</ul>
+</dd>
+<dt class="field-even">引发</dt>
+<dd class="field-even"><p><a class="reference internal" href="mycqu.mycqu.MycquUnauthorized.html#mycqu.mycqu.MycquUnauthorized" title="mycqu.mycqu.MycquUnauthorized"><strong>MycquUnauthorized</strong></a> – 若会话未在 my.cqu.edu.cn 进行认证</p>
+</dd>
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>获取的课表对象的列表</p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="#mycqu.course.CourseTimetable" title="mycqu.course.CourseTimetable">CourseTimetable</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mycqu.course.CourseTimetable.from_dict">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mycqu.course.CourseTimetable" title="mycqu.course.CourseTimetable"><span class="pre">mycqu.course.CourseTimetable</span></a></span></span><a class="headerlink" href="#mycqu.course.CourseTimetable.from_dict" title="永久链接至目标">¶</a></dt>
+<dd><p>从反序列化的一个课表 json 中获取课表</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 反序列化成字典的课表 json</p>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>课表对象</p>
+</dd>
+<dt class="field-odd">返回类型</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mycqu.course.CourseTimetable" title="mycqu.course.CourseTimetable">CourseTimetable</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.course.CourseTimetable.stu_num">
+<span class="sig-name descname"><span class="pre">stu_num</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mycqu.course.CourseTimetable.stu_num" title="永久链接至目标">¶</a></dt>
+<dd><p>学生数</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.course.CourseTimetable.weeks">
+<span class="sig-name descname"><span class="pre">weeks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mycqu.course.CourseTimetable.weeks" title="永久链接至目标">¶</a></dt>
+<dd><p>行课周数，列表中每个元组 (a,b) 代表一个周数范围 a~b（包含 a, b），在单独的一周则有 b=a</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.course.CourseTimetable.whole_week">
+<span class="sig-name descname"><span class="pre">whole_week</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#mycqu.course.CourseTimetable.whole_week" title="永久链接至目标">¶</a></dt>
+<dd><p>是否真实地占用整周（如军训和某些实习是真实地占用、思修实践是“虚拟地占用”）</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="mycqu.course.CourseDayTime.html"
+                        title="上一章">mycqu.course.CourseDayTime</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="mycqu.exam.html"
+                        title="下一章">mycqu.exam</a></p>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/_stubs/mycqu.course.CourseTimetable.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<h3>Versions</h3>
+<ul>
+  <li><a href="../../v0.5.0/index.html">v0.5.0</a></li>
+  <li><a href="../../v0.4.0/index.html">v0.4.0</a></li>
+  <li><a href="../../v0.3.0rc1/index.html">v0.3.0rc1</a></li>
+  <li><a href="../../v0.3.0rc/index.html">v0.3.0rc</a></li>
+  <li><a href="../../v0.3.0/index.html">v0.3.0</a></li>
+  <li><a href="../../v0.2.6.1/index.html">v0.2.6.1</a></li>
+  <li><a href="../../v0.2.6/index.html">v0.2.6</a></li>
+  <li><a href="../../v0.2.5/index.html">v0.2.5</a></li>
+  <li><a href="../../v0.2.4/index.html">v0.2.4</a></li>
+  <li><a href="../../v0.2.3/index.html">v0.2.3</a></li>
+  <li><a href="mycqu.course.CourseTimetable.html">v0.2.2</a></li>
+  <li><a href="../../v0.2.1/index.html">v0.2.1</a></li>
+  <li><a href="../../v0.2.0/index.html">v0.2.0</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="mycqu.exam.html" title="mycqu.exam"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="mycqu.course.CourseDayTime.html" title="mycqu.course.CourseDayTime"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu v0.2.2 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="mycqu.course.html" >mycqu.course</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mycqu.course.CourseTimetable</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; 版权所有 2021, Hagb.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
+    </div>
+  </body>
+</html>
