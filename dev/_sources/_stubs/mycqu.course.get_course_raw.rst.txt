@@ -1,0 +1,6 @@
+mycqu.course.get\_course\_raw
+=============================
+
+.. currentmodule:: mycqu.course
+
+.. autofunction:: get_course_raw

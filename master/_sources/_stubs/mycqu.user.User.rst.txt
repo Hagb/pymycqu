@@ -1,0 +1,35 @@
+mycqu.user.User
+===============
+
+.. currentmodule:: mycqu.user
+
+.. autoclass:: User
+   :members:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~User.__init__
+      ~User.fetch_self
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~User.name
+      ~User.uniform_id
+      ~User.code
+      ~User.role
+      ~User.email
+      ~User.phone_number
+   
+   
+
+   .. rubric:: Details

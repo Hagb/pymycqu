@@ -1,0 +1,34 @@
+mycqu.course.CQUSessionInfo
+===========================
+
+.. currentmodule:: mycqu.course
+
+.. autoclass:: CQUSessionInfo
+   :members:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CQUSessionInfo.__init__
+      ~CQUSessionInfo.fetch
+      ~CQUSessionInfo.fetch_all
+      ~CQUSessionInfo.from_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~CQUSessionInfo.session
+      ~CQUSessionInfo.begin_date
+      ~CQUSessionInfo.end_date
+   
+   
+
+   .. rubric:: Details

@@ -1,0 +1,34 @@
+mycqu.score.GpaRanking
+======================
+
+.. currentmodule:: mycqu.score
+
+.. autoclass:: GpaRanking
+   :members:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GpaRanking.__init__
+      ~GpaRanking.fetch
+      ~GpaRanking.from_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~GpaRanking.gpa
+      ~GpaRanking.majorRanking
+      ~GpaRanking.gradeRanking
+      ~GpaRanking.classRanking
+   
+   
+
+   .. rubric:: Details

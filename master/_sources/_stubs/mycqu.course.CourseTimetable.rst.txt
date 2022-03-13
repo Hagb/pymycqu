@@ -1,0 +1,36 @@
+mycqu.course.CourseTimetable
+============================
+
+.. currentmodule:: mycqu.course
+
+.. autoclass:: CourseTimetable
+   :members:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CourseTimetable.__init__
+      ~CourseTimetable.fetch
+      ~CourseTimetable.from_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~CourseTimetable.course
+      ~CourseTimetable.stu_num
+      ~CourseTimetable.classroom
+      ~CourseTimetable.weeks
+      ~CourseTimetable.day_time
+      ~CourseTimetable.whole_week
+   
+   
+
+   .. rubric:: Details
