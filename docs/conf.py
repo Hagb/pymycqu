@@ -13,6 +13,8 @@
 import os
 import sys
 import pkg_resources
+import subprocess
+import sphinx_multiversion
 sys.path.insert(0, os.path.abspath('..'))
 
 
@@ -22,14 +24,28 @@ project = 'pymycqu'
 copyright = '2021, Hagb'
 author = 'Hagb'
 # The full version, including alpha/beta/rc tags
-release = pkg_resources.get_distribution('mycqu').version
+
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ["sphinx.ext.autodoc", "sphinx.ext.autosummary"]
-#html_sidebars = {'**': ['fulltoc.html', 'relations.html', 'sourcelink.html', 'searchbox.html']}
+
+extensions = ["sphinx.ext.autodoc", "sphinx.ext.autosummary", "sphinx_multiversion"]
+html_sidebars = {'**': ['localtoc.html', 'relations.html', 'sourcelink.html', 'searchbox.html', 'versioning.html']}
+
+if not hasattr(sphinx_multiversion.sphinx, "config_inited_hooked"):
+    old_config_inited = sphinx_multiversion.sphinx.config_inited
+    def config_inited(app, config):
+        old_config_inited(app, config)
+        config.release = config.smv_current_version
+    sphinx_multiversion.sphinx.config_inited = config_inited
+    sphinx_multiversion.sphinx.config_inited_hooked = True
+
+smv_tag_whitelist = r'^v\d+.*$'
+smv_branch_whitelist = r'^master|dev$'
+smv_remote_whitelist = None
+
 #autodoc_default_flags = ['members', 'attributes']
 autosummary_generate = True
 autosummary_ignore_module_all = False
