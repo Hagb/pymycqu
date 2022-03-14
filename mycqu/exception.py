@@ -87,3 +87,8 @@ class MycquUnauthorized(Exception):
 
     def __init__(self):
         super().__init__("Unauthorized in mycqu, auth.login firstly and then mycqu.access_mycqu")
+
+class InvalidRoom(Exception):
+
+    def __init__(self):
+        super().__init__("Invalid Room Name")
