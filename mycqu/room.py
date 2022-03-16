@@ -4,10 +4,13 @@ from __future__ import annotations
 from typing import Any, Dict, Optional, Tuple, List, Union, ClassVar
 
 from requests import Session, get
+from datetime import date
 from ._lib_wrapper.dataclass import dataclass
 from .course import CQUSession, CQUSessionInfo
 from .utils.datetimes import parse_period_str, parse_weeks_str, parse_weekday_str, date_from_str
 from .exception import MycquUnauthorized, InvalidRoom
+
+__all__ = ('Room', 'RoomTimetable')
 
 ROOM_TIMETABLE_URL = "https://my.cqu.edu.cn/api/timetable/class/timetable/room/table-detail?sessionId=1039"
 ROOM_ID_URL = "https://my.cqu.edu.cn/api/resourceapi/room/roomName-filter"
@@ -119,12 +122,12 @@ class Room:
 @dataclass
 class RoomActivityInfo:
     """教室活动的公有属性"""
-    period_format: str
+    period: Tuple[int, int]
     """占用节数"""
-    teaching_week_format: str
-    """占用周数"""
-    week_day: int
-    """占用星期"""
+    weeks: List[Tuple[int, int]]
+    """行课周数，列表中每个元组 (a,b) 代表一个周数范围 a~b（包含 a, b），在单独的一周则有 b=a"""
+    weekday: int
+    """星期，0 为周一，6 为周日，此与 :attr:`datetime.date.day` 一致"""
 
     @staticmethod
     def from_dict(data: Dict[str, Any]):
@@ -136,11 +139,10 @@ class RoomActivityInfo:
         :rtype: RoomActivityInfo
         """
         return RoomActivityInfo(
-            period_format=data['periodFormat'],
-            teaching_week_format=data['teachingWeekFormat'],
-            week_day=data['weekDay']
+            period=parse_period_str(data['periodFormat']),
+            weeks=parse_weeks_str(data['teachingWeekFormat']),
+            weekday=int(data['weekDay']) - 1
         )
-
 
 
 @dataclass
@@ -167,6 +169,7 @@ class RoomExamInvigilator:
             type=data['invigilatorType'],
             dept_name=data['deptName']
         )
+
 
 @dataclass
 class RoomExam:
