@@ -252,10 +252,10 @@ class Course:
             dept=data.get(
                 "courseDepartmentName") or data.get("courseDeptShortName"),
             credit=data.get("credit") or data.get("courseCredit"),
-            instructor=data.get("instructorName"),
+            instructor=data.get("instructorName") if data.get("instructorName") is not None else
+                data.get('classTimetableInstrVOList')[0].get('instructorName'),
             session=session,
         )
-
 
 @dataclass
 class CourseTimetable:
@@ -263,7 +263,7 @@ class CourseTimetable:
     """
     course: Course
     """对应的课程"""
-    stu_num: int
+    stu_num: Optional[int]
     """学生数"""
     classroom: Optional[str]
     """行课地点，无则为 :obj:`None`"""
@@ -290,14 +290,14 @@ class CourseTimetable:
         """
         return CourseTimetable(
             course=Course.from_dict(data),
-            stu_num=data["selectedStuNum"],
-            classroom=data["position"],
+            stu_num=data.get("selectedStuNum"),
+            classroom=data.get("position"),
             weeks=parse_weeks_str(data.get("weeks")
                                   or data.get("teachingWeekFormat")),  # type: ignore
             day_time=CourseDayTime.from_dict(data),
             whole_week=bool(data["wholeWeekOccupy"]),
             classroom_name=data["roomName"],
-            expr_projects=data["exprProjectName"].split(',')
+            expr_projects=(data["exprProjectName"] or '').split(',')
         )
 
     @staticmethod

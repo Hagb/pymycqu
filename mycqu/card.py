@@ -6,7 +6,7 @@ from __future__ import annotations
 
 import json
 import datetime
-from typing import Any, List
+from typing import Any, List, Optional
 from html.parser import HTMLParser
 import requests
 from requests import Session
@@ -149,13 +149,15 @@ class EnergyFees:
     """
     balance: float
     """账户余额"""
-    electricity_subsidy: float
-    """电剩余补助"""
-    water_subsidy: float
-    """水剩余补助"""
+    electricity_subsidy: Optional[float]
+    """电剩余补助（仅虎溪校区拥有）"""
+    water_subsidy: Optional[float]
+    """水剩余补助（仅虎溪校区拥有）"""
+    subsidies: Optional[float]
+    """补助余额（仅老校区拥有）"""
 
     @staticmethod
-    def from_dict(data: dict[str, Any]) -> EnergyFees:
+    def from_dict(data: dict[str, Any], isHuXi: bool) -> EnergyFees:
         """从反序列化的（一个）水电费 json 中获取水电费信息
 
         :param data: json 反序列化得到的字典
@@ -163,11 +165,20 @@ class EnergyFees:
         :return: 学期信息对象
         :rtype: EnergyFees
         """
-        return EnergyFees(
-            balance=data["剩余金额"],
-            electricity_subsidy=data["电剩余补助"],
-            water_subsidy=data["水剩余补助"]
-        )
+        if isHuXi:
+            return EnergyFees(
+                balance=data["剩余金额"],
+                electricity_subsidy=data["电剩余补助"],
+                water_subsidy=data["水剩余补助"],
+                subsidies=None,
+            )
+        else:
+            return EnergyFees(
+                balance=data["现金余额"],
+                electricity_subsidy=None,
+                water_subsidy=None,
+                subsidies=data["补贴余额"],
+            )
 
     @staticmethod
     def fetch(session: Session, isHuxi: bool, room: str) -> EnergyFees:
@@ -182,7 +193,7 @@ class EnergyFees:
         :return: 返回相关宿舍的水电费信息
         :rtype: EnergyFees
         """
-        return EnergyFees.from_dict(get_fees_raw(session, isHuxi, room)["map"]["showData"])
+        return EnergyFees.from_dict(get_fees_raw(session, isHuxi, room)["map"]["showData"], isHuxi)
 
 
 @dataclass
