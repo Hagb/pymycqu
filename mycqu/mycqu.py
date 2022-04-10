@@ -13,15 +13,13 @@ MYCQU_SERVICE_URL = "http://my.cqu.edu.cn/authserver/authentication/cas"
 CODE_RE = re.compile(r"\?code=([^&]+)&")
 
 
-class MycquUnauthorized(Exception):
-    def __init__(self):
-        super().__init__("Unanthorized in mycqu, auth.login firstly and then mycqu.access_mycqu")
-
-
-def get_oauth_token(session: Session) -> str:
+def _get_oauth_token(session: Session) -> str:
     # from https://github.com/CQULHW/CQUQueryGrade
     resp = session.get(MYCQU_AUTHORIZE_URL, allow_redirects=False)
-    assert (match := CODE_RE.search(resp.headers['Location']))
+    match = CODE_RE.search(resp.headers['Location'])
+    if match is None:
+        raise ValueError("failed to get the code when accessing mycqu")
+    assert match
     token_data = {
         'client_id': 'enroll-prod',
         'client_secret': 'app-a-1234',
@@ -47,7 +45,8 @@ def access_mycqu(session: Session, add_to_header: bool = True) -> Dict[str, str]
         del session.headers["Authorization"]
     session.get(access_service(session, MYCQU_SERVICE_URL).headers['Location'],
                 allow_redirects=False)  # http 302 to https
-    token = get_oauth_token(session)
+    token = _get_oauth_token(session)
     if add_to_header:
         session.headers["Authorization"] = token
     return {"Authorization": token}
+

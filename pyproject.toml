@@ -36,6 +36,7 @@ pycryptodomex = ["pycryptodomex"]
 
 sphinx-multiversion = "^0"
 sphinx = "^4"
+jieba = "^0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
