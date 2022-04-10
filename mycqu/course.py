@@ -260,14 +260,13 @@ class Course:
             session=session,
         )
 
-
 @dataclass
 class CourseTimetable:
     """课表对象，一个对象存储有相同课程、相同行课节次和相同星期的一批行课安排
     """
     course: Course
     """对应的课程"""
-    stu_num: int
+    stu_num: Optional[int]
     """学生数"""
     classroom: Optional[str]
     """行课地点，无则为 :obj:`None`"""
@@ -294,14 +293,14 @@ class CourseTimetable:
         """
         return CourseTimetable(
             course=Course.from_dict(data),
-            stu_num=data["selectedStuNum"],
-            classroom=data["position"],
+            stu_num=data.get("selectedStuNum"),
+            classroom=data.get("position"),
             weeks=parse_weeks_str(data.get("weeks")
                                   or data.get("teachingWeekFormat")),  # type: ignore
             day_time=CourseDayTime.from_dict(data),
             whole_week=bool(data["wholeWeekOccupy"]),
             classroom_name=data["roomName"],
-            expr_projects=data["exprProjectName"].split(',')
+            expr_projects=(data["exprProjectName"] or '').split(',')
         )
 
     @staticmethod
