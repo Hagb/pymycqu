@@ -18,6 +18,7 @@ __all__ = ('access_library', 'BookInfo')
 LIB_LOGIN_URL = "http://authserver.cqu.edu.cn/authserver/login?service=http://lib.cqu.edu.cn/caslogin"
 CURR_BOOKS_URL = "http://lib.cqu.edu.cn/api/v1/user/getcurrentborrowlist"
 HISTORY_BOOKS_URL = "http://lib.cqu.edu.cn/api/v1/user/GetHistoryBorrowList"
+RENEW_BOOK_URL = "http://lib.cqu.edu.cn/api/v1/user/renew"
 
 
 class LibPageParser(HTMLParser):
@@ -93,7 +94,6 @@ def get_history_books_raw(session: Session, data: Dict[str, Any]) -> List[Dict[s
     res = session.get(HISTORY_BOOKS_URL, params={"query": json.dumps(data)})
     return res.json()['result']['borrowBookList']
 
-
 @dataclass
 class BookInfo:
     """
@@ -160,4 +160,10 @@ class BookInfo:
             return [BookInfo.from_dict(book) for book in get_curr_books_raw(session, data)]
         else:
             return [BookInfo.from_dict(book) for book in get_history_books_raw(session, data)]
+
+    @staticmethod
+    def renew_book(session: Session, data, book_id: str) -> str:
+        data['BookId'] = book_id
+        res = session.get(RENEW_BOOK_URL, params={'query': json.dumps(data)})
+        return res.json()['result']
 
