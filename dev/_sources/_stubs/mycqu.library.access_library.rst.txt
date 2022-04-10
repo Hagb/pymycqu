@@ -1,0 +1,6 @@
+mycqu.library.access\_library
+=============================
+
+.. currentmodule:: mycqu.library
+
+.. autofunction:: access_library

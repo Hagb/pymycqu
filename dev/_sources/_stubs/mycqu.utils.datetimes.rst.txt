@@ -15,6 +15,7 @@ mycqu.utils.datetimes
       :toctree:
    
       date_from_str
+      datetime_from_str
       parse_period_str
       parse_weekday_str
       parse_weeks_str

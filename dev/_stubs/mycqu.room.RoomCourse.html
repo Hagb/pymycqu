@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mycqu.room.RoomCourse &#8212; pymycqu dev 文档</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="mycqu.room.RoomExam" href="mycqu.room.RoomExam.html" />
+    <link rel="prev" title="mycqu.room.RoomActivityInfo" href="mycqu.room.RoomActivityInfo.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="mycqu.room.RoomExam.html" title="mycqu.room.RoomExam"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="mycqu.room.RoomActivityInfo.html" title="mycqu.room.RoomActivityInfo"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu dev 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="mycqu.html" >mycqu</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mycqu.room.html" accesskey="U">mycqu.room</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mycqu.room.RoomCourse</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="mycqu-room-roomcourse">
+<h1>mycqu.room.RoomCourse<a class="headerlink" href="#mycqu-room-roomcourse" title="永久链接至标题">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mycqu.room.RoomCourse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mycqu.room.</span></span><span class="sig-name descname"><span class="pre">RoomCourse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="mycqu.room.RoomActivityInfo.html#mycqu.room.RoomActivityInfo" title="mycqu.room.RoomActivityInfo"><span class="pre">mycqu.room.RoomActivityInfo</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">course_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">course_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">department</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stu_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">credit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instructor_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.room.RoomCourse" title="永久链接至目标">¶</a></dt>
+<dd><p>教室课程活动</p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code>(activity_info, class_number, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.room.RoomCourse.from_dict" title="mycqu.room.RoomCourse.from_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code></a>(data)</p></td>
+<td><p>从反序列化的一个教室课程信息 json 中生成RoomCourse对象</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.room.RoomCourse.activity_info" title="mycqu.room.RoomCourse.activity_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">activity_info</span></code></a></p></td>
+<td><p>基础信息</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.room.RoomCourse.class_number" title="mycqu.room.RoomCourse.class_number"><code class="xref py py-obj docutils literal notranslate"><span class="pre">class_number</span></code></a></p></td>
+<td><p>教学班号</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.room.RoomCourse.course_code" title="mycqu.room.RoomCourse.course_code"><code class="xref py py-obj docutils literal notranslate"><span class="pre">course_code</span></code></a></p></td>
+<td><p>课程代码</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.room.RoomCourse.course_name" title="mycqu.room.RoomCourse.course_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">course_name</span></code></a></p></td>
+<td><p>课程名称</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.room.RoomCourse.department" title="mycqu.room.RoomCourse.department"><code class="xref py py-obj docutils literal notranslate"><span class="pre">department</span></code></a></p></td>
+<td><p>开课学院</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.room.RoomCourse.stu_num" title="mycqu.room.RoomCourse.stu_num"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stu_num</span></code></a></p></td>
+<td><p>选课学生数</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.room.RoomCourse.credit" title="mycqu.room.RoomCourse.credit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">credit</span></code></a></p></td>
+<td><p>课程学分</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.room.RoomCourse.instructor_name" title="mycqu.room.RoomCourse.instructor_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">instructor_name</span></code></a></p></td>
+<td><p>教师姓名</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Details</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.room.RoomCourse.activity_info">
+<span class="sig-name descname"><span class="pre">activity_info</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="mycqu.room.RoomActivityInfo.html#mycqu.room.RoomActivityInfo" title="mycqu.room.RoomActivityInfo"><span class="pre">mycqu.room.RoomActivityInfo</span></a></em><a class="headerlink" href="#mycqu.room.RoomCourse.activity_info" title="永久链接至目标">¶</a></dt>
+<dd><p>基础信息</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.room.RoomCourse.class_number">
+<span class="sig-name descname"><span class="pre">class_number</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#mycqu.room.RoomCourse.class_number" title="永久链接至目标">¶</a></dt>
+<dd><p>教学班号</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.room.RoomCourse.course_code">
+<span class="sig-name descname"><span class="pre">course_code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#mycqu.room.RoomCourse.course_code" title="永久链接至目标">¶</a></dt>
+<dd><p>课程代码</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.room.RoomCourse.course_name">
+<span class="sig-name descname"><span class="pre">course_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#mycqu.room.RoomCourse.course_name" title="永久链接至目标">¶</a></dt>
+<dd><p>课程名称</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.room.RoomCourse.credit">
+<span class="sig-name descname"><span class="pre">credit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#mycqu.room.RoomCourse.credit" title="永久链接至目标">¶</a></dt>
+<dd><p>课程学分</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.room.RoomCourse.department">
+<span class="sig-name descname"><span class="pre">department</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#mycqu.room.RoomCourse.department" title="永久链接至目标">¶</a></dt>
+<dd><p>开课学院</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mycqu.room.RoomCourse.from_dict">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.room.RoomCourse.from_dict" title="永久链接至目标">¶</a></dt>
+<dd><p>从反序列化的一个教室课程信息 json 中生成RoomCourse对象</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 反序列化成字典的教室课程 json</p>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>教室课程</p>
+</dd>
+<dt class="field-odd">返回类型</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mycqu.room.RoomCourse" title="mycqu.room.RoomCourse">RoomCourse</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.room.RoomCourse.instructor_name">
+<span class="sig-name descname"><span class="pre">instructor_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#mycqu.room.RoomCourse.instructor_name" title="永久链接至目标">¶</a></dt>
+<dd><p>教师姓名</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.room.RoomCourse.stu_num">
+<span class="sig-name descname"><span class="pre">stu_num</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mycqu.room.RoomCourse.stu_num" title="永久链接至目标">¶</a></dt>
+<dd><p>选课学生数</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="mycqu.room.RoomActivityInfo.html"
+                        title="上一章">mycqu.room.RoomActivityInfo</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="mycqu.room.RoomExam.html"
+                        title="下一章">mycqu.room.RoomExam</a></p>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/_stubs/mycqu.room.RoomCourse.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<h3>Versions</h3>
+<ul>
+  <li><a href="../../master/index.html">master</a></li>
+  <li><a href="mycqu.room.RoomCourse.html">dev</a></li>
+  <li><a href="../../v0.5.0/index.html">v0.5.0</a></li>
+  <li><a href="../../v0.4.0/index.html">v0.4.0</a></li>
+  <li><a href="../../v0.3.0rc1/index.html">v0.3.0rc1</a></li>
+  <li><a href="../../v0.3.0rc/index.html">v0.3.0rc</a></li>
+  <li><a href="../../v0.3.0/index.html">v0.3.0</a></li>
+  <li><a href="../../v0.2.6.1/index.html">v0.2.6.1</a></li>
+  <li><a href="../../v0.2.6/index.html">v0.2.6</a></li>
+  <li><a href="../../v0.2.5/index.html">v0.2.5</a></li>
+  <li><a href="../../v0.2.4/index.html">v0.2.4</a></li>
+  <li><a href="../../v0.2.3/index.html">v0.2.3</a></li>
+  <li><a href="../../v0.2.2/index.html">v0.2.2</a></li>
+  <li><a href="../../v0.2.1/index.html">v0.2.1</a></li>
+  <li><a href="../../v0.2.0/index.html">v0.2.0</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="mycqu.room.RoomExam.html" title="mycqu.room.RoomExam"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="mycqu.room.RoomActivityInfo.html" title="mycqu.room.RoomActivityInfo"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu dev 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="mycqu.html" >mycqu</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mycqu.room.html" >mycqu.room</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mycqu.room.RoomCourse</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; 版权所有 2021, Hagb.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
+    </div>
+  </body>
+</html>

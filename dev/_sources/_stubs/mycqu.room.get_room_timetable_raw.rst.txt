@@ -1,0 +1,6 @@
+mycqu.room.get\_room\_timetable\_raw
+====================================
+
+.. currentmodule:: mycqu.room
+
+.. autofunction:: get_room_timetable_raw

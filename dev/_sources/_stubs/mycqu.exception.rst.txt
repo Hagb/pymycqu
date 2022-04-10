@@ -27,6 +27,7 @@ mycqu.exception
       CQUWebsiteError
       IncorrectLoginCredentials
       InvaildCaptcha
+      InvalidRoom
       MultiSessionConflict
       MycquUnauthorized
       NeedCaptcha

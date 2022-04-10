@@ -1,0 +1,6 @@
+mycqu.room.get\_room\_info\_raw
+===============================
+
+.. currentmodule:: mycqu.room
+
+.. autofunction:: get_room_info_raw

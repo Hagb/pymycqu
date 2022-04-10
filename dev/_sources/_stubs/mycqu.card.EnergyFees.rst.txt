@@ -27,6 +27,7 @@ mycqu.card.EnergyFees
       ~EnergyFees.balance
       ~EnergyFees.electricity_subsidy
       ~EnergyFees.water_subsidy
+      ~EnergyFees.subsidies
    
    
 

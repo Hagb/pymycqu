@@ -1,0 +1,32 @@
+mycqu.room.RoomExamInvigilator
+==============================
+
+.. currentmodule:: mycqu.room
+
+.. autoclass:: RoomExamInvigilator
+   :members:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RoomExamInvigilator.__init__
+      ~RoomExamInvigilator.from_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~RoomExamInvigilator.name
+      ~RoomExamInvigilator.type
+      ~RoomExamInvigilator.dept_name
+   
+   
+
+   .. rubric:: Details

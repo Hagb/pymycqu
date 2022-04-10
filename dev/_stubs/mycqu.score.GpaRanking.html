@@ -52,7 +52,7 @@
 <h1>mycqu.score.GpaRanking<a class="headerlink" href="#mycqu-score-gparanking" title="永久链接至标题">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="mycqu.score.GpaRanking">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mycqu.score.</span></span><span class="sig-name descname"><span class="pre">GpaRanking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gpa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">majorRanking</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gradeRanking</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classRanking</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.score.GpaRanking" title="永久链接至目标">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mycqu.score.</span></span><span class="sig-name descname"><span class="pre">GpaRanking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gpa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">majorRanking</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gradeRanking</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classRanking</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weightedAvg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minorWeightedAvg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minorGpa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.score.GpaRanking" title="永久链接至目标">¶</a></dt>
 <dd><p>绩点对象</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -90,6 +90,15 @@
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#mycqu.score.GpaRanking.classRanking" title="mycqu.score.GpaRanking.classRanking"><code class="xref py py-obj docutils literal notranslate"><span class="pre">classRanking</span></code></a></p></td>
 <td><p>班级排名</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.score.GpaRanking.weightedAvg" title="mycqu.score.GpaRanking.weightedAvg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">weightedAvg</span></code></a></p></td>
+<td><p>加权平均分</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.score.GpaRanking.minorWeightedAvg" title="mycqu.score.GpaRanking.minorWeightedAvg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">minorWeightedAvg</span></code></a></p></td>
+<td><p>辅修加权平均分</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.score.GpaRanking.minorGpa" title="mycqu.score.GpaRanking.minorGpa"><code class="xref py py-obj docutils literal notranslate"><span class="pre">minorGpa</span></code></a></p></td>
+<td><p>辅修绩点</p></td>
 </tr>
 </tbody>
 </table>
@@ -146,6 +155,24 @@
 <dt class="sig sig-object py" id="mycqu.score.GpaRanking.majorRanking">
 <span class="sig-name descname"><span class="pre">majorRanking</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mycqu.score.GpaRanking.majorRanking" title="永久链接至目标">¶</a></dt>
 <dd><p>专业排名</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.score.GpaRanking.minorGpa">
+<span class="sig-name descname"><span class="pre">minorGpa</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mycqu.score.GpaRanking.minorGpa" title="永久链接至目标">¶</a></dt>
+<dd><p>辅修绩点</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.score.GpaRanking.minorWeightedAvg">
+<span class="sig-name descname"><span class="pre">minorWeightedAvg</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mycqu.score.GpaRanking.minorWeightedAvg" title="永久链接至目标">¶</a></dt>
+<dd><p>辅修加权平均分</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mycqu.score.GpaRanking.weightedAvg">
+<span class="sig-name descname"><span class="pre">weightedAvg</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#mycqu.score.GpaRanking.weightedAvg" title="永久链接至目标">¶</a></dt>
+<dd><p>加权平均分</p>
 </dd></dl>
 
 </dd></dl>

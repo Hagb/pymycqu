@@ -1,0 +1,33 @@
+mycqu.room.RoomTimetable
+========================
+
+.. currentmodule:: mycqu.room
+
+.. autoclass:: RoomTimetable
+   :members:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RoomTimetable.__init__
+      ~RoomTimetable.fetch
+      ~RoomTimetable.from_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~RoomTimetable.course_timetable
+      ~RoomTimetable.exam_timetable
+      ~RoomTimetable.temp_activity_timetable
+   
+   
+
+   .. rubric:: Details

@@ -1,0 +1,32 @@
+mycqu.room.RoomActivityInfo
+===========================
+
+.. currentmodule:: mycqu.room
+
+.. autoclass:: RoomActivityInfo
+   :members:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RoomActivityInfo.__init__
+      ~RoomActivityInfo.from_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~RoomActivityInfo.period
+      ~RoomActivityInfo.weeks
+      ~RoomActivityInfo.weekday
+   
+   
+
+   .. rubric:: Details

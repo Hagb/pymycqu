@@ -32,7 +32,9 @@
    mycqu.course
    mycqu.exam
    mycqu.exception
+   mycqu.library
    mycqu.mycqu
+   mycqu.room
    mycqu.score
    mycqu.user
    mycqu.utils

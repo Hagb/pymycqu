@@ -1,0 +1,6 @@
+mycqu.library.get\_curr\_books\_raw
+===================================
+
+.. currentmodule:: mycqu.library
+
+.. autofunction:: get_curr_books_raw

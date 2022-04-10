@@ -28,6 +28,9 @@ mycqu.score.GpaRanking
       ~GpaRanking.majorRanking
       ~GpaRanking.gradeRanking
       ~GpaRanking.classRanking
+      ~GpaRanking.weightedAvg
+      ~GpaRanking.minorWeightedAvg
+      ~GpaRanking.minorGpa
    
    
 

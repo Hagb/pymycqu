@@ -1,0 +1,37 @@
+mycqu.room.RoomCourse
+=====================
+
+.. currentmodule:: mycqu.room
+
+.. autoclass:: RoomCourse
+   :members:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RoomCourse.__init__
+      ~RoomCourse.from_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~RoomCourse.activity_info
+      ~RoomCourse.class_number
+      ~RoomCourse.course_code
+      ~RoomCourse.course_name
+      ~RoomCourse.department
+      ~RoomCourse.stu_num
+      ~RoomCourse.credit
+      ~RoomCourse.instructor_name
+   
+   
+
+   .. rubric:: Details

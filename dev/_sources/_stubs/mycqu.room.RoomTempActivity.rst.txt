@@ -1,0 +1,35 @@
+mycqu.room.RoomTempActivity
+===========================
+
+.. currentmodule:: mycqu.room
+
+.. autoclass:: RoomTempActivity
+   :members:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RoomTempActivity.__init__
+      ~RoomTempActivity.from_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~RoomTempActivity.activity_info
+      ~RoomTempActivity.content
+      ~RoomTempActivity.department
+      ~RoomTempActivity.type
+      ~RoomTempActivity.time_range
+      ~RoomTempActivity.date
+   
+   
+
+   .. rubric:: Details

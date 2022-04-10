@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mycqu.room &#8212; pymycqu dev 文档</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="mycqu.room.get_room_info_raw" href="mycqu.room.get_room_info_raw.html" />
+    <link rel="prev" title="mycqu.mycqu.access_mycqu" href="mycqu.mycqu.access_mycqu.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="mycqu.room.get_room_info_raw.html" title="mycqu.room.get_room_info_raw"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="mycqu.mycqu.access_mycqu.html" title="mycqu.mycqu.access_mycqu"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu dev 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="mycqu.html" accesskey="U">mycqu</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mycqu.room</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-mycqu.room">
+<span id="mycqu-room"></span><h1>mycqu.room<a class="headerlink" href="#module-mycqu.room" title="永久链接至标题">¶</a></h1>
+<p>教室相关信息模块</p>
+<p class="rubric">Functions</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="mycqu.room.get_room_info_raw.html#mycqu.room.get_room_info_raw" title="mycqu.room.get_room_info_raw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_room_info_raw</span></code></a>(session, name)</p></td>
+<td><p>依据教室名字查询教室（支持模糊查询）</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="mycqu.room.get_room_timetable_raw.html#mycqu.room.get_room_timetable_raw" title="mycqu.room.get_room_timetable_raw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_room_timetable_raw</span></code></a>(session, room[, ...])</p></td>
+<td><p>获取某教室活动详情</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="mycqu.room.Room.html#mycqu.room.Room" title="mycqu.room.Room"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Room</span></code></a>(id, name, capacity, building_name, ...)</p></td>
+<td><p>教室对象，储存了某个教室的相关信息</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="mycqu.room.RoomActivityInfo.html#mycqu.room.RoomActivityInfo" title="mycqu.room.RoomActivityInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RoomActivityInfo</span></code></a>(period, weeks, weekday)</p></td>
+<td><p>教室活动的公有属性</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="mycqu.room.RoomCourse.html#mycqu.room.RoomCourse" title="mycqu.room.RoomCourse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RoomCourse</span></code></a>(activity_info, class_number, ...)</p></td>
+<td><p>教室课程活动</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="mycqu.room.RoomExam.html#mycqu.room.RoomExam" title="mycqu.room.RoomExam"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RoomExam</span></code></a>(activity_info, course_name, ...)</p></td>
+<td><p>教室中考试活动相关信息</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="mycqu.room.RoomExamInvigilator.html#mycqu.room.RoomExamInvigilator" title="mycqu.room.RoomExamInvigilator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RoomExamInvigilator</span></code></a>(name, type, dept_name)</p></td>
+<td><p>教室考试活动监考员信息</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="mycqu.room.RoomTempActivity.html#mycqu.room.RoomTempActivity" title="mycqu.room.RoomTempActivity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RoomTempActivity</span></code></a>(activity_info, content, ...)</p></td>
+<td><p>教室临时活动</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="mycqu.room.RoomTimetable.html#mycqu.room.RoomTimetable" title="mycqu.room.RoomTimetable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RoomTimetable</span></code></a>(course_timetable, ...)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="mycqu.mycqu.access_mycqu.html"
+                        title="上一章">mycqu.mycqu.access_mycqu</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="mycqu.room.get_room_info_raw.html"
+                        title="下一章">mycqu.room.get_room_info_raw</a></p>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/_stubs/mycqu.room.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<h3>Versions</h3>
+<ul>
+  <li><a href="../../master/index.html">master</a></li>
+  <li><a href="mycqu.room.html">dev</a></li>
+  <li><a href="../../v0.5.0/index.html">v0.5.0</a></li>
+  <li><a href="../../v0.4.0/index.html">v0.4.0</a></li>
+  <li><a href="../../v0.3.0rc1/index.html">v0.3.0rc1</a></li>
+  <li><a href="../../v0.3.0rc/index.html">v0.3.0rc</a></li>
+  <li><a href="../../v0.3.0/index.html">v0.3.0</a></li>
+  <li><a href="../../v0.2.6.1/index.html">v0.2.6.1</a></li>
+  <li><a href="../../v0.2.6/index.html">v0.2.6</a></li>
+  <li><a href="../../v0.2.5/index.html">v0.2.5</a></li>
+  <li><a href="../../v0.2.4/index.html">v0.2.4</a></li>
+  <li><a href="../../v0.2.3/index.html">v0.2.3</a></li>
+  <li><a href="../../v0.2.2/index.html">v0.2.2</a></li>
+  <li><a href="../../v0.2.1/index.html">v0.2.1</a></li>
+  <li><a href="../../v0.2.0/index.html">v0.2.0</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="mycqu.room.get_room_info_raw.html" title="mycqu.room.get_room_info_raw"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="mycqu.mycqu.access_mycqu.html" title="mycqu.mycqu.access_mycqu"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu dev 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="mycqu.html" >mycqu</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mycqu.room</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; 版权所有 2021, Hagb.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
+    </div>
+  </body>
+</html>

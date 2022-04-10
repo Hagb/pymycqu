@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mycqu.room.RoomTimetable &#8212; pymycqu dev 文档</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="mycqu.score" href="mycqu.score.html" />
+    <link rel="prev" title="mycqu.room.RoomTempActivity" href="mycqu.room.RoomTempActivity.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="mycqu.score.html" title="mycqu.score"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="mycqu.room.RoomTempActivity.html" title="mycqu.room.RoomTempActivity"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu dev 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="mycqu.html" >mycqu</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mycqu.room.html" accesskey="U">mycqu.room</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mycqu.room.RoomTimetable</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="mycqu-room-roomtimetable">
+<h1>mycqu.room.RoomTimetable<a class="headerlink" href="#mycqu-room-roomtimetable" title="永久链接至标题">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mycqu.room.RoomTimetable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mycqu.room.</span></span><span class="sig-name descname"><span class="pre">RoomTimetable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_timetable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'List[RoomCourse]'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exam_timetable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'List[RoomExam]'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temp_activity_timetable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'List[RoomTempActivity]'</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.room.RoomTimetable" title="永久链接至目标">¶</a></dt>
+<dd><p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code>(course_timetable, exam_timetable, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mycqu.room.RoomTimetable.fetch" title="mycqu.room.RoomTimetable.fetch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fetch</span></code></a>(session, room[, cqu_session])</p></td>
+<td><p>获取某教室活动详情</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mycqu.room.RoomTimetable.from_dict" title="mycqu.room.RoomTimetable.from_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code></a>(data)</p></td>
+<td><p>从反序列化的一个教室信息 json 中生成RoomTimetable对象</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">course_timetable</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">exam_timetable</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">temp_activity_timetable</span></code></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Details</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mycqu.room.RoomTimetable.fetch">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fetch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">requests.sessions.Session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">room</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mycqu.room.Room.html#mycqu.room.Room" title="mycqu.room.Room"><span class="pre">mycqu.room.Room</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cqu_session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mycqu.course.CQUSession.html#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><span class="pre">mycqu.course.CQUSession</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.room.RoomTimetable.fetch" title="永久链接至目标">¶</a></dt>
+<dd><p>获取某教室活动详情</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> (<em>Session</em>) – 登录了统一身份认证（<a class="reference internal" href="mycqu.auth.login.html#mycqu.auth.login" title="mycqu.auth.login"><code class="xref py py-func docutils literal notranslate"><span class="pre">auth.login()</span></code></a>）并在 mycqu 进行了认证（<a class="reference internal" href="mycqu.mycqu.access_mycqu.html#mycqu.mycqu.access_mycqu" title="mycqu.mycqu.access_mycqu"><code class="xref py py-func docutils literal notranslate"><span class="pre">mycqu.access_mycqu()</span></code></a>）的 requests 会话</p></li>
+<li><p><strong>room</strong> (<em>Union</em><em>[</em><a class="reference internal" href="mycqu.room.Room.html#mycqu.room.Room" title="mycqu.room.Room"><em>Room</em></a><em>, </em><em>str</em><em>]</em>) – 教室信息（为Room对象或需要获取的教室名称）</p></li>
+<li><p><strong>cqu_session</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="mycqu.course.CQUSession.html#mycqu.course.CQUSession" title="mycqu.course.CQUSession"><em>CQUSession</em></a><em>, </em><em>str</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – 需要获取课表的学期，留空获取当前年级的课表</p></li>
+</ul>
+</dd>
+<dt class="field-even">引发</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="mycqu.exception.MycquUnauthorized.html#mycqu.exception.MycquUnauthorized" title="mycqu.exception.MycquUnauthorized"><strong>MycquUnauthorized</strong></a> – 若会话未在 my.cqu.edu.cn 进行认证</p></li>
+<li><p><strong>InvalidName</strong> – 若教室名称不为准确教室名称时</p></li>
+</ul>
+</dd>
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>教室活动信息对象</p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mycqu.room.RoomTimetable" title="mycqu.room.RoomTimetable">RoomTimetable</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mycqu.room.RoomTimetable.from_dict">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mycqu.room.RoomTimetable.from_dict" title="永久链接至目标">¶</a></dt>
+<dd><p>从反序列化的一个教室信息 json 中生成RoomTimetable对象</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 反序列化成字典的教室信息 json</p>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>教室活动信息</p>
+</dd>
+<dt class="field-odd">返回类型</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mycqu.room.RoomTimetable" title="mycqu.room.RoomTimetable">RoomTimetable</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="mycqu.room.RoomTempActivity.html"
+                        title="上一章">mycqu.room.RoomTempActivity</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="mycqu.score.html"
+                        title="下一章">mycqu.score</a></p>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/_stubs/mycqu.room.RoomTimetable.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<h3>Versions</h3>
+<ul>
+  <li><a href="../../master/index.html">master</a></li>
+  <li><a href="mycqu.room.RoomTimetable.html">dev</a></li>
+  <li><a href="../../v0.5.0/index.html">v0.5.0</a></li>
+  <li><a href="../../v0.4.0/index.html">v0.4.0</a></li>
+  <li><a href="../../v0.3.0rc1/index.html">v0.3.0rc1</a></li>
+  <li><a href="../../v0.3.0rc/index.html">v0.3.0rc</a></li>
+  <li><a href="../../v0.3.0/index.html">v0.3.0</a></li>
+  <li><a href="../../v0.2.6.1/index.html">v0.2.6.1</a></li>
+  <li><a href="../../v0.2.6/index.html">v0.2.6</a></li>
+  <li><a href="../../v0.2.5/index.html">v0.2.5</a></li>
+  <li><a href="../../v0.2.4/index.html">v0.2.4</a></li>
+  <li><a href="../../v0.2.3/index.html">v0.2.3</a></li>
+  <li><a href="../../v0.2.2/index.html">v0.2.2</a></li>
+  <li><a href="../../v0.2.1/index.html">v0.2.1</a></li>
+  <li><a href="../../v0.2.0/index.html">v0.2.0</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="mycqu.score.html" title="mycqu.score"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="mycqu.room.RoomTempActivity.html" title="mycqu.room.RoomTempActivity"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pymycqu dev 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="mycqu.html" >mycqu</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mycqu.room.html" >mycqu.room</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mycqu.room.RoomTimetable</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; 版权所有 2021, Hagb.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
+    </div>
+  </body>
+</html>

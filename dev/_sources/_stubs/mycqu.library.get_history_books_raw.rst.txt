@@ -1,0 +1,6 @@
+mycqu.library.get\_history\_books\_raw
+======================================
+
+.. currentmodule:: mycqu.library
+
+.. autofunction:: get_history_books_raw

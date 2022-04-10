@@ -1,0 +1,36 @@
+mycqu.room.Room
+===============
+
+.. currentmodule:: mycqu.room
+
+.. autoclass:: Room
+   :members:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Room.__init__
+      ~Room.fetch
+      ~Room.from_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Room.id
+      ~Room.name
+      ~Room.capacity
+      ~Room.building_name
+      ~Room.campus_name
+      ~Room.room_type
+   
+   
+
+   .. rubric:: Details

@@ -1,0 +1,34 @@
+mycqu.room.RoomExam
+===================
+
+.. currentmodule:: mycqu.room
+
+.. autoclass:: RoomExam
+   :members:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RoomExam.__init__
+      ~RoomExam.from_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~RoomExam.activity_info
+      ~RoomExam.course_name
+      ~RoomExam.stu_capacity
+      ~RoomExam.time_range
+      ~RoomExam.invigilators
+   
+   
+
+   .. rubric:: Details

@@ -1,0 +1,7 @@
+mycqu.exception.InvalidRoom
+===========================
+
+.. currentmodule:: mycqu.exception
+
+.. autoclass:: InvalidRoom
+   :members:

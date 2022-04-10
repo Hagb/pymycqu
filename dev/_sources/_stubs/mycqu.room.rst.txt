@@ -1,0 +1,44 @@
+mycqu.room
+==========
+
+.. automodule:: mycqu.room
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      get_room_info_raw
+      get_room_timetable_raw
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+   
+      Room
+      RoomActivityInfo
+      RoomCourse
+      RoomExam
+      RoomExamInvigilator
+      RoomTempActivity
+      RoomTimetable
+   
+   
+
+   
+   
+   
+
+
+

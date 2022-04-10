@@ -1,0 +1,40 @@
+mycqu.library
+=============
+
+.. automodule:: mycqu.library
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      access_library
+      get_curr_books_raw
+      get_history_books_raw
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+   
+      BookInfo
+      LibPageParser
+   
+   
+
+   
+   
+   
+
+
+

@@ -1,0 +1,41 @@
+mycqu.library.BookInfo
+======================
+
+.. currentmodule:: mycqu.library
+
+.. autoclass:: BookInfo
+   :members:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BookInfo.__init__
+      ~BookInfo.fetch
+      ~BookInfo.from_dict
+      ~BookInfo.renew_book
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BookInfo.id
+      ~BookInfo.title
+      ~BookInfo.call_no
+      ~BookInfo.library_name
+      ~BookInfo.borrow_time
+      ~BookInfo.should_return_time
+      ~BookInfo.is_return
+      ~BookInfo.return_time
+      ~BookInfo.renew_count
+      ~BookInfo.can_renew
+   
+   
+
+   .. rubric:: Details
