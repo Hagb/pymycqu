@@ -15,6 +15,7 @@
       :toctree:
    
       access_service
+      access_sso_service
       get_formdata
       is_logined
       login
