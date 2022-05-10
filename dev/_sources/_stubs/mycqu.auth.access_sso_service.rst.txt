@@ -1,0 +1,6 @@
+mycqu.auth.access\_sso\_service
+===============================
+
+.. currentmodule:: mycqu.auth
+
+.. autofunction:: access_sso_service

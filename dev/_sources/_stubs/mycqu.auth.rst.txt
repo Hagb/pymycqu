@@ -15,6 +15,7 @@ mycqu.auth
       :toctree:
    
       access_service
+      access_sso_service
       is_logined
       login
       logout
