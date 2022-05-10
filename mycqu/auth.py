@@ -5,18 +5,21 @@ import random
 import re
 from base64 import b64encode
 from html.parser import HTMLParser
-from requests import Session, Response
+from urllib.parse import parse_qs, urlsplit
+from requests import Session, Response, cookies
 from ._lib_wrapper.encrypt import pad, aes_cbc_encryptor
-
 from .exception import NotAllowedService, NeedCaptcha, InvaildCaptcha, IncorrectLoginCredentials, \
     UnknownAuthserverException, NotLogined, MultiSessionConflict, ParseError
 
-__all__ = ("is_logined", "logout", "access_service", "login")
+__all__ = ("is_logined", "logout", "access_service",
+           "access_sso_service", "login")
+
 
 AUTHSERVER_URL = "http://authserver.cqu.edu.cn/authserver/login"
 AUTHSERVER_CAPTCHA_DETERMINE_URL = "http://authserver.cqu.edu.cn/authserver/needCaptcha.html"
 AUTHSERVER_CAPTCHA_IMAGE_URL = "http://authserver.cqu.edu.cn/authserver/captcha.html"
 AUTHSERVER_LOGOUT_URL = "http://authserver.cqu.edu.cn/authserver/logout"
+SSO_LOGIN_URL = "https://sso.cqu.edu.cn/login"
 _CHAR_SET = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'
 
 
@@ -160,6 +163,34 @@ def logout(session: Session) -> None:
     :type session: Session
     """
     session.get("http://authserver.cqu.edu.cn/authserver/logout")
+
+
+def access_sso_service(session: Session, service: str) -> Response:
+    class ArriveService(Exception):
+        def __init__(self, response: Response):
+            super().__init__()
+            self.response: Response = response
+
+    def response_hook(response: Response, *args, **kwargs):
+        if response.url.startswith(SSO_LOGIN_URL) and response.status_code != 302:
+            assert '<div class="code">adapter</div>' in response.text
+            response.headers['Location'] = './clientredirect?client_name=adapter'
+            response.status_code = 302
+            return response
+        if response.url.startswith(AUTHSERVER_URL) and response.status_code != 302:
+            raise NotLogined()
+        if response.url.startswith(service):
+            cookies.merge_cookies(session.cookies, response.cookies)
+            raise ArriveService(response)
+
+    try:
+        assert not session.get(SSO_LOGIN_URL,
+                               params={"service": service},
+                               allow_redirects=True,
+                               hooks={"response": response_hook}
+                               )
+    except ArriveService as arrive_service:
+        return arrive_service.response
 
 
 def access_service(session: Session, service: str) -> Response:

@@ -3,13 +3,13 @@
 from typing import Dict
 import re
 from requests import Session
-from .auth import access_service
+from .auth import access_sso_service
 __all__ = ("access_mycqu",)
 
 MYCQU_TOKEN_INDEX_URL = "https://my.cqu.edu.cn/enroll/token-index"
 MYCQU_TOKEN_URL = "https://my.cqu.edu.cn/authserver/oauth/token"
 MYCQU_AUTHORIZE_URL = f"https://my.cqu.edu.cn/authserver/oauth/authorize?client_id=enroll-prod&response_type=code&scope=all&state=&redirect_uri={MYCQU_TOKEN_INDEX_URL}"
-MYCQU_SERVICE_URL = "http://my.cqu.edu.cn/authserver/authentication/cas"
+MYCQU_SERVICE_URL = "https://my.cqu.edu.cn/authserver/authentication/cas"
 CODE_RE = re.compile(r"\?code=([^&]+)&")
 
 
@@ -43,10 +43,8 @@ def access_mycqu(session: Session, add_to_header: bool = True) -> Dict[str, str]
     """
     if "Authorization" in session.headers:
         del session.headers["Authorization"]
-    session.get(access_service(session, MYCQU_SERVICE_URL).headers['Location'],
-                allow_redirects=False)  # http 302 to https
+    access_sso_service(session, MYCQU_SERVICE_URL)
     token = _get_oauth_token(session)
     if add_to_header:
         session.headers["Authorization"] = token
     return {"Authorization": token}
-
