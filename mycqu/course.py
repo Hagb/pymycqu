@@ -279,7 +279,7 @@ class CourseTimetable:
     """是否真实地占用整周（如军训和某些实习是真实地占用、思修实践是“虚拟地占用”）"""
     classroom_name: Optional[str]
     """行课教室名称"""
-    expr_projects: List[str]
+    expr_projects: Optional[List[str]]
     """实验课各次实验内容"""
 
     @staticmethod
@@ -300,7 +300,7 @@ class CourseTimetable:
             day_time=CourseDayTime.from_dict(data),
             whole_week=bool(data["wholeWeekOccupy"]),
             classroom_name=data["roomName"],
-            expr_projects=(data["exprProjectName"] or '').split(',')
+            expr_projects=data["exprProjectName"].split(',') if data['exprProjectName'] else None
         )
 
     @staticmethod
