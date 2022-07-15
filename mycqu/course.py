@@ -5,12 +5,11 @@ from typing import Any, Dict, Optional, Tuple, List, Union, ClassVar
 # from pydantic.dataclasses import dataclass
 import re
 from datetime import date
-from functools import lru_cache
+from functools import lru_cache, reduce
 from requests import Session, get
 from ._lib_wrapper.dataclass import dataclass
 from .utils.datetimes import parse_period_str, parse_weeks_str, parse_weekday_str, date_from_str
-from .mycqu import MycquUnauthorized
-
+from .exception import MycquUnauthorized, InvalidRoom
 
 __all__ = ("CQUSession", "CQUSessionInfo",
            "CourseTimetable", "CourseDayTime", "Course")
@@ -32,7 +31,7 @@ def get_course_raw(session: Session, code: str, cqu_session: Optional[Union[CQUS
     :type cqu_session: Optional[Union[CQUSession, str]], optional
     :raises MycquUnauthorized: 若会话未在 my.cqu.edu.cn 进行认证
     :return: 反序列化获取课表的json
-    :rtype: List[CourseTimetable]
+    :rtype: dict
     """
     if cqu_session is None:
         cqu_session = CQUSessionInfo.fetch(session).session
@@ -61,7 +60,7 @@ class CQUSession:
         239259, 102, 101, 103, 1028, 1029, 1030, 1032)  # 2015 ~ 2018
 
     @lru_cache(maxsize=32)  # type: ignore
-    def __new__(cls, year: int, is_autumn: bool): # pylint: disable=unused-argument
+    def __new__(cls, year: int, is_autumn: bool):  # pylint: disable=unused-argument
         return super(CQUSession, cls).__new__(cls)
 
     def __str__(self):
@@ -246,6 +245,10 @@ class Course:
         if isinstance(session, str):
             session = CQUSession.from_str(session)
         assert isinstance(session, CQUSession) or session is None
+
+        instructor_name = data.get("instructorName") if data.get("instructorName") is not None else \
+            reduce(lambda x, y: x + ', ' + y, [instructor.get('instructorName') for instructor in data.get('classTimetableInstrVOList')], '')
+
         return Course(
             name=data["courseName"],
             code=data["courseCode"],
@@ -253,10 +256,9 @@ class Course:
             dept=data.get(
                 "courseDepartmentName") or data.get("courseDeptShortName"),
             credit=data.get("credit") or data.get("courseCredit"),
-            instructor=data.get("instructorName"),
+            instructor=instructor_name,
             session=session,
         )
-
 
 @dataclass
 class CourseTimetable:
@@ -264,7 +266,7 @@ class CourseTimetable:
     """
     course: Course
     """对应的课程"""
-    stu_num: int
+    stu_num: Optional[int]
     """学生数"""
     classroom: Optional[str]
     """行课地点，无则为 :obj:`None`"""
@@ -275,6 +277,10 @@ class CourseTimetable:
     则为 :obj:`None`"""
     whole_week: bool
     """是否真实地占用整周（如军训和某些实习是真实地占用、思修实践是“虚拟地占用”）"""
+    classroom_name: Optional[str]
+    """行课教室名称"""
+    expr_projects: List[str]
+    """实验课各次实验内容"""
 
     @staticmethod
     def from_dict(data: Dict[str, Any]) -> CourseTimetable:
@@ -287,16 +293,18 @@ class CourseTimetable:
         """
         return CourseTimetable(
             course=Course.from_dict(data),
-            stu_num=data["selectedStuNum"],
-            classroom=data["roomName"],
+            stu_num=data.get("selectedStuNum"),
+            classroom=data.get("position"),
             weeks=parse_weeks_str(data.get("weeks")
                                   or data.get("teachingWeekFormat")),  # type: ignore
             day_time=CourseDayTime.from_dict(data),
-            whole_week=bool(data["wholeWeekOccupy"])
+            whole_week=bool(data["wholeWeekOccupy"]),
+            classroom_name=data["roomName"],
+            expr_projects=(data["exprProjectName"] or '').split(',')
         )
 
     @staticmethod
-    def fetch(session: Session, code: str, cqu_session: Optional[Union[CQUSession, str]] = None)\
+    def fetch(session: Session, code: str, cqu_session: Optional[Union[CQUSession, str]] = None) \
             -> List[CourseTimetable]:
         """从 my.cqu.edu.cn 上获取学生或老师的课表
 
