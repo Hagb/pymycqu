@@ -34,3 +34,6 @@ def parse_weekday_str(string: str) -> int:
 
 def date_from_str(string: str) -> date:
     return date.fromisoformat(string)
+
+def datetime_from_str(string: str) -> datetime:
+    return datetime.strptime(string, '%Y-%m-%d %H:%M:%S').replace(tzinfo=TIMEZONE)

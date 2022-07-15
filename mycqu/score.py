@@ -8,26 +8,25 @@ import requests
 from requests import Session
 from ._lib_wrapper.dataclass import dataclass
 from .course import Course, CQUSession
-from .mycqu import MycquUnauthorized
+from .exception import CQUWebsiteError, MycquUnauthorized
 
 __all__ = ("Score", "GpaRanking")
 
 
-class CQUWebsiteError(Exception):
-    def __init__(self, error_msg):
-        super().__init__('CQU website return error: ' + error_msg)
-
-
-def get_score_raw(auth: Union[Session, str]):
+def get_score_raw(auth: Union[Session, str], is_minor_boo: bool):
     """
     获取学生原始成绩
+
     :param auth: 登陆后获取的authorization或者调用过mycqu.access_mycqu的session
     :type auth: Union[Session, str]
+    :param is_minor_boo: 是否获取辅修成绩
+    :type is_minor_boo: bool
     :return: 反序列化获取的score列表
     :rtype: Dict
     """
+    url = 'https://my.cqu.edu.cn/api/sam/score/student/score' + ('?isMinorBoo=true' if is_minor_boo else '')
     if isinstance(auth, requests.Session):
-        res = auth.get('https://my.cqu.edu.cn/api/sam/score/student/score')
+        res = auth.get(url)
     else:
         authorization = auth
         headers = {
@@ -36,13 +35,12 @@ def get_score_raw(auth: Union[Session, str]):
             'Authorization': authorization
         }
         res = requests.get(
-            'https://my.cqu.edu.cn/api/sam/score/student/score', headers=headers)
-
+            url, headers=headers)
     content = json.loads(res.content)
-    if content['status'] == 'error':
-        raise CQUWebsiteError(content['msg'])
     if res.status_code == 401:
         raise MycquUnauthorized()
+    if content['status'] == 'error':
+        raise CQUWebsiteError(content['msg'])
     return content['data']
 
 
@@ -68,10 +66,10 @@ def get_gpa_ranking_raw(auth: Union[Session, str]):
             'https://my.cqu.edu.cn/api/sam/score/student/studentGpaRanking', headers=headers)
 
     content = json.loads(res.content)
-    if content['status'] == 'error':
-        raise CQUWebsiteError(content['msg'])
     if res.status_code == 401:
         raise MycquUnauthorized()
+    if content['status'] == 'error':
+        raise CQUWebsiteError(content['msg'])
     return content['data']
 
 
@@ -110,16 +108,19 @@ class Score:
         )
 
     @staticmethod
-    def fetch(auth: Union[str, Session]) -> List[Score]:
+    def fetch(auth: Union[str, Session], is_minor_boo: bool = False) -> List[Score]:
         """
         从网站获取成绩信息
+
         :param auth: 登陆后获取的 authorization 或者调用过 :func:`.mycqu.access_mycqu` 的 Session
         :type auth: Union[Session, str]
+        :param is_minor_boo: 是否获取辅修成绩
+        :type is_minor_boo: bool
         :return: 返回成绩对象
         :rtype: List[Score]
         :raises CQUWebsiteError: 查询时教务网报错
         """
-        temp = get_score_raw(auth)
+        temp = get_score_raw(auth, is_minor_boo)
         score = []
         for courses in temp.values():
             for course in courses['stuScoreHomePgVoS']:
@@ -140,6 +141,12 @@ class GpaRanking:
     """年级排名"""
     classRanking: Optional[int]
     """班级排名"""
+    weightedAvg: float
+    """加权平均分"""
+    minorWeightedAvg: Optional[float]
+    """辅修加权平均分"""
+    minorGpa: Optional[float]
+    """辅修绩点"""
 
     @staticmethod
     def from_dict(data: Dict[str, Any]) -> GpaRanking:
@@ -155,7 +162,10 @@ class GpaRanking:
             gpa=float(data['gpa']),
             majorRanking=data['majorRanking'] and int(data['majorRanking']),
             gradeRanking=data['gradeRanking'] and int(data['gradeRanking']),
-            classRanking=data['classRanking'] and int(data['classRanking'])
+            classRanking=data['classRanking'] and int(data['classRanking']),
+            weightedAvg=float(data['weightedAvg']),
+            minorWeightedAvg=data['minorWeightedAvg'] and float(data['minorWeightedAvg']),
+            minorGpa=data['minorGpa'] and float(data['minorGpa']),
         )
 
     @staticmethod
