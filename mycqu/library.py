@@ -53,10 +53,9 @@ def access_library(session: Session) -> Dict[str, Any]:
     :return: 图书馆账号特有的UserID和UserKey
     :rtype: Dict[str, Any]
     """
-    res = access_service(session, "http://lib.cqu.edu.cn/caslogin")
-    res1 = session.get(url="http://lib.cqu.edu.cn" + res.headers['Location'], allow_redirects=False)
+    res = session.get("http://i.cqu.edu.cn/appShow?appId=5242821709601738")
     parser = LibPageParser()
-    parser.feed(res1.text)
+    parser.feed(res.text)
     data = {
         "UserID": parser.user_id,
         "UserKey": parser.user_key,
