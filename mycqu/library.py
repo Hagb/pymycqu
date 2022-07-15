@@ -9,7 +9,7 @@ from typing import Any, Dict, Optional, Tuple, List, Union, ClassVar
 from requests import Session, get
 from datetime import date, datetime
 
-from . import access_service
+from .auth import access_service
 from .utils.datetimes import date_from_str, datetime_from_str
 from ._lib_wrapper.dataclass import dataclass
 

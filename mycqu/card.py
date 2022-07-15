@@ -12,7 +12,7 @@ import requests
 from requests import Session
 from ._lib_wrapper.dataclass import dataclass
 from .utils.datetimes import TIMEZONE
-from .exception import TicketGetError, ParseError, CQUWebsiteError
+from .exception import TicketGetError, ParseError, CQUWebsiteError, MycquUnauthorized
 from .auth import access_service
 
 __all__ = ("EnergyFees", "Bill", "Card", "access_card")
@@ -21,7 +21,7 @@ __all__ = ("EnergyFees", "Bill", "Card", "access_card")
 FEE_ITEM_ID = {'Huxi': '182',
                'Old': '181'}
 
-LOGIN_URL = 'http://card.cqu.edu.cn:7280/ias/prelogin?sysid=FWDT'
+LOGIN_URL = 'http://card.cqu.edu.cn:7280/ias/prelogin'
 
 
 def get_fees_raw(session: Session, is_huxi: bool, room: str):
@@ -105,11 +105,14 @@ def access_card(session):
     :type session: Session
     """
     res = access_service(session, LOGIN_URL)
-    res = session.get(res.headers["Location"])
+    res = session.get(f"http://card.cqu.edu.cn:7280/ias/prelogin?sysid=FWDT&continueurl=http%3A%2F%2Fcard.cqu.edu.cn%2Fcassyno%2Findex")
 
     parser = _CardPageParser()
     parser.feed(res.text)
     ssoticket_id = parser.ssoticket_id
+
+    if ssoticket_id == '' or ssoticket_id is None:
+        raise MycquUnauthorized
     _get_hall_ticket(session, ssoticket_id)
 
 
