@@ -13,11 +13,6 @@ MYCQU_SERVICE_URL = "https://my.cqu.edu.cn/authserver/authentication/cas"
 CODE_RE = re.compile(r"\?code=([^&]+)&")
 
 
-class MycquUnauthorized(Exception):
-    def __init__(self):
-        super().__init__("Unanthorized in mycqu, auth.login firstly and then mycqu.access_mycqu")
-
-
 def get_oauth_token(session: Session) -> str:
     # from https://github.com/CQULHW/CQUQueryGrade
     resp = session.get(MYCQU_AUTHORIZE_URL, allow_redirects=False)
