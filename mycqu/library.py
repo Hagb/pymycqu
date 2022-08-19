@@ -162,8 +162,8 @@ class BookInfo:
             return [BookInfo.from_dict(book) for book in get_history_books_raw(session, data)]
 
     @staticmethod
-    def renew_book(session: Session, data, book_id: str) -> str:
+    def renew_book(session: Session, data, book_id: str) -> Dict:
         data['BookId'] = book_id
         res = session.get(RENEW_BOOK_URL, params={'query': json.dumps(data)})
-        return res.json()['result']
+        return res.json()
 
