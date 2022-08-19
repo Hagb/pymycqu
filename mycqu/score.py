@@ -38,10 +38,10 @@ def get_score_raw(auth: Union[Session, str], is_minor_boo: bool):
             url, headers=headers)
 
     content = json.loads(res.content)
-    if content['status'] == 'error':
-        raise CQUWebsiteError(content['msg'])
     if res.status_code == 401:
         raise MycquUnauthorized()
+    if content['status'] == 'error':
+        raise CQUWebsiteError(content['msg'])
     return content['data']
 
 
@@ -67,10 +67,10 @@ def get_gpa_ranking_raw(auth: Union[Session, str]):
             'https://my.cqu.edu.cn/api/sam/score/student/studentGpaRanking', headers=headers)
 
     content = json.loads(res.content)
-    if content['status'] == 'error':
-        raise CQUWebsiteError(content['msg'])
     if res.status_code == 401:
         raise MycquUnauthorized()
+    if content['status'] == 'error':
+        raise CQUWebsiteError(content['msg'])
     return content['data']
 
 
