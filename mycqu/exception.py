@@ -4,20 +4,22 @@ __all__ = ("CQUWebsiteError", "NotAllowedService", "NeedCaptcha", "InvaildCaptch
            "IncorrectLoginCredentials", "TicketGetError", "ParseError", "MycquUnauthorized",
            "UnknownAuthserverException", "NotLogined", "MultiSessionConflict")
 
+class MycquException(Exception):
+    pass
 
-class CQUWebsiteError(Exception):
+class CQUWebsiteError(MycquException):
     """重大网站返回未知的错误或异常时抛出"""
 
     def __init__(self, error_msg='No error info'):
         super().__init__('CQU website return error: ' + error_msg)
 
 
-class NotAllowedService(Exception):
+class NotAllowedService(MycquException):
     """试图认证不允许的服务时抛出
     """
 
 
-class NeedCaptcha(Exception):
+class NeedCaptcha(MycquException):
     """登录统一身份认证时需要输入验证码时拋出
     """
 
@@ -31,7 +33,7 @@ class NeedCaptcha(Exception):
         """将验证码传入，调用以继续进行登陆"""
 
 
-class InvaildCaptcha(Exception):
+class InvaildCaptcha(MycquException):
     """登录统一身份认证输入了无效验证码时抛出
     """
 
@@ -39,7 +41,7 @@ class InvaildCaptcha(Exception):
         super().__init__("invaild captcha")
 
 
-class IncorrectLoginCredentials(Exception):
+class IncorrectLoginCredentials(MycquException):
     """使用无效的的登录凭据（如错误的用户、密码）
     """
 
@@ -63,7 +65,7 @@ class UnknownAuthserverException(CQUWebsiteError):
     """登录或认证服务过程中未知错误"""
 
 
-class NotLogined(Exception):
+class NotLogined(MycquException):
     """未登陆或登陆过期的会话被用于进行需要统一身份认证登陆的操作
     """
 
@@ -71,7 +73,7 @@ class NotLogined(Exception):
         super().__init__("not in logined status")
 
 
-class MultiSessionConflict(Exception):
+class MultiSessionConflict(MycquException):
     """当前用户启用单处登录，并且存在其他登录会话时抛出"""
 
     def __init__(self, kick: Callable[[], Response], cancel: Callable[[], Response]):
@@ -82,13 +84,13 @@ class MultiSessionConflict(Exception):
         """取消登录"""
 
 
-class MycquUnauthorized(Exception):
+class MycquUnauthorized(MycquException):
     """访问需要 mycqu 认证，但未对 my.cqu.edu.cn 进行认证或认证过期时抛出"""
 
     def __init__(self):
         super().__init__("Unauthorized in mycqu, auth.login firstly and then mycqu.access_mycqu")
 
-class InvalidRoom(Exception):
+class InvalidRoom(MycquException):
 
     def __init__(self):
         super().__init__("Invalid Room Name")
