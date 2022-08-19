@@ -5,11 +5,11 @@ from typing import Any, Dict, Optional, Tuple, List, Union, ClassVar
 # from pydantic.dataclasses import dataclass
 import re
 from datetime import date
-from functools import lru_cache, reduce
+from functools import lru_cache
 from requests import Session, get
 from ._lib_wrapper.dataclass import dataclass
 from .utils.datetimes import parse_period_str, parse_weeks_str, parse_weekday_str, date_from_str
-from .exception import MycquUnauthorized, InvalidRoom
+from .exception import MycquUnauthorized
 
 __all__ = ("CQUSession", "CQUSessionInfo",
            "CourseTimetable", "CourseDayTime", "Course")
@@ -247,7 +247,8 @@ class Course:
         assert isinstance(session, CQUSession) or session is None
 
         instructor_name = data.get("instructorName") if data.get("instructorName") is not None else \
-            reduce(lambda x, y: x + ', ' + y, [instructor.get('instructorName') for instructor in data.get('classTimetableInstrVOList')])
+            ', '.join(instructor.get('instructorName')
+                      for instructor in data.get('classTimetableInstrVOList'))
 
         return Course(
             name=data["courseName"],
@@ -259,6 +260,7 @@ class Course:
             instructor=instructor_name,
             session=session,
         )
+
 
 @dataclass
 class CourseTimetable:
@@ -279,7 +281,7 @@ class CourseTimetable:
     """是否真实地占用整周（如军训和某些实习是真实地占用、思修实践是“虚拟地占用”）"""
     classroom_name: Optional[str]
     """行课教室名称"""
-    expr_projects: Optional[List[str]]
+    expr_projects: List[str]
     """实验课各次实验内容"""
 
     @staticmethod
@@ -300,7 +302,7 @@ class CourseTimetable:
             day_time=CourseDayTime.from_dict(data),
             whole_week=bool(data["wholeWeekOccupy"]),
             classroom_name=data["roomName"],
-            expr_projects=data["exprProjectName"].split(',') if data['exprProjectName'] else None
+            expr_projects=(data["exprProjectName"] or '').split(',')
         )
 
     @staticmethod
