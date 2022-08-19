@@ -5,9 +5,8 @@ import random
 import re
 from base64 import b64encode
 from html.parser import HTMLParser
-from urllib.parse import parse_qs, urlsplit
 from requests import Session, Response, cookies
-from ._lib_wrapper.encrypt import pad, aes_cbc_encryptor
+from ._lib_wrapper.encrypt import pad16, aes_cbc_encryptor
 from .exception import NotAllowedService, NeedCaptcha, InvaildCaptcha, IncorrectLoginCredentials, \
     UnknownAuthserverException, NotLogined, MultiSessionConflict, ParseError
 
@@ -137,7 +136,7 @@ def _get_formdata(html: str, username: str, password: str) -> Dict[str, Optional
     if not salt:
         ParseError("无法获取盐")
     assert salt
-    passwd_pkcs7 = pad((_random_str(64)+str(password)).encode())
+    passwd_pkcs7 = pad16((_random_str(64)+str(password)).encode())
     encryptor = aes_cbc_encryptor(salt.encode(), _random_str(16).encode())
     passwd_encrypted = b64encode(encryptor(passwd_pkcs7)).decode()
     parser.input_data['username'] = username

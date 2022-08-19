@@ -8,7 +8,7 @@ from .course import Course
 from .utils.datetimes import date_from_str, time_from_str
 # from pydantic.dataclasses import dataclass
 from ._lib_wrapper.dataclass import dataclass
-from ._lib_wrapper.encrypt import pad, aes_ecb_encryptor
+from ._lib_wrapper.encrypt import pad16, aes_ecb_encryptor
 
 __all__ = ("Exam",)
 
@@ -29,7 +29,7 @@ def get_exam_raw(student_id: str, session: Optional[requests.Session] = None) ->
     return (session or requests).get(EXAM_LIST_URL,
                                      params={"studentId":
                                              __exam_encryptor(
-                                                 pad(student_id.encode())).hex().upper()
+                                                 pad16(student_id.encode())).hex().upper()
                                              }
                                      ).json()
 
