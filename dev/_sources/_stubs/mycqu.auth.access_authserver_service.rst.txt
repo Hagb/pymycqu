@@ -1,0 +1,6 @@
+mycqu.auth.access\_authserver\_service
+======================================
+
+.. currentmodule:: mycqu.auth
+
+.. autofunction:: access_authserver_service

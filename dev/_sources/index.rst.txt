@@ -127,6 +127,7 @@ API 文档
    mycqu.course
    mycqu.exam
    mycqu.exception
+   mycqu.library
    mycqu.mycqu
    mycqu.score
    mycqu.user

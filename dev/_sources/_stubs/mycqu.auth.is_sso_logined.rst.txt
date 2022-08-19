@@ -1,0 +1,6 @@
+mycqu.auth.is\_sso\_logined
+===========================
+
+.. currentmodule:: mycqu.auth
+
+.. autofunction:: is_sso_logined

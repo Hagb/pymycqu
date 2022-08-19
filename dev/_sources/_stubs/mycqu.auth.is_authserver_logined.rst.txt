@@ -1,0 +1,6 @@
+mycqu.auth.is\_authserver\_logined
+==================================
+
+.. currentmodule:: mycqu.auth
+
+.. autofunction:: is_authserver_logined

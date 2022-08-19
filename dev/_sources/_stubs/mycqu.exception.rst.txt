@@ -29,6 +29,7 @@ mycqu.exception
       InvaildCaptcha
       InvalidRoom
       MultiSessionConflict
+      MycquException
       MycquUnauthorized
       NeedCaptcha
       NotAllowedService

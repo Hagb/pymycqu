@@ -1,0 +1,7 @@
+mycqu.exception.MycquException
+==============================
+
+.. currentmodule:: mycqu.exception
+
+.. autoclass:: MycquException
+   :members:

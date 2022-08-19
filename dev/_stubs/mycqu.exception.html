@@ -71,25 +71,28 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="mycqu.exception.MultiSessionConflict.html#mycqu.exception.MultiSessionConflict" title="mycqu.exception.MultiSessionConflict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiSessionConflict</span></code></a>(kick, cancel)</p></td>
 <td><p>当前用户启用单处登录，并且存在其他登录会话时抛出</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="mycqu.exception.MycquUnauthorized.html#mycqu.exception.MycquUnauthorized" title="mycqu.exception.MycquUnauthorized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MycquUnauthorized</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="mycqu.exception.MycquException.html#mycqu.exception.MycquException" title="mycqu.exception.MycquException"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MycquException</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="mycqu.exception.MycquUnauthorized.html#mycqu.exception.MycquUnauthorized" title="mycqu.exception.MycquUnauthorized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MycquUnauthorized</span></code></a>()</p></td>
 <td><p>访问需要 mycqu 认证，但未对 my.cqu.edu.cn 进行认证或认证过期时抛出</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="mycqu.exception.NeedCaptcha.html#mycqu.exception.NeedCaptcha" title="mycqu.exception.NeedCaptcha"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NeedCaptcha</span></code></a>(image, image_type, after_captcha)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="mycqu.exception.NeedCaptcha.html#mycqu.exception.NeedCaptcha" title="mycqu.exception.NeedCaptcha"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NeedCaptcha</span></code></a>(image, image_type, after_captcha)</p></td>
 <td><p>登录统一身份认证时需要输入验证码时拋出</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="mycqu.exception.NotAllowedService.html#mycqu.exception.NotAllowedService" title="mycqu.exception.NotAllowedService"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NotAllowedService</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="mycqu.exception.NotAllowedService.html#mycqu.exception.NotAllowedService" title="mycqu.exception.NotAllowedService"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NotAllowedService</span></code></a></p></td>
 <td><p>试图认证不允许的服务时抛出</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="mycqu.exception.NotLogined.html#mycqu.exception.NotLogined" title="mycqu.exception.NotLogined"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NotLogined</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="mycqu.exception.NotLogined.html#mycqu.exception.NotLogined" title="mycqu.exception.NotLogined"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NotLogined</span></code></a>()</p></td>
 <td><p>未登陆或登陆过期的会话被用于进行需要统一身份认证登陆的操作</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="mycqu.exception.ParseError.html#mycqu.exception.ParseError" title="mycqu.exception.ParseError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParseError</span></code></a>([error_msg])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="mycqu.exception.ParseError.html#mycqu.exception.ParseError" title="mycqu.exception.ParseError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParseError</span></code></a>([error_msg])</p></td>
 <td><p>当从返回数据解析所需值失败时抛出</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="mycqu.exception.TicketGetError.html#mycqu.exception.TicketGetError" title="mycqu.exception.TicketGetError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TicketGetError</span></code></a>([error_msg])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="mycqu.exception.TicketGetError.html#mycqu.exception.TicketGetError" title="mycqu.exception.TicketGetError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TicketGetError</span></code></a>([error_msg])</p></td>
 <td><p>当未能从网页对应位置中获取到ticket时抛出</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="mycqu.exception.UnknownAuthserverException.html#mycqu.exception.UnknownAuthserverException" title="mycqu.exception.UnknownAuthserverException"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnknownAuthserverException</span></code></a>([error_msg])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="mycqu.exception.UnknownAuthserverException.html#mycqu.exception.UnknownAuthserverException" title="mycqu.exception.UnknownAuthserverException"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnknownAuthserverException</span></code></a>([error_msg])</p></td>
 <td><p>登录或认证服务过程中未知错误</p></td>
 </tr>
 </tbody>

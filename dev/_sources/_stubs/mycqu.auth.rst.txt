@@ -14,11 +14,18 @@ mycqu.auth
    .. autosummary::
       :toctree:
    
+      access_authserver_service
       access_service
       access_sso_service
+      is_authserver_logined
       is_logined
+      is_sso_logined
       login
+      login_authserver
+      login_sso
       logout
+      logout_authserver
+      logout_sso
    
    
 
