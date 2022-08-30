@@ -2,7 +2,6 @@
 """
 from __future__ import annotations
 from typing import Any, Dict, Optional, Tuple, List, Union, ClassVar
-# from pydantic.dataclasses import dataclass
 import re
 from datetime import date
 from functools import lru_cache
@@ -246,9 +245,13 @@ class Course:
             session = CQUSession.from_str(session)
         assert isinstance(session, CQUSession) or session is None
 
-        instructor_name = data.get("instructorName") if data.get("instructorName") is not None else \
-            ', '.join(instructor.get('instructorName')
-                      for instructor in data.get('classTimetableInstrVOList'))
+        instructor_name = None
+        if data.get("instructorName"):
+            instructor_name = data.get("instructorName")
+        elif data.get("instructorNames"):
+            instructor_name = data.get("instructorNames")
+        else:
+            ', '.join(instructor.get('instructorName') for instructor in data.get('classTimetableInstrVOList'))
 
         return Course(
             name=data["courseName"],

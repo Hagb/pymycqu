@@ -2,7 +2,7 @@ from typing import List, Tuple, Dict
 from datetime import date, time, datetime
 import pytz
 TIMEZONE = datetime.now(pytz.timezone("Asia/Shanghai")).tzinfo
-WEEKDAY: Dict[str, int] = {
+SHORT_WEEKDAY: Dict[str, int] = {
     "一": 0,
     "二": 1,
     "三": 2,
@@ -10,6 +10,15 @@ WEEKDAY: Dict[str, int] = {
     "五": 4,
     "六": 5,
     "日": 6
+}
+LONG_WEEKDAY: Dict[str, int] = {
+    "星期一": 0,
+    "星期二": 1,
+    "星期三": 2,
+    "星期四": 3,
+    "星期五": 4,
+    "星期六": 5,
+    "星期日": 6
 }
 
 
@@ -29,7 +38,7 @@ def parse_weeks_str(string: str) -> List[Tuple[int, int]]:
 
 
 def parse_weekday_str(string: str) -> int:
-    return WEEKDAY[string]
+    return SHORT_WEEKDAY.get(string) or LONG_WEEKDAY.get(string)
 
 
 def date_from_str(string: str) -> date:
