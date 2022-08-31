@@ -1,6 +1,7 @@
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Optional
 from datetime import date, time, datetime
 import pytz
+
 TIMEZONE = datetime.now(pytz.timezone("Asia/Shanghai")).tzinfo
 SHORT_WEEKDAY: Dict[str, int] = {
     "一": 0,
@@ -37,12 +38,13 @@ def parse_weeks_str(string: str) -> List[Tuple[int, int]]:
     return [parse_period_str(unit) for unit in string.split(',')]
 
 
-def parse_weekday_str(string: str) -> int:
-    return SHORT_WEEKDAY.get(string) or LONG_WEEKDAY.get(string)
+def parse_weekday_str(string: str) -> Optional[int]:
+    return SHORT_WEEKDAY.get(string) if SHORT_WEEKDAY.get(string) else LONG_WEEKDAY.get(string)
 
 
 def date_from_str(string: str) -> date:
     return date.fromisoformat(string)
+
 
 def datetime_from_str(string: str) -> datetime:
     return datetime.strptime(string, '%Y-%m-%d %H:%M:%S').replace(tzinfo=TIMEZONE)

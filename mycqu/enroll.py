@@ -11,7 +11,7 @@ from requests import Session
 
 from .utils.datetimes import parse_weekday_str, parse_period_str, parse_weeks_str
 
-__all__ = ['EnrollCourseInfo', 'EnrollCourseTimetable', 'EnrollCourseItem']
+__all__ = ('EnrollCourseInfo', 'EnrollCourseTimetable', 'EnrollCourseItem')
 
 ENROLLMENT_COURSE_LIST_URL = "https://my.cqu.edu.cn/api/enrollment/enrollment/course-list?selectionSource="
 ENROLLMENT_COURSE_DETAIL_URL = "https://my.cqu.edu.cn/api/enrollment/enrollment/courseDetails/"
@@ -28,10 +28,10 @@ def get_enroll_list_raw(session: Session, is_major: bool = True) -> Dict[str: Li
     :type is_major: bool
     :raises MycquUnauthorized: 若会话未在 my.cqu.edu.cn 进行认证
     :return: 反序列化获取可选课程的的json
-    :rtype: Dict
+    :rtype: Dict[str, List]
     """
 
-    url = ENROLLMENT_COURSE_LIST_URL + "主修" if is_major else "辅修"
+    url = ENROLLMENT_COURSE_LIST_URL + ("主修" if is_major else "辅修")
     res = session.get(url)
     content = json.loads(res.text)
     assert content["status"] == "success"
@@ -80,7 +80,7 @@ class EnrollCourseInfo:
     """选课标识，如：已选，已选满等，当为 :obj:`None` 时标识无相关标记"""
     course_nature: str
     """课程属性，如必修，选修等"""
-    campus: List
+    campus: List[str]
     """可选课程可选校区，如['D区'], ['A区', 'D区']等"""
 
     @staticmethod

@@ -250,8 +250,9 @@ class Course:
             instructor_name = data.get("instructorName")
         elif data.get("instructorNames"):
             instructor_name = data.get("instructorNames")
-        else:
-            ', '.join(instructor.get('instructorName') for instructor in data.get('classTimetableInstrVOList'))
+        elif data.get('classTimetableInstrVOList'):
+            instructor_name = ', '.join(instructor.get('instructorName')
+                                        for instructor in data.get('classTimetableInstrVOList'))
 
         return Course(
             name=data["courseName"],
