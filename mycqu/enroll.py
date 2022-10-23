@@ -60,7 +60,7 @@ def get_enroll_detail_raw(session: Session, course_id: str, is_major: bool = Tru
     url = ENROLLMENT_COURSE_DETAIL_URL + course_id + "?selectionSource=" + ("主修" if is_major else "辅修")
     res = session.get(url)
     content = json.loads(res.text)
-    return content['selectCourseListVOs'][0]['selectCourseVOList']
+    return content['selectCourseListVOs'][0]['selectCourseVOList'] if len(content['selectCourseListVOs']) > 0 else []
 
 
 @dataclass
@@ -87,7 +87,6 @@ class EnrollCourseInfo:
     def from_dict(data: Dict[str, Any]) -> EnrollCourseInfo:
         """
         从反序列化的选课列表中返回``EnrollCourseInfo``
-
         :param data: 反序列化成字典的选课列表
         :type data: Dict[str, Any]
         :return: 对应的可选课程列表
@@ -184,26 +183,26 @@ class EnrollCourseItem:
     """
     可选具体课程，包含课程上课时间、上课教师、教室可容纳学生等信息
     """
-    id: str
-    """可选具体课程id，每个可选具体课程具有唯一id"""
-    session_id: str
-    """可选具体课程所在学期ID"""
-    checked: bool
-    """是否已经选择该课程"""
-    course_id: str
-    """该具体课程所属课程ID"""
+    id: Optional[str]
+    """可选具体课程id，每个可选具体课程具有唯一id，部分从属课程该值为`None`"""
+    session_id: Optional[str]
+    """可选具体课程所在学期ID，部分从属课程该值为`None`"""
+    checked: Optional[bool]
+    """是否已经选择该课程，部分从属课程该值为`None`"""
+    course_id: Optional[str]
+    """该具体课程所属课程ID，部分从属课程该值为`None`"""
     course: Course
     """课程信息"""
     type: str
     """具体课程类别，如：理论、实验"""
-    selected_num: int
-    """已选课程学生"""
-    capacity: int
-    """该课程容量上限"""
+    selected_num: Optional[int]
+    """已选课程学生，部分从属课程该值为`None`"""
+    capacity: Optional[int]
+    """该课程容量上限，部分从属课程该值为`None`"""
     children: Optional[List[EnrollCourseItem]]
     """该课程从属课程列表，一般为理论课程的实验课"""
-    campus: str
-    """所属校区，如D区"""
+    campus: Optional[str]
+    """所属校区，如D区，部分从属课程该值为`None`"""
     parent_id: Optional[str]
     """所从属具体课程id，如果不存在从属关系，该值为None"""
     timetable: List[EnrollCourseTimetable]
@@ -212,7 +211,6 @@ class EnrollCourseItem:
     def from_dict(data: Dict) -> EnrollCourseItem:
         """
         从反序列化的可选具体课程字典中返回`EnrollCourseItem`
-
         :param data: 反序列化成字典的可选具体课程
         :type data: Dict[str, Any]
         :return: 对应的可选具体课程列表
@@ -231,7 +229,7 @@ class EnrollCourseItem:
                      if data['childrenList'] else None,
             campus=data['campusShortName'],
             parent_id=data['parentClassId'],
-            timetable=EnrollCourseTimetable.from_str(data['classTime'])
+            timetable=EnrollCourseTimetable.from_str(data['classTime']) if data['classTime'] is not None else []
         )
 
     @staticmethod

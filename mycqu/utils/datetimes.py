@@ -39,7 +39,7 @@ def parse_weeks_str(string: str) -> List[Tuple[int, int]]:
 
 
 def parse_weekday_str(string: str) -> Optional[int]:
-    return SHORT_WEEKDAY.get(string) if SHORT_WEEKDAY.get(string) else LONG_WEEKDAY.get(string)
+    return SHORT_WEEKDAY.get(string) if SHORT_WEEKDAY.get(string) is not None else LONG_WEEKDAY.get(string)
 
 
 def date_from_str(string: str) -> date:

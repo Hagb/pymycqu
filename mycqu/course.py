@@ -212,9 +212,9 @@ class CourseDayTime:
 class Course:
     """与具体行课时间无关的课程信息
     """
-    name: str
+    name: Optional[str]
     """课程名称"""
-    code: str
+    code: Optional[str]
     """课程代码"""
     course_num: Optional[str]
     """教学班号，在无法获取时（如考表 :class:`.exam.Exam` 中）设为 :obj:`None`"""
@@ -246,11 +246,11 @@ class Course:
         assert isinstance(session, CQUSession) or session is None
 
         instructor_name = None
-        if data.get("instructorName"):
+        if data.get("instructorName") is not None:
             instructor_name = data.get("instructorName")
-        elif data.get("instructorNames"):
+        elif data.get("instructorNames") is not None:
             instructor_name = data.get("instructorNames")
-        elif data.get('classTimetableInstrVOList'):
+        elif data.get('classTimetableInstrVOList') is not None:
             instructor_name = ', '.join(instructor.get('instructorName')
                                         for instructor in data.get('classTimetableInstrVOList'))
 
