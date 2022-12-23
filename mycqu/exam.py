@@ -121,9 +121,11 @@ class Exam:
             seat_num=data["seatNum"],
             stu_num=data["examStuNum"],
             chief_invi=[Invigilator.from_dict(invi)
-                        for invi in data["simpleChiefinvigilatorVOS"]],
-            asst_invi=data["simpleAssistantInviVOS"] and [Invigilator.from_dict(invi)
-                                                          for invi in data["simpleAssistantInviVOS"]]
+                        for invi in data["simpleChiefinvigilatorVOS"]]
+            if data['simpleChiefinvigilatorVOS'] is not None else [],
+            asst_invi=data["simpleAssistantInviVOS"] and ([Invigilator.from_dict(invi)
+                                                           for invi in data["simpleAssistantInviVOS"]]
+                                                          if data['simpleAssistantInviVOS'] is not None else [])
         )
 
     @staticmethod
