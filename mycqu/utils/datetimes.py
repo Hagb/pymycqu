@@ -42,8 +42,8 @@ def parse_weekday_str(string: str) -> Optional[int]:
     return SHORT_WEEKDAY.get(string) if SHORT_WEEKDAY.get(string) is not None else LONG_WEEKDAY.get(string)
 
 
-def date_from_str(string: str) -> date:
-    return date.fromisoformat(string)
+def date_from_str(string: str) -> Optional[date]:
+    return date.fromisoformat(string) if string is not None else None
 
 
 def datetime_from_str(string: str) -> datetime:

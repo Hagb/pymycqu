@@ -124,9 +124,9 @@ class CQUSessionInfo:
     """
     session: CQUSession
     """对应的学期"""
-    begin_date: date
+    begin_date: Optional[date]
     """学期的开始日期"""
-    end_date: date
+    end_date: Optional[date]
     """学期的结束日期"""
 
     @staticmethod
