@@ -22,20 +22,18 @@ python = "^3.7"
 requests = "^2"
 pydantic = "^1"
 pycryptodome = {version = "^3", optional = true}
-pycryptodomex = {version = "^3", optional = true}
-pyaes = ">= 1.2.0"
+pycryptodomex = "^3"
 pytz = "*"
 
 [tool.poetry.extras]
 
 pycryptodome = ["pycryptodome"]
-pycryptodomex = ["pycryptodomex"]
-#pyaes = ["pyaes"]
 
 [tool.poetry.dev-dependencies]
 
 sphinx-multiversion = "^0"
 sphinx = "^4"
+jieba = "^0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -53,9 +53,10 @@ def access_library(session: Session) -> Dict[str, Any]:
     :return: 图书馆账号特有的UserID和UserKey
     :rtype: Dict[str, Any]
     """
-    res = session.get("http://i.cqu.edu.cn/appShow?appId=5242821709601738")
+    res = access_service(session, "http://lib.cqu.edu.cn/caslogin")
+    res1 = session.get(url="http://lib.cqu.edu.cn" + res.headers['Location'], allow_redirects=False)
     parser = LibPageParser()
-    parser.feed(res.text)
+    parser.feed(res1.text)
     data = {
         "UserID": parser.user_id,
         "UserKey": parser.user_key,
@@ -92,7 +93,6 @@ def get_history_books_raw(session: Session, data: Dict[str, Any]) -> List[Dict[s
     """
     res = session.get(HISTORY_BOOKS_URL, params={"query": json.dumps(data)})
     return res.json()['result']['borrowBookList']
-
 
 @dataclass
 class BookInfo:
@@ -162,7 +162,8 @@ class BookInfo:
             return [BookInfo.from_dict(book) for book in get_history_books_raw(session, data)]
 
     @staticmethod
-    def renew_book(session: Session, data, book_id: str) -> Dict:
+    def renew_book(session: Session, data, book_id: str) -> str:
         data['BookId'] = book_id
         res = session.get(RENEW_BOOK_URL, params={'query': json.dumps(data)})
-        return res.json()
+        return res.json()['result']
+

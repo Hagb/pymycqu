@@ -1,12 +1,12 @@
-from . import auth, course, exam, mycqu, score, card, exception, user, library
+from . import auth, course, exam, mycqu, score, card, exception, library
 from .auth import *
 from .course import *
 from .exam import *
 from .score import *
 from .mycqu import *
 from .card import *
+from .library import *
 from .exception import *
-
 __all__ = ["auth", "course", "exam", "mycqu", "user", "score", "card", "library"]
 __all__.extend(auth.__all__)
 __all__.extend(course.__all__)

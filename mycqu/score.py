@@ -36,6 +36,7 @@ def get_score_raw(auth: Union[Session, str], is_minor_boo: bool):
         }
         res = requests.get(
             url, headers=headers)
+
     content = json.loads(res.content)
     if res.status_code == 401:
         raise MycquUnauthorized()

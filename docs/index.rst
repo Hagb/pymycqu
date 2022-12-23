@@ -21,7 +21,7 @@ https://my.cqu.edu.cn 上获取考试数据并生成 :py:class:`mycqu.exam.Exam`
 
 .. code-block:: python
 
-   from mycqu.exam import Exam
+   from mycqu import Exam
    from datetime import date
    exams = Exam.fetch("201xxxxx") # 获取学号 201xxxxx 的本学期考表，返回 Exam 对象的列表
    today = date.today()
@@ -51,8 +51,7 @@ https://my.cqu.edu.cn 上获取考试数据并生成 :py:class:`mycqu.exam.Exam`
 
 .. code-block:: python
 
-   from mycqu.auth import login, NeedCaptcha
-   from mycqu.mycqu import access_mycqu
+   from mycqu import login, NeedCaptcha, access_mycqu
    from requests import Session
 
    session = Session()
@@ -70,6 +69,7 @@ https://my.cqu.edu.cn 上获取考试数据并生成 :py:class:`mycqu.exam.Exam`
 
 .. code-block:: python
 
+   from mycqu import CourseTimetable
    timetables = CourseTimetable.fetch(session, "201xxxxx")  # 获取学号 201xxxxx 的本学期课表
    week = 9
    print(f"第 {week} 周的课")
@@ -121,9 +121,13 @@ API 文档
    :toctree: _stubs
    :recursive:
 
+   mycqu
    mycqu.auth
+   mycqu.card
    mycqu.course
    mycqu.exam
+   mycqu.exception
+   mycqu.library
    mycqu.mycqu
    mycqu.score
    mycqu.user

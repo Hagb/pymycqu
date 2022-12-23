@@ -4,10 +4,8 @@ __all__ = ("CQUWebsiteError", "NotAllowedService", "NeedCaptcha", "InvaildCaptch
            "IncorrectLoginCredentials", "TicketGetError", "ParseError", "MycquUnauthorized",
            "UnknownAuthserverException", "NotLogined", "MultiSessionConflict")
 
-
 class MycquException(Exception):
-    """mycqu基础异常"""
-
+    pass
 
 class CQUWebsiteError(MycquException):
     """重大网站返回未知的错误或异常时抛出"""
@@ -91,7 +89,6 @@ class MycquUnauthorized(MycquException):
 
     def __init__(self):
         super().__init__("Unauthorized in mycqu, auth.login firstly and then mycqu.access_mycqu")
-
 
 class InvalidRoom(MycquException):
 
