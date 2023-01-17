@@ -1,8 +1,8 @@
 from typing import Callable
 from requests import Response
-__all__ = ("CQUWebsiteError", "NotAllowedService", "NeedCaptcha", "InvaildCaptcha",
+__all__ = ["CQUWebsiteError", "NotAllowedService", "NeedCaptcha", "InvaildCaptcha",
            "IncorrectLoginCredentials", "TicketGetError", "ParseError", "MycquUnauthorized",
-           "UnknownAuthserverException", "NotLogined", "MultiSessionConflict")
+           "UnknownAuthserverException", "NotLogined", "MultiSessionConflict", "InvalidRoom"]
 
 class MycquException(Exception):
     pass

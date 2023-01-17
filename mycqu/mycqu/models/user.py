@@ -1,10 +1,11 @@
-"""用户信息相关的模块
-"""
 from __future__ import annotations
+
 from requests import Session
-from ._lib_wrapper.dataclass import dataclass
-from .exception import MycquUnauthorized
-__all__ = ("User",)
+
+from ..._lib_wrapper.dataclass import dataclass
+from ...exception import MycquUnauthorized
+
+__all__ = ["User",]
 
 
 @dataclass

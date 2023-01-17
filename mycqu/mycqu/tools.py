@@ -3,8 +3,10 @@
 from typing import Dict
 import re
 from requests import Session
-from .auth import access_sso_service
-__all__ = ("access_mycqu",)
+
+from mycqu.auth import access_sso_service
+
+__all__ = ["access_mycqu",]
 
 MYCQU_TOKEN_INDEX_URL = "https://my.cqu.edu.cn/enroll/token-index"
 MYCQU_TOKEN_URL = "https://my.cqu.edu.cn/authserver/oauth/token"

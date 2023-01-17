@@ -1,3 +1,7 @@
+"""
+统一身份认证相关的模块
+"""
+
 from typing import Optional, Callable
 from requests import Session, Response
 
@@ -5,11 +9,7 @@ from ._authserver import *
 from ._sso import *
 
 
-__all__ = ("is_sso_logined", "is_authserver_logined", 'is_logined',
-           "logout_sso", "logout_authserver", 'logout',
-           "access_sso_service", "access_authserver_service", 'access_service',
-           "login_sso", "login_authserver", 'login',
-           'AuthserverAuthorizer', 'SSOAuthorizer')
+__all__ = ('is_logined', 'logout', 'access_service', 'login', 'AuthserverAuthorizer', 'SSOAuthorizer')
 
 
 def is_logined(session: Session, use_sso: bool = True) -> bool:
