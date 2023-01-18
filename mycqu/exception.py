@@ -2,7 +2,7 @@ from typing import Callable
 from requests import Response
 __all__ = ["CQUWebsiteError", "NotAllowedService", "NeedCaptcha", "InvaildCaptcha",
            "IncorrectLoginCredentials", "TicketGetError", "ParseError", "MycquUnauthorized",
-           "UnknownAuthserverException", "NotLogined", "MultiSessionConflict", "InvalidRoom"]
+           "UnknownAuthserverException", "NotLogined", "MultiSessionConflict", "InvalidRoom", "RequestTransformerException"]
 
 class MycquException(Exception):
     pass
@@ -94,3 +94,7 @@ class InvalidRoom(MycquException):
 
     def __init__(self):
         super().__init__("Invalid Room Name")
+
+class RequestTransformerException(MycquException):
+    """请求转换器注册异常"""
+
