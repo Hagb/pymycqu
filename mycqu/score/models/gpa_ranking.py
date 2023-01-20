@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from typing import Dict, Any, Union, Optional, List
+from typing import Dict, Any, Union, Optional
 from requests import Session
 
-from ..tools import get_gpa_ranking_raw
+from ..tools import get_gpa_ranking_raw, async_get_gpa_ranking_raw
 from ..._lib_wrapper.dataclass import dataclass
 
 __all__ = ['GpaRanking']
@@ -61,3 +61,16 @@ class GpaRanking:
         :raises CQUWebsiteError: 查询时教务网报错
         """
         return GpaRanking.from_dict(get_gpa_ranking_raw(auth))
+
+    @staticmethod
+    async def async_fetch(auth: Union[str, Session]) -> GpaRanking:
+        """
+        异步的从网站获取绩点排名信息
+
+        :param auth: 登陆后获取的 authorization 或者调用过 :func:`.mycqu.access_mycqu` 的 Session
+        :type auth: Union[Session, str]
+        :return: 返回绩点排名对象
+        :rtype: GpaRanking
+        :raises CQUWebsiteError: 查询时教务网报错
+        """
+        return GpaRanking.from_dict(await async_get_gpa_ranking_raw(auth))
