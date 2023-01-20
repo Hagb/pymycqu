@@ -1,11 +1,10 @@
 from enum import Enum
-from typing import NewType, Tuple, Optional, Dict, Protocol, Any, Literal
+from typing import NewType, Tuple, Optional, Dict, Protocol, Any, Literal, TypeVar
 
-from ...exception import RequestTransformerException
 from .params_mapper import RequestParamsMapper
 
 
-__all__ = ['ResponseProtocol', 'RequestProtocol', 'RequestReturns', 'RequestParams', 'Request']
+__all__ = ['ResponseProtocol', 'RequestProtocol', 'RequestReturns', 'RequestParams', 'Requestable', 'Request', 'Response']
 
 REQUEST_METHOD = Literal['delete', 'get', 'head', 'options', 'patch', 'post', 'put']
 
@@ -34,6 +33,9 @@ class ResponseProtocol(Protocol):
     @property
     def json(self, **kwargs: Any) -> Any: ...
 
+    @property
+    def headers(self) -> Any: ...
+
 class RequestProtocol(Protocol):
     """
     具有网络请求相关方法，所有请求方法均返回一个满足`Response`协议的对象
@@ -52,6 +54,9 @@ class RequestProtocol(Protocol):
     def options(*args, **kwargs) -> ResponseProtocol: ...
 
     def head(*args, **kwargs) -> ResponseProtocol: ...
+
+Request = TypeVar('Request', bound=RequestProtocol)
+Response = TypeVar('Response', bound=ResponseProtocol)
 
 class RequestParams:
     """
@@ -79,13 +84,13 @@ class RequestParams:
         for k, v in self.other_params.items():
             param_key: Optional[Enum] = getattr(param_mapper, k, None)
             if param_key is None:
-                raise RequestTransformerException('请求参数未在RequestsParamsMapper中给出')
+                raise Exception('请求参数未在RequestsParamsMapper中给出')
             result.update({param_key.value: v})
         return result
 
 RequestReturns = NewType('RequestReturns', Tuple[RequestProtocol, RequestParams])
 
-class Request:
+class Requestable:
     def __init__(self, requestable: RequestProtocol):
         self.requestable = requestable
     def request(self, method: REQUEST_METHOD, url: str, *, allow_redirects: bool = True, **kwargs) -> RequestReturns:

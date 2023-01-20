@@ -1,10 +1,9 @@
-from functools import wraps
-from inspect import isgeneratorfunction
+from functools import wraps, partial
+from inspect import isgeneratorfunction, isgenerator
 from typing import Callable, Any, Generator
 
-from ...exception import RequestTransformerException
 from ..config import ConfigManager
-from .models import RequestReturns, RequestProtocol, Request
+from .models import RequestReturns, RequestProtocol, Requestable, Request, Response
 
 
 __all__ = ['RequestTransformer', ]
@@ -19,29 +18,47 @@ class RequestTransformer:
         :param sync_request_param_mapper: 用于发出同步请求时使用的参数转换库，默认为`RequestsParamsMapper`
         :param async_request_param_mapper: 用于发出异步请求时使用的参数转换库，默认为`HttpxParamsMapper`
         """
-        if not isgeneratorfunction(generator):
-            raise RequestTransformerException('注册为Request Transformer的函数应当为生成器函数')
+        if not (isgeneratorfunction(generator) or isgenerator(generator)):
+            self.without_request = True
+        else:
+            self.without_request = False
         self.generator = generator
+        self.instance = None
+
+    def __get__(self, instance, owner):
+        self.instance = instance if instance is not None else owner
+        return self
+
 
     @property
     def sync_request(self) -> Callable[[RequestProtocol, Any, ...], Any]:
         """
         将生成器函数以同步的方式执行，返回同步函数
         """
+        if self.without_request:
+            if self.instance is not None:
+                return partial(self.generator, self.instance)
+            else:
+                return self.generator
+
         @wraps(self.generator)
-        def inner_function(*args, **kwargs):
+        def inner_function(request: Request, *args, **kwargs) -> Response:
             try:
-                request = args[0]
-                args = args[1:]
-                generator = self.generator(Request(request), *args, **kwargs)
+                if self.instance is not None:
+                    generator = self.generator(self.instance, Requestable(request), *args, **kwargs)
+                else:
+                    generator = self.generator(Requestable(request), *args, **kwargs)
                 res = None
                 while True:
                     request_returns: RequestReturns = generator.send(res)
-                    res = request_returns[0].request(
-                        **request_returns[1].to_param_dict(
-                            ConfigManager().config['request']['sync_request_params_mapper']
+                    if isinstance(request_returns[0], RequestTransformer):
+                        res = request_returns[0].sync_request(request, **request_returns[1])
+                    else:
+                        res = request_returns[0].request(
+                            **request_returns[1].to_param_dict(
+                                ConfigManager().config['request']['sync_request_params_mapper']
+                            )
                         )
-                    )
             except StopIteration as e:
                 return e.value
 
@@ -52,20 +69,32 @@ class RequestTransformer:
         """
         将生成器函数以异步的方式执行，返回async function
         """
+        if self.without_request:
+            @wraps(self.generator)
+            async def return_function(*args, **kwargs):
+                if self.instance is not None:
+                    return self.generator(self.instance, *args, **kwargs)
+                else:
+                    return self.generator(*args, **kwargs)
+            return return_function
         @wraps(self.generator)
-        async def inner_function(*args, **kwargs):
+        async def inner_function(request: Request, *args, **kwargs) -> Response:
             try:
-                request = args[0]
-                args = args[1:]
-                generator = self.generator(Request(request), *args, **kwargs)
+                if self.instance is not None:
+                    generator = self.generator(self.instance, Requestable(request), *args, **kwargs)
+                else:
+                    generator = self.generator(Requestable(request), *args, **kwargs)
                 res = None
                 while True:
                     request_returns: RequestReturns = generator.send(res)
-                    res = await request_returns[0].request(
-                        **request_returns[1].to_param_dict(
-                            ConfigManager().config['request']['async_request_params_mapper']
+                    if isinstance(request_returns[0], RequestTransformer):
+                        res = await request_returns[0].async_request(request, **request_returns[1])
+                    else:
+                        res = await request_returns[0].request(
+                            **request_returns[1].to_param_dict(
+                                ConfigManager().config['request']['async_request_params_mapper']
+                            )
                         )
-                    )
             except StopIteration as e:
                 return e.value
 

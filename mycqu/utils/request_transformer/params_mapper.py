@@ -33,6 +33,7 @@ class RequestsParamsMapper(Enum):
     data = 'data'
     json = 'json'
     headers = 'headers'
+    timeout = 'timeout'
     allow_redirects = 'allow_redirects'
 
 class HttpxParamsMapper(Enum):
@@ -45,4 +46,5 @@ class HttpxParamsMapper(Enum):
     data = 'data'
     json = 'json'
     headers = 'headers'
+    timeout = 'timeout'
     allow_redirects = 'follow_redirects'

@@ -1,6 +1,9 @@
-from .models import RequestProtocol, ResponseProtocol
+from .models import RequestProtocol, ResponseProtocol, Request, Response, Requestable
 from .params_mapper import *
 from .request_transformer import RequestTransformer
 
-__all__ = ['ResponseProtocol', 'RequestProtocol', 'RequestTransformer',
-           'RequestParamsMapper', 'RequestsParamsMapper', 'HttpxParamsMapper']
+__all__ = [
+    'Request', 'Response', 'Requestable',
+    'ResponseProtocol', 'RequestProtocol', 'RequestTransformer',
+    'RequestParamsMapper', 'RequestsParamsMapper', 'HttpxParamsMapper'
+]
