@@ -1,12 +1,13 @@
-from typing import Optional, Dict
+from typing import Optional, Dict, Generic
 from functools import partial
 
-from requests import Session, Response
+from requests import Session
 
 from ._authorizer import Authorizer
 from ..exception import UnknownAuthserverException, MultiSessionConflict, ParseError
 from ._page_parser import _LoginedPageParser, _get_formdata
 from ..utils.deprecated import deprecated
+from ..utils.request_transformer.models import Response
 
 AUTHSERVER_CAPTCHA_DETERMINE_URL = "http://authserver.cqu.edu.cn/authserver/needCaptcha.html"
 AUTHSERVER_CAPTCHA_IMAGE_URL = "http://authserver.cqu.edu.cn/authserver/captcha.html"
@@ -23,7 +24,7 @@ def is_authserver_logined(session: Session) -> bool:
     :return: :obj:`True` 如果处于登陆状态，:obj:`False` 如果处于未登陆或登陆过期状态
     :rtype: bool
     """
-    return AuthserverAuthorizer.is_logined(session)
+    return AuthserverAuthorizer[Session].is_logined(session)
 
 @deprecated('请改用`AuthserverAuthorizer.logout`')
 def logout_authserver(session: Session) -> None:
@@ -32,7 +33,7 @@ def logout_authserver(session: Session) -> None:
     :param session: 进行过登录的会话
     :type session: Session
     """
-    AuthserverAuthorizer.logout(session)
+    AuthserverAuthorizer[Session].logout(session)
 
 @deprecated('请改用`AuthserverAuthorizer.access_service`')
 def access_authserver_service(session: Session, service: str) -> Response:
@@ -46,7 +47,8 @@ def access_authserver_service(session: Session, service: str) -> Response:
     :return: 访问服务 url 的 :class:`Response`
     :rtype: Response
     """
-    AuthserverAuthorizer.access_service(session, service)
+    return AuthserverAuthorizer[Session].access_service(session, service)
+
 
 class AuthserverAuthorizer(Authorizer):
     LOGIN_URL = "http://authserver.cqu.edu.cn/authserver/login"
@@ -81,11 +83,17 @@ class AuthserverAuthorizer(Authorizer):
 
         return formdata
 
+    async def _async_get_request_data(self) -> Dict:
+        pass
+
     def _need_captcha(self) -> Optional[str]:
         if self.session.get(AUTHSERVER_CAPTCHA_DETERMINE_URL, params={"username": self.username}).text == "true":
             return AUTHSERVER_CAPTCHA_IMAGE_URL
         else:
             return
+
+    async def _async_need_captcha(self) -> Optional[str]:
+        pass
 
     def _need_captcha_handler(self, captcha: str, request_data: Dict):
         request_data["captchaResponse"] = request_data
@@ -133,6 +141,9 @@ class AuthserverAuthorizer(Authorizer):
             return self._handle_login_error(login_resp)
         return self._redirect_to_service(login_resp)
 
+    async def _async_login(self, request_data: Dict) -> Response:
+        pass
+
 
 @deprecated('请改用`AuthserverAuthorizer.login`')
 def login_authserver(
@@ -165,4 +176,4 @@ def login_authserver(
     :return: 登陆了统一身份认证后所跳转到的地址的 :class:`Response`
     :rtype: Response
     """
-    return AuthserverAuthorizer._base_login(session, username, password, service, timeout, force_relogin, keep_longer, kick_others)
+    return AuthserverAuthorizer[Session]._base_login(session, username, password, service, timeout, force_relogin, keep_longer, kick_others)

@@ -1,8 +1,9 @@
 from base64 import b64encode, b64decode
-from typing import Optional, Dict
+from typing import Optional, Dict, Generic
 
-from requests import Session, Response
+from requests import Session
 
+from ..utils.request_transformer import RequestTransformer, Request, Response
 from ..utils.deprecated import deprecated
 from ..exception import IncorrectLoginCredentials, InvaildCaptcha, UnknownAuthserverException
 from .._lib_wrapper.encrypt import des_ecb_encryptor, pad8
@@ -27,7 +28,7 @@ def is_sso_logined(session: Session) -> bool:
     :return: :obj:`True` 如果处于登陆状态，:obj:`False` 如果处于未登陆或登陆过期状态
     :rtype: bool
     """
-    return SSOAuthorizer.is_logined(session)
+    return SSOAuthorizer[Session].is_logined(session)
 
 @deprecated('请改用`SSOAuthorizer.logout`')
 def logout_sso(session: Session) -> None:
@@ -36,7 +37,7 @@ def logout_sso(session: Session) -> None:
     :param session: 进行过登录的会话
     :type session: Session
     """
-    return SSOAuthorizer.logout(session)
+    return SSOAuthorizer[Session].logout(session)
 
 @deprecated('请改用`SSOAuthorizer.access_service`')
 def access_sso_service(session: Session, service: str) -> Response:
@@ -50,12 +51,12 @@ def access_sso_service(session: Session, service: str) -> Response:
     :return: 访问服务 url 的 :class:`Response`
     :rtype: Response
     """
-    return SSOAuthorizer.access_service(session, service)
+    return SSOAuthorizer[Session].access_service(session, service)
 
 
-class SSOAuthorizer(Authorizer):
+class SSOAuthorizer(Authorizer, Generic[Request]):
     def __init__(self,
-                 session: Session,
+                 session: Request,
                  username: str,
                  password: str,
                  service: Optional[str] = None,
@@ -73,8 +74,9 @@ class SSOAuthorizer(Authorizer):
     LOGOUT_URL = "https://sso.cqu.edu.cn/logout"
     ROOT_URL = "https://sso.cqu.edu.cn"
 
-    def _get_request_data(self) -> Dict:
-        resp = self.session.get(
+    @RequestTransformer.register()
+    def _get_request_data(self, session: Request) -> Dict:
+        resp = yield session.get(
             self.LOGIN_URL,
             params=self.service and {"service": self.service},
             allow_redirects=False,
@@ -82,10 +84,10 @@ class SSOAuthorizer(Authorizer):
         )
         if resp.status_code == 302:
             if self.force_relogin:
-                logout_sso(self.session)
-                resp = self.session.get(self.LOGIN_URL, timeout=self.timeout)
+                yield self._logout
+                resp = yield session.get(self.LOGIN_URL, timeout=self.timeout)
             else:
-                self._login_res = self.session.get(resp.headers['Location'], allow_redirects=False, timeout=self.timeout)
+                self._login_res = yield session.get(resp.headers['Location'], allow_redirects=False, timeout=self.timeout)
                 return {}
         if resp.status_code != 200:
             UnknownAuthserverException(
@@ -95,6 +97,7 @@ class SSOAuthorizer(Authorizer):
         page_data = _SSOPageParser().parse(resp.text)
         croypto = page_data['login-croypto']
         passwd_encrypted = b64encode(des_ecb_encryptor(b64decode(croypto))(pad8(self.password.encode())))
+        passwd_encrypted = str(passwd_encrypted, encoding='utf-8')
         request_data = {
             'username': self.username,
             'type': 'UsernamePassword',
@@ -107,24 +110,28 @@ class SSOAuthorizer(Authorizer):
 
         return request_data
 
-    def _need_captcha(self) -> Optional[str]:
+    @RequestTransformer.register()
+    def _need_captcha(self, session: Request) -> Optional[str]:
         if self._page_data is not None:
             return f"{self.ROOT_URL}/{self._page_data['captcha-url']}"
 
     def _need_captcha_handler(self, captcha: str, request_data: Dict):
         request_data['captcha_code'] = [captcha, captcha]
 
-    def _login(self, request_data: Dict) -> Response:
+    @RequestTransformer.register()
+    def _login(self, session: Request, request_data: Dict) -> Response:
         if self._login_res is not None:
-            return self.session.get(self._login_res.headers['Location'], allow_redirects=False, timeout=self.timeout)
+            res = yield session.get(self._login_res.headers['Location'], allow_redirects=False, timeout=self.timeout)
+            return res
 
-        login_resp = self.session.post(self.LOGIN_URL,
+        login_resp = yield session.post(self.LOGIN_URL,
                                   params=self.service and {"service": self.service},
                                   data=request_data,
                                   allow_redirects=False,
                                   timeout=self.timeout)
         if login_resp.status_code == 302:
-            return self.session.get(login_resp.headers['Location'], allow_redirects=False, timeout=self.timeout)
+            res = yield session.get(login_resp.headers['Location'], allow_redirects=False, timeout=self.timeout)
+            return res
         elif login_resp.status_code == 401:
             raise IncorrectLoginCredentials()
         elif login_resp.status_code == 200:
@@ -166,4 +173,4 @@ def login_sso(session: Session,
     :return: 登陆了统一身份认证后所跳转到的地址的 :class:`Response`
     :rtype: Response
     """
-    return SSOAuthorizer._base_login(session, username, password, service, timeout, force_relogin)
+    return SSOAuthorizer[Session]._base_login(session, username, password, service, timeout, force_relogin)
