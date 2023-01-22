@@ -4,7 +4,6 @@ from typing import Optional, Dict, Generic
 from requests import Session
 
 from ..utils.request_transformer import RequestTransformer, Request, Response
-from ..utils.deprecated import deprecated
 from ..exception import IncorrectLoginCredentials, InvaildCaptcha, UnknownAuthserverException
 from .._lib_wrapper.encrypt import des_ecb_encryptor, pad8
 from ._page_parser import _SSOPageParser, _SSOErrorParser
@@ -17,9 +16,9 @@ _SSO_ERROR_CODES = {1030027: '用户名或密码错误，请确认后重新输�
                     1410040: '当前用户名已失效',
                     1320007: '验证码有误，请确认后重新输入'}
 
-__all__ = ['is_sso_logined', 'logout_sso', 'access_sso_service', 'login_sso', 'SSOAuthorizer']
+__all__ = ['is_sso_logined', 'logout_sso', 'access_sso_service', 'login_sso',
+           'async_is_sso_logined', 'async_logout_sso', 'async_access_sso_service', 'async_login_sso']
 
-@deprecated('请改用`SSOAuthorizer.is_logined`')
 def is_sso_logined(session: Session) -> bool:
     """判断是否处于统一身份认证（sso）登陆状态
 
@@ -30,7 +29,17 @@ def is_sso_logined(session: Session) -> bool:
     """
     return SSOAuthorizer[Session].is_logined(session)
 
-@deprecated('请改用`SSOAuthorizer.logout`')
+async def async_is_sso_logined(session: Request) -> bool:
+    """
+    异步的判断是否处于统一身份认证（sso）登陆状态
+
+    :param session: 会话
+    :type session: Session
+    :return: :obj:`True` 如果处于登陆状态，:obj:`False` 如果处于未登陆或登陆过期状态
+    :rtype: bool
+    """
+    return await SSOAuthorizer.async_is_logined(session)
+
 def logout_sso(session: Session) -> None:
     """注销统一身份认证（sso）登录状态
 
@@ -39,7 +48,15 @@ def logout_sso(session: Session) -> None:
     """
     return SSOAuthorizer[Session].logout(session)
 
-@deprecated('请改用`SSOAuthorizer.access_service`')
+async def async_logout_sso(session: Request) -> None:
+    """
+    异步的注销统一身份认证（sso）登录状态
+
+    :param session: 进行过登录的会话
+    :type session: Session
+    """
+    return await SSOAuthorizer.async_logout(session)
+
 def access_sso_service(session: Session, service: str) -> Response:
     """从登录了统一身份认证（sso）的会话获取指定服务的许可
 
@@ -52,6 +69,20 @@ def access_sso_service(session: Session, service: str) -> Response:
     :rtype: Response
     """
     return SSOAuthorizer[Session].access_service(session, service)
+
+async def async_access_sso_service(session: Request, service: str) -> Response:
+    """
+    异步的从登录了统一身份认证（sso）的会话获取指定服务的许可
+
+    :param session: 登录了统一身份认证的会话
+    :type session: Session
+    :param service: 服务的 url
+    :type service: str
+    :raises NotLogined: 统一身份认证未登录时抛出
+    :return: 访问服务 url 的 :class:`Response`
+    :rtype: Response
+    """
+    return await SSOAuthorizer.async_access_service(session, service)
 
 
 class SSOAuthorizer(Authorizer, Generic[Request]):
@@ -121,8 +152,7 @@ class SSOAuthorizer(Authorizer, Generic[Request]):
     @RequestTransformer.register()
     def _login(self, session: Request, request_data: Dict) -> Response:
         if self._login_res is not None:
-            res = yield session.get(self._login_res.headers['Location'], allow_redirects=False, timeout=self.timeout)
-            return res
+            return (yield session.get(self._login_res.headers['Location'], allow_redirects=False, timeout=self.timeout))
 
         login_resp = yield session.post(self.LOGIN_URL,
                                   params=self.service and {"service": self.service},
@@ -130,8 +160,7 @@ class SSOAuthorizer(Authorizer, Generic[Request]):
                                   allow_redirects=False,
                                   timeout=self.timeout)
         if login_resp.status_code == 302:
-            res = yield session.get(login_resp.headers['Location'], allow_redirects=False, timeout=self.timeout)
-            return res
+            return (yield session.get(login_resp.headers['Location'], allow_redirects=False, timeout=self.timeout))
         elif login_resp.status_code == 401:
             raise IncorrectLoginCredentials()
         elif login_resp.status_code == 200:
@@ -145,7 +174,6 @@ class SSOAuthorizer(Authorizer, Generic[Request]):
                     f"{error_code}: {_SSO_ERROR_CODES.get(error_code, '')}")
 
 
-@deprecated('请改用`SSOAuthorizer.login`')
 def login_sso(session: Session,
               username: str,
               password: str,
@@ -173,4 +201,34 @@ def login_sso(session: Session,
     :return: 登陆了统一身份认证后所跳转到的地址的 :class:`Response`
     :rtype: Response
     """
-    return SSOAuthorizer[Session]._base_login(session, username, password, service, timeout, force_relogin)
+    return SSOAuthorizer[Session].login(session, username, password, service, timeout, force_relogin)
+
+async def async_login_sso(session: Request,
+              username: str,
+              password: str,
+              service: Optional[str] = None,
+              timeout: int = 10,
+              force_relogin: bool = False
+              ):
+    """
+    异步的登录统一身份认证（sso）
+
+    :param session: 用于登录统一身份认证的会话
+    :type session: Session
+    :param username: 统一身份认证号或学工号
+    :type username: str
+    :param password: 统一身份认证密码
+    :type password: str
+    :param service: 需要登录的服务，默认（:obj:`None`）则先不登陆任何服务
+    :type service: Optional[str], optional
+    :param timeout: 连接超时时限，默认为 10（单位秒）
+    :type timeout: int, optional
+    :param force_relogin: 强制重登，当会话中已经有有效的登陆 cookies 时依然重新登录，默认为 :obj:`False`
+    :type force_relogin: bool, optional
+    :raises InvaildCaptcha: 无效的验证码
+    :raises IncorrectLoginCredentials: 错误的登陆凭据（如错误的密码、用户名）
+    :raises NeedCaptcha: 需要提供验证码，获得验证码文本之后可调用所抛出异常的 :func:`NeedCaptcha.after_captcha` 函数来继续登陆
+    :return: 登陆了统一身份认证后所跳转到的地址的 :class:`Response`
+    :rtype: Response
+    """
+    return await SSOAuthorizer.async_login(session, username, password, service, timeout, force_relogin)

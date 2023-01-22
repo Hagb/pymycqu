@@ -3,7 +3,7 @@
 from typing import Dict, Generic
 import re
 
-from ..auth import SSOAuthorizer
+from ..auth import access_service, async_access_service
 from ..utils.request_transformer import Request, RequestTransformer
 
 __all__ = ["access_mycqu", "async_access_mycqu"]
@@ -46,7 +46,7 @@ def access_mycqu(session: Generic[Request], add_to_header: bool = True) -> Dict[
     """
     if "Authorization" in session.headers:
         del session.headers["Authorization"]
-    SSOAuthorizer[type(session)].access_service(session, MYCQU_SERVICE_URL)
+    access_service(session, MYCQU_SERVICE_URL)
     token = _get_oauth_token.sync_request(session)
     if add_to_header:
         session.headers["Authorization"] = token
@@ -64,7 +64,7 @@ async def async_access_mycqu(session: Generic[Request], add_to_header: bool = Tr
     """
     if "Authorization" in session.headers:
         del session.headers["Authorization"]
-    await SSOAuthorizer[type(session)].async_access_service(session, MYCQU_SERVICE_URL)
+    await async_access_service(session, MYCQU_SERVICE_URL)
     token = await _get_oauth_token.async_request(session)
     if add_to_header:
         session.headers["Authorization"] = token

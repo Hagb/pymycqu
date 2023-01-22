@@ -1,6 +1,6 @@
 from functools import wraps, partial
 from inspect import isgeneratorfunction, isgenerator
-from typing import Callable, Any, Generator
+from typing import Callable, Any, Generator, Tuple
 
 from ..config import ConfigManager
 from .models import RequestReturns, RequestProtocol, Requestable, Request, Response
@@ -51,6 +51,8 @@ class RequestTransformer:
                 res = None
                 while True:
                     request_returns: RequestReturns = generator.send(res)
+                    if isinstance(request_returns, RequestTransformer):
+                        request_returns = (request_returns, {})
                     if isinstance(request_returns[0], RequestTransformer):
                         res = request_returns[0].sync_request(request, **request_returns[1])
                     else:
@@ -87,6 +89,8 @@ class RequestTransformer:
                 res = None
                 while True:
                     request_returns: RequestReturns = generator.send(res)
+                    if isinstance(request_returns, RequestTransformer):
+                        request_returns = (request_returns, {})
                     if isinstance(request_returns[0], RequestTransformer):
                         res = await request_returns[0].async_request(request, **request_returns[1])
                     else:

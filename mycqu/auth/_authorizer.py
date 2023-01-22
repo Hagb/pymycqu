@@ -78,16 +78,16 @@ class Authorizer(ABC, Generic[Request]):
 
 
     @classmethod
-    def _base_login(cls,
-                    session: Request,
-                    username: str,
-                    password: str,
-                    service: Optional[str] = None,
-                    timeout: int = 10,
-                    force_relogin: bool = False,
-                    keep_longer: bool = False,
-                    kick_others: bool = False
-                    ) -> Response:
+    def login(cls,
+              session: Request,
+              username: str,
+              password: str,
+              service: Optional[str] = None,
+              timeout: int = 10,
+              force_relogin: bool = False,
+              keep_longer: bool = False,
+              kick_others: bool = False
+              ) -> Response:
         """
         组合登陆流程
         """
@@ -103,7 +103,7 @@ class Authorizer(ABC, Generic[Request]):
         return authorizer._login.sync_request(authorizer.session, request_data)
 
     @classmethod
-    async def _async_base_login(
+    async def async_login(
             cls,
             session: Request,
             username: str,
@@ -127,126 +127,6 @@ class Authorizer(ABC, Generic[Request]):
             authorizer._raise_need_captcha(is_need_captcha, after_captcha, authorizer.timeout)
 
         return await authorizer._login.async_request(authorizer.session, request_data)
-
-
-    @classmethod
-    def login(
-            cls,
-            session: Request,
-            username: str,
-            password: str,
-            service: Optional[str] = None,
-            timeout: int = 10,
-            force_relogin: bool = False,
-            captcha_callback: Optional[Callable[[bytes, str], Optional[str]]] = None,
-            keep_longer: bool = False,
-            kick_others: bool = False
-    ) -> Response:
-        """
-        登录统一身份认证
-
-        :param session: 用于登录统一身份认证的会话
-        :type session: Session
-        :param username: 统一身份认证号或学工号
-        :type username: str
-        :param password: 统一身份认证密码
-        :type password: str
-        :param service: 需要登录的服务，默认（:obj:`None`）则先不登陆任何服务
-        :type service: Optional[str], optional
-        :param timeout: 连接超时时限，默认为 10（单位秒）
-        :type timeout: int, optional
-        :param force_relogin: 强制重登，当会话中已经有有效的登陆 cookies 时依然重新登录，默认为 :obj:`False`
-        :type force_relogin: bool, optional
-        :param captcha_callback: 需要输入验证码时调用的回调函数，默认为 :obj:`None` 即不设置回调；
-                                 当需要输入验证码，但回调没有设置或回调返回 :obj:`None` 时，抛出异常 :class:`NeedCaptcha`；
-                                 该函数接受一个 :class:`bytes` 型参数为验证码图片的文件数据，一个 :class:`str` 型参数为图片的 MIME 类型，
-                                 返回验证码文本或 :obj:`None`。
-        :type captcha_callback: Optional[Callable[[bytes, str], Optional[str]]], optional
-        :param keep_longer: 保持更长时间的登录状态（保持一周）
-        :type keep_longer: bool
-        :param kick_others: 当目标用户开启了“单处登录”并有其他登录会话时，踢出其他会话并登录单前会话；若该参数为 :obj:`False` 则抛出
-                           :class:`MultiSessionConflict`
-        :type kick_others: bool
-        :raises UnknownAuthserverException: 未知认证错误
-        :raises InvaildCaptcha: 无效的验证码
-        :raises IncorrectLoginCredentials: 错误的登陆凭据（如错误的密码、用户名）
-        :raises NeedCaptcha: 需要提供验证码，获得验证码文本之后可调用所抛出异常的 :func:`NeedCaptcha.after_captcha` 函数来继续登陆
-        :raises MultiSessionConflict: 和其他会话冲突
-        :return: 登陆了统一身份认证后所跳转到的地址的 :class:`Response`
-        :rtype: Response
-        """
-        try:
-            return cls._base_login(session, username, password, service, timeout, force_relogin, keep_longer,
-                                   kick_others)
-        except NeedCaptcha as e:
-            if captcha_callback is None:
-                raise e
-            else:
-                captcha_str = captcha_callback(e.image, e.image_type)
-                if captcha_str is None:
-                    raise InvaildCaptcha()
-                else:
-                    return e.after_captcha(captcha_str)
-
-    @classmethod
-    async def async_login(
-            cls,
-            session: Request,
-            username: str,
-            password: str,
-            service: Optional[str] = None,
-            timeout: int = 10,
-            force_relogin: bool = False,
-            captcha_callback: Optional[Callable[[bytes, str], Optional[str]]] = None,
-            keep_longer: bool = False,
-            kick_others: bool = False
-    ) -> Response:
-        """
-        异步的登录统一身份认证
-
-        :param session: 用于登录统一身份认证的会话
-        :type session: Session
-        :param username: 统一身份认证号或学工号
-        :type username: str
-        :param password: 统一身份认证密码
-        :type password: str
-        :param service: 需要登录的服务，默认（:obj:`None`）则先不登陆任何服务
-        :type service: Optional[str], optional
-        :param timeout: 连接超时时限，默认为 10（单位秒）
-        :type timeout: int, optional
-        :param force_relogin: 强制重登，当会话中已经有有效的登陆 cookies 时依然重新登录，默认为 :obj:`False`
-        :type force_relogin: bool, optional
-        :param captcha_callback: 需要输入验证码时调用的回调函数，默认为 :obj:`None` 即不设置回调；
-                                 当需要输入验证码，但回调没有设置或回调返回 :obj:`None` 时，抛出异常 :class:`NeedCaptcha`；
-                                 该函数接受一个 :class:`bytes` 型参数为验证码图片的文件数据，一个 :class:`str` 型参数为图片的 MIME 类型，
-                                 返回验证码文本或 :obj:`None`。
-        :type captcha_callback: Optional[Callable[[bytes, str], Optional[str]]], optional
-        :param keep_longer: 保持更长时间的登录状态（保持一周）
-        :type keep_longer: bool
-        :param kick_others: 当目标用户开启了“单处登录”并有其他登录会话时，踢出其他会话并登录单前会话；若该参数为 :obj:`False` 则抛出
-                           :class:`MultiSessionConflict`
-        :type kick_others: bool
-        :raises UnknownAuthserverException: 未知认证错误
-        :raises InvaildCaptcha: 无效的验证码
-        :raises IncorrectLoginCredentials: 错误的登陆凭据（如错误的密码、用户名）
-        :raises NeedCaptcha: 需要提供验证码，获得验证码文本之后可调用所抛出异常的 :func:`NeedCaptcha.after_captcha` 函数来继续登陆
-        :raises MultiSessionConflict: 和其他会话冲突
-        :return: 登陆了统一身份认证后所跳转到的地址的 :class:`Response`
-        :rtype: Response
-        """
-        try:
-            return await cls._async_base_login(session, username, password, service, timeout, force_relogin, keep_longer,
-                                   kick_others)
-        except NeedCaptcha as e:
-            if captcha_callback is None:
-                raise e
-            else:
-                captcha_str = captcha_callback(e.image, e.image_type)
-                if captcha_str is None:
-                    raise InvaildCaptcha()
-                else:
-                    return e.after_captcha(captcha_str)
-
 
     @classmethod
     @RequestTransformer.register()
