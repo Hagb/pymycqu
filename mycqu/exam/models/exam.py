@@ -1,61 +1,17 @@
-"""考试相关的模块
-"""
 from __future__ import annotations
+
 from typing import Dict, Any, Optional, List
 from datetime import date, time
-import requests
-from .course import Course
-from .utils.datetimes import date_from_str, time_from_str
-# from pydantic.dataclasses import dataclass
-from ._lib_wrapper.dataclass import dataclass
-from ._lib_wrapper.encrypt import pad16, aes_ecb_encryptor
 
-__all__ = ("Exam",)
-
-__exam_encryptor = aes_ecb_encryptor("cquisse123456789".encode())
-EXAM_LIST_URL = "https://my.cqu.edu.cn/api/exam/examTask/get-student-exam-list-outside"
+from .invigilator import Invigilator
+from ..tools import get_exam_raw, async_get_exam_raw
+from ...course import Course
+from ...utils.datetimes import date_from_str, time_from_str
+from ..._lib_wrapper.dataclass import dataclass
+from ...utils.request_transformer import Request
 
 
-def get_exam_raw(student_id: str, session: Optional[requests.Session] = None) -> Dict[str, Any]:
-    """获取考表的原始 json 数据（被反序列化为 python 字典对象）
-
-    :param student_id: 学号
-    :type student_id: str
-    :param session: 用于请求的 requests session
-    :type session: requests.Session, optional
-    :return: 反序列化后的课表 json 数据
-    :rtype: Dict[str, Any]
-    """
-    return (session or requests).get(EXAM_LIST_URL,
-                                     params={"studentId":
-                                             __exam_encryptor(
-                                                 pad16(student_id.encode())).hex().upper()
-                                             }
-                                     ).json()
-
-
-@dataclass
-class Invigilator:
-    """监考员信息
-    """
-    name: str
-    """监考员姓名"""
-    dept: str
-    """监考员所在学院（可能是简称，如 :obj:`"数统"`）"""
-
-    @staticmethod
-    def from_dict(data: Dict[str, Optional[str]]) -> Invigilator:
-        """从反序列化后的 json 数据中一名正/副监考员的数据中生成 :class:`Invigilator` 对象。
-
-        :param data: 反序列化后的 json 数据中的一次考试数据
-        :type data: Dict[str, Optional[str]]
-        :return: 对应的 :class:`Invigilator` 对象
-        :rtype: Invigilator
-        """
-        return Invigilator(
-            name=data["instructor"],  # type: ignore
-            dept=data["instDeptShortName"]  # type: ignore
-        )
+__all__ = ['Exam']
 
 
 @dataclass
@@ -121,9 +77,11 @@ class Exam:
             seat_num=data["seatNum"],
             stu_num=data["examStuNum"],
             chief_invi=[Invigilator.from_dict(invi)
-                        for invi in data["simpleChiefinvigilatorVOS"]],
-            asst_invi=data["simpleAssistantInviVOS"] and [Invigilator.from_dict(invi)
-                                                          for invi in data["simpleAssistantInviVOS"]]
+                        for invi in data["simpleChiefinvigilatorVOS"]]
+            if data['simpleChiefinvigilatorVOS'] is not None else [],
+            asst_invi=data["simpleAssistantInviVOS"] and ([Invigilator.from_dict(invi)
+                                                           for invi in data["simpleAssistantInviVOS"]]
+                                                          if data['simpleAssistantInviVOS'] is not None else [])
         )
 
     @staticmethod
@@ -137,3 +95,15 @@ class Exam:
         """
         return [Exam.from_dict(exam)
                 for exam in get_exam_raw(student_id)["data"]["content"]]
+
+    @staticmethod
+    async def async_fetch(session: Request, student_id: str) -> List[Exam]:
+        """从 my.cqu.edu.cn 上获取指定学生的考表
+
+        :param student_id: 学生学号
+        :type student_id: str
+        :return: 本学期的考表
+        :rtype: List[Exam]
+        """
+        return [Exam.from_dict(exam)
+                for exam in (await async_get_exam_raw(session, student_id))["data"]["content"]]

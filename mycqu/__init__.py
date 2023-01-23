@@ -7,7 +7,7 @@ from .mycqu import *
 from .card import *
 from .library import *
 from .exception import *
-__all__ = ["auth", "course", "exam", "mycqu", "user", "score", "card", "library"]
+__all__ = ["auth", "course", "exam", "mycqu", "score", "card", "library"]
 __all__.extend(auth.__all__)
 __all__.extend(course.__all__)
 __all__.extend(exam.__all__)
