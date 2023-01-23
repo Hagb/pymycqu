@@ -4,13 +4,15 @@ from typing import Dict, Any, Optional, List
 from datetime import date, time
 
 from .invigilator import Invigilator
-from ..tools import get_exam_raw
+from ..tools import get_exam_raw, async_get_exam_raw
 from ...course import Course
 from ...utils.datetimes import date_from_str, time_from_str
 from ..._lib_wrapper.dataclass import dataclass
+from ...utils.request_transformer import Request
 
 
 __all__ = ['Exam']
+
 
 @dataclass
 class Exam:
@@ -93,3 +95,15 @@ class Exam:
         """
         return [Exam.from_dict(exam)
                 for exam in get_exam_raw(student_id)["data"]["content"]]
+
+    @staticmethod
+    async def async_fetch(session: Request, student_id: str) -> List[Exam]:
+        """从 my.cqu.edu.cn 上获取指定学生的考表
+
+        :param student_id: 学生学号
+        :type student_id: str
+        :return: 本学期的考表
+        :rtype: List[Exam]
+        """
+        return [Exam.from_dict(exam)
+                for exam in (await async_get_exam_raw(session, student_id))["data"]["content"]]

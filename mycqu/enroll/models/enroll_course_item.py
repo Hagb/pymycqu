@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import List, Dict, Optional
 
 from .enroll_course_timetable import EnrollCourseTimetable
-from ..tools import get_enroll_detail_raw
+from ..tools import get_enroll_detail_raw, async_get_enroll_detail_raw
 from ..._lib_wrapper.dataclass import dataclass
 from ...course import Course
 
@@ -81,4 +81,22 @@ class EnrollCourseItem:
         :rtype: List[EnrollCourseItem]
         """
         res = get_enroll_detail_raw(session, id, is_major)
+        return [EnrollCourseItem.from_dict(item) for item in res]
+
+    @staticmethod
+    async def async_fetch(session: Session, id: str, is_major: bool = True) -> List[EnrollCourseItem]:
+        """
+        异步的从 my.cqu.edu.cn 上获取学生可选具体课程
+
+        :param session: 登录了统一身份认证（:func:`.auth.login`）并在 mycqu 进行了认证（:func:`.mycqu.access_mycqu`）的 requests 会话
+        :type session: Session
+        :param id: 需要获取的课程id（非Course Code）
+        :type id: str
+        :param is_major: 是否获取主修可选课程，为`False`时查询辅修可选课程
+        :type is_major: bool
+        :raises MycquUnauthorized: 若会话未在 my.cqu.edu.cn 进行认证
+        :return: 获取的可选具体课程对象的列表
+        :rtype: List[EnrollCourseItem]
+        """
+        res = await async_get_enroll_detail_raw(session, id, is_major)
         return [EnrollCourseItem.from_dict(item) for item in res]

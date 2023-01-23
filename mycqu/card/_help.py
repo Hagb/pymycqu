@@ -1,7 +1,7 @@
 import json
 from html.parser import HTMLParser
-import requests
-from mycqu.exception import TicketGetError, ParseError, CQUWebsiteError
+from ..exception import TicketGetError, ParseError, CQUWebsiteError
+from ..utils.request_transformer import Request, RequestTransformer
 
 
 class _CardPageParser(HTMLParser):
@@ -20,21 +20,22 @@ class _CardPageParser(HTMLParser):
 
 
 # 获取hallticket
-def _get_hall_ticket(session, ssoticket_id):
+@RequestTransformer.register()
+def _get_hall_ticket(session: Request, ssoticket_id):
     url = 'http://card.cqu.edu.cn/cassyno/index'
     data = {
         'errorcode': '1',
         'continueurl': 'http://card.cqu.edu.cn/cassyno/index',
         'ssoticketid': ssoticket_id,
     }
-    r = session.post(url, data=data)
+    r = yield session.post(url, data=data)
     if r.status_code != 200:
         raise CQUWebsiteError()
-    return session
 
 
 # 利用登录之后的cookie获取一卡通的关键ticket
-def _get_ticket(session):
+@RequestTransformer.register()
+def _get_ticket(session: Request):
     url = 'http://card.cqu.edu.cn/Page/Page'
     data = {
         'EMenuName': '电费、网费',
@@ -43,7 +44,7 @@ def _get_ticket(session):
         'apptype': '4',
         'flowID': '10002'
     }
-    r = session.post(url, data=data)
+    r = yield session.post(url, data=data)
     if r.status_code != 200:
         raise CQUWebsiteError()
     ticket_start = r.text.find('ticket=')
@@ -56,10 +57,11 @@ def _get_ticket(session):
 
 
 # 利用ticket获取一卡通关键cookie
-def _get_synjones_auth(ticket):
+@RequestTransformer.register()
+def _get_synjones_auth(session: Request, ticket: str):
     url = 'http://card.cqu.edu.cn:8080/blade-auth/token/fwdt'
-    data = {'ticket': ticket}
-    r = requests.post(url, data=data)
+    data = {'ticket': ticket, 'json': 'true'}
+    r = yield session.post(url, data=data)
     if r.status_code != 200:
         raise CQUWebsiteError()
     try:
@@ -72,7 +74,8 @@ def _get_synjones_auth(ticket):
 
 
 # 利用关键cookie获取水电费dic
-def _get_fee_data(synjones_auth, room, fee_item_id):
+@RequestTransformer.register()
+def _get_fee_data(session: Request, synjones_auth, room, fee_item_id):
     url = "http://card.cqu.edu.cn:8080/charge/feeitem/getThirdData"
     data = {
         'feeitemid': fee_item_id,
@@ -82,7 +85,7 @@ def _get_fee_data(synjones_auth, room, fee_item_id):
         'type': 'IEC',
     }
     cookie = {'synjones-auth': synjones_auth}
-    r = requests.post(url, data=data, cookies=cookie)
+    r = yield session.post(url, data=data, cookies=cookie)
     if r.status_code != 200:
         raise CQUWebsiteError()
     dic = json.loads(r.text)

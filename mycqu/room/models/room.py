@@ -6,6 +6,7 @@ from requests import Session
 
 from ...exception import MycquUnauthorized
 from ..._lib_wrapper.dataclass import dataclass
+from ...utils.request_transformer import Request, RequestTransformer
 
 ROOM_ID_URL = "https://my.cqu.edu.cn/api/resourceapi/room/roomName-filter"
 
@@ -47,6 +48,15 @@ class Room:
         )
 
     @staticmethod
+    @RequestTransformer.register()
+    def _fetch(session: Session, name: str) -> List[Room]:
+        res = yield session.get(ROOM_ID_URL, params={'roomName': name})
+        if res.status_code == 401:
+            raise MycquUnauthorized
+
+        return [Room.from_dict(room) for room in res.json()]
+
+    @staticmethod
     def fetch(session: Session, name: str) -> List[Room]:
         """
         依据教室名字查询教室（支持模糊查询）
@@ -58,9 +68,19 @@ class Room:
         :return: 教室对象组成的列表
         :rtype: List[Room]
         """
-        res = session.get(ROOM_ID_URL, params={'roomName': name})
-        if res.status_code == 401:
-            raise MycquUnauthorized
+        return Room._fetch.sync_request(session, name)
 
-        return [Room.from_dict(room) for room in res.json()]
+    @staticmethod
+    async def async_fetch(session: Request, name: str) -> List[Room]:
+        """
+        依据教室名字查询教室（支持模糊查询）
+
+        :param session: 登录了统一身份认证（:func:`.auth.login`）并在 mycqu 进行了认证（:func:`.mycqu.access_mycqu`）的 requests 会话
+        :type session: Session
+        :param name: 教室名称
+        :type name: str
+        :return: 教室对象组成的列表
+        :rtype: List[Room]
+        """
+        return await Room._fetch.async_request(session, name)
 

@@ -6,10 +6,11 @@ from requests import Session
 
 from .course import Course
 from .course_day_time import CourseDayTime
-from ..tools import get_course_raw
+from ..tools import get_course_raw, async_get_course_raw
 from ..._lib_wrapper.dataclass import dataclass
 from .cqu_session import CQUSession
 from ...utils.datetimes import parse_weeks_str
+from ...utils.request_transformer import Request
 
 
 __all__ = ['CourseTimetable']
@@ -73,6 +74,27 @@ class CourseTimetable:
         :rtype: List[CourseTimetable]
         """
         resp = get_course_raw(session, code, cqu_session)
+        return [CourseTimetable.from_dict(timetable) for timetable in resp
+                if timetable["teachingWeekFormat"]
+                ]
+
+    @staticmethod
+    async def async_fetch(session: Request, code: str, cqu_session: Optional[Union[CQUSession, str]] = None) \
+            -> List[CourseTimetable]:
+        """
+        异步的从 my.cqu.edu.cn 上获取学生或老师的课表
+
+        :param session: 登录了统一身份认证（:func:`.auth.login`）并在 mycqu 进行了认证（:func:`.mycqu.access_mycqu`）的 requests 会话
+        :type session: Session
+        :param code: 学生或教师的学工号
+        :type code: str
+        :param cqu_session: 需要获取课表的学期，留空获取当前年级的课表
+        :type cqu_session: Optional[Union[CQUSession, str]], optional
+        :raises MycquUnauthorized: 若会话未在 my.cqu.edu.cn 进行认证
+        :return: 获取的课表对象的列表
+        :rtype: List[CourseTimetable]
+        """
+        resp = await async_get_course_raw(session, code, cqu_session)
         return [CourseTimetable.from_dict(timetable) for timetable in resp
                 if timetable["teachingWeekFormat"]
                 ]

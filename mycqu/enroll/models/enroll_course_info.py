@@ -2,9 +2,10 @@ from __future__ import annotations
 
 from typing import List, Dict, Any, Optional
 
-from ..tools import get_enroll_list_raw
+from ..tools import get_enroll_list_raw, async_get_enroll_list_raw
 from ..._lib_wrapper.dataclass import dataclass
 from ...course import Course
+from ...utils.request_transformer import Request
 
 from requests import Session
 
@@ -63,6 +64,26 @@ class EnrollCourseInfo:
         :rtype: List[EnrollCourseInfo]
         """
         res = get_enroll_list_raw(session, is_major)
+        result = {}
+        for key, value in res.items():
+            result[key] = [EnrollCourseInfo.from_dict(item) for item in value]
+
+        return result
+
+    @staticmethod
+    async def async_fetch(session: Request, is_major: bool = True) -> Dict[str, list[EnrollCourseInfo]]:
+        """
+        异步的从 my.cqu.edu.cn 上获取学生可选课程
+
+        :param session: 登录了统一身份认证（:func:`.auth.login`）并在 mycqu 进行了认证（:func:`.mycqu.access_mycqu`）的 requests 会话
+        :type session: Session
+        :param is_major: 是否获取主修可选课程，为`False`时查询辅修可选课程
+        :type is_major: bool
+        :raises MycquUnauthorized: 若会话未在 my.cqu.edu.cn 进行认证
+        :return: 获取的可选课程对象的列表
+        :rtype: List[EnrollCourseInfo]
+        """
+        res = await async_get_enroll_list_raw(session, is_major)
         result = {}
         for key, value in res.items():
             result[key] = [EnrollCourseInfo.from_dict(item) for item in value]

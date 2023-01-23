@@ -4,7 +4,8 @@ from typing import Optional, Any
 
 from requests import Session
 
-from ..tools import get_fees_raw
+from ..tools import get_fees_raw, async_get_fees_raw
+from ...utils.request_transformer import Request
 from ..._lib_wrapper.dataclass import dataclass
 
 
@@ -69,3 +70,22 @@ class EnergyFees:
         :rtype: EnergyFees
         """
         return EnergyFees.from_dict(get_fees_raw(session, is_huxi, room)["map"]["showData"], is_huxi)
+
+    @staticmethod
+    async def async_fetch(session: Request, is_huxi: bool, room: str) -> EnergyFees:
+        """从 card.cqu.edu.cn 上获取当前水电费信息，需要登录了统一身份认证的会话
+
+        :param session: 登录了统一身份认证（:func:`.auth.login`）并在 card.cqu.edu.cn 进行了认证（:func:`.card.access_card`）的 requests 会话
+        :type session: Session
+        :param is_huxi: 房间号是否为虎溪校区的房间
+        :type is_huxi: bool
+        :param room: 需要获取水电费详情的宿舍
+        :type room: str
+        :raises NetworkError: 当访问相关网页时statue code不为200时抛出
+        :raises TicketGetError: 当未能从网页对应位置中获取到ticket时抛出
+        :raises ParseError: 当从返回数据解析所需值失败时抛出
+        :raises CQUWebsiteError: 当网页获取水电费状态码不为success时抛出
+        :return: 返回相关宿舍的水电费信息
+        :rtype: EnergyFees
+        """
+        return EnergyFees.from_dict((await async_get_fees_raw(session, is_huxi, room))["map"]["showData"], is_huxi)

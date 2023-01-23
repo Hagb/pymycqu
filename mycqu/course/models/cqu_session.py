@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import re
-from typing import ClassVar, Tuple, List
+from typing import ClassVar, Tuple, List, Optional
 from functools import lru_cache
 
-from requests import get
+import requests
+from requests import Session
 
 from ..._lib_wrapper.dataclass import dataclass
+from ...utils.request_transformer import Request, RequestTransformer
 
 CQUSESSIONS_URL = "https://my.cqu.edu.cn/api/timetable/optionFinder/session?blankOption=false"
 
@@ -73,13 +75,28 @@ class CQUSession:
             raise ValueError(f"string {string} is not a session")
 
     @staticmethod
-    def fetch() -> List[CQUSession]:
+    @RequestTransformer.register()
+    def _fetch(request: Request) -> List[CQUSession]:
+        session_list = []
+        for session in (yield request.get(CQUSESSIONS_URL)).json():
+            session_list.append(CQUSession.from_str(session["name"]))
+        return session_list
+
+    @staticmethod
+    def fetch(session: Optional[Session] = None) -> List[CQUSession]:
         """从 my.cqu.edu.cn 上获取各个学期
 
         :return: 各个学期组成的列表
         :rtype: List[CQUSession]
         """
-        session_list = []
-        for session in get(CQUSESSIONS_URL).json():
-            session_list.append(CQUSession.from_str(session["name"]))
-        return session_list
+        return CQUSession._fetch.sync_request(requests if session is None else session)
+
+    @staticmethod
+    async def async_fetch(session: Request) -> List[CQUSession]:
+        """
+        异步的从 my.cqu.edu.cn 上获取各个学期
+
+        :return: 各个学期组成的列表
+        :rtype: List[CQUSession]
+        """
+        return await CQUSession._fetch.async_request(session)
