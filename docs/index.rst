@@ -6,6 +6,9 @@
 开始
 ====
 
+**由于作者毕业，本仓库不再维护，保留原样。** 您可以选用 `321CQU 团队维护的 pymycqu <https://github.com/321CQU/pymycqu>`__ 或使用 Rust 开发的 `rsmycqu <https://github.com/321CQU/rsmycqu>`__ 。
+
+
 安装
 ----
 
