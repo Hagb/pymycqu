@@ -1,5 +1,7 @@
 # pymycqu
 
+**由于作者毕业，本仓库不再维护，保留原样。您可以选用 [321CQU 团队维护的 pymycqu](https://github.com/321CQU/pymycqu) 或使用 Rust 开发的 [rsmycqu](https://github.com/321CQU/rsmycqu)。**
+
 这个库对重庆大学 <https://my.cqu.edu.cn> 和统一身份认证的部分 web api 进行了封装，同时整理了相关数据模型。
 
 Work in progress... 欢迎反馈和补充
